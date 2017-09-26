@@ -23,16 +23,20 @@ route_ids = getRouteIds('routes.json')
 
 
 def get_data():
+    """Requests route data from API"""
 
-    for i in range(len(route_ids))[::200]: 
+    for i in range(1000)[::200]: 
 
         payload = {
             'routeIds': ','.join(route_ids[i:i+200]),
             'key': TOKEN
         }
 
-        response = requests.get('https://www.mountainproject.com/data/get-routes', params=payload)
+        r = requests.get('https://www.mountainproject.com/data/get-routes', params=payload)
+        print '********'
+        print i, r
+        print '********'
 
-        print response
+
 
     return response
