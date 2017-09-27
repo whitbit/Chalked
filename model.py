@@ -1,5 +1,4 @@
 from flask_sqlalchemy import SQLAlchemy
-# from sqlalchemy import CheckConstraint
 
 db = SQLAlchemy()
 
@@ -37,20 +36,20 @@ class Route(db.Model):
     __tablename__ = 'routes'
 
     route_id = db.Column(db.Integer, primary_key=True, autoincrement=True)
-    name = db.Column(db.String(50))
+    name = db.Column(db.String(100))
     latitude = db.Column(db.Float)
     longitude = db.Column(db.Float)
-    location = db.Column(db.String(50))
-    v_grade = db.Column(db.String(3))
+    state = db.Column(db.String(100))
+    area = db.Column(db.String(100))
+    v_grade = db.Column(db.String(20))
     url = db.Column(db.String(100))
     img = db.Column(db.String(100))
 
     def __repr__(self):
          """Provide helpful representation when printed."""
 
-         return "<Route id={}, name={}, vgrade={}>".format(self.route_id,
-                                                           self.name,
-                                                           self.v_grade)
+         return "<Route id={}, vgrade={}>".format(self.route_id,
+                                                  self.v_grade)
 
 
 class Review(db.Model):
@@ -68,7 +67,6 @@ class Review(db.Model):
 
 
     user = db.relationship('User', backref=db.backref('reviews'), order_by=date)
-
     route = db.relationship('Route', backref=db.backref('reviews'), order_by=date)
 
     def __repr__(self):
@@ -125,11 +123,12 @@ class UserFavorites(db.Model):
 def connect_to_db(app):
     """Connect to database."""
 
-    app.config['SQLALCHEMY_DATABASE_URI'] = 'postgresql:///climbs'
+    app.config['SQLALCHEMY_DATABASE_URI'] = 'postgresql:///routes'
     app.config['SQLCHEMY_ECHO'] = True
     db.app = app
     db.init_app(app)
 
-# if __name__ == "__main__":
-#     connect_to_db(app)
-#     print "Connected to DB."
+if __name__ == "__main__":
+    from server import app
+    connect_to_db(app)
+    print "Connected to DB."

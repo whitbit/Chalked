@@ -1,6 +1,11 @@
+from sqlalchemy import func
+from model import User, Route, Review, UserLog, UserFavorites, connect_to_db, db
+from server import app
+from datetime import datetime
 import requests, os, json
 
 TOKEN = os.environ.get('MOUNTAIN_PROJECT_TOKEN')
+
 
 def getRouteIds(file):
     """Gets all route IDs out of json file."""
@@ -19,24 +24,44 @@ def getRouteIds(file):
 
     return route_ids
 
-route_ids = getRouteIds('routes.json')
 
+def load_routes():
+    """Loads database with routes from Mountain Project API."""
 
-def get_data():
-    """Requests route data from API"""
+    route_ids = getRouteIds('routes.json')
 
-    for i in range(1000)[::200]: 
+    Route.query.delete()
+
+    for i in range(len(route_ids))[::100]: 
 
         payload = {
-            'routeIds': ','.join(route_ids[i:i+200]),
+            'routeIds': ','.join(route_ids[i:i+100]),
             'key': TOKEN
         }
 
-        r = requests.get('https://www.mountainproject.com/data/get-routes', params=payload)
-        print '********'
-        print i, r
-        print '********'
+        r = requests.get('https://www.mountainproject.com/data/get-routes', params=payload).json()
+
+
+        for route in r['routes']:
+            route = Route(name=route['name'],
+                          latitude=route['latitude'],
+                          longitude=route['longitude'],
+                          state=route['location'][0],
+                          area=route['location'][1],
+                          v_grade=route['rating'],
+                          url=route['url'],
+                          img=route['imgSmallMed'])
+
+            db.session.add(route)
+
+        db.session.commit()
 
 
 
-    return response
+
+if __name__ == "__main__":
+    connect_to_db(app)
+
+    db.create_all()
+
+    load_routes()
