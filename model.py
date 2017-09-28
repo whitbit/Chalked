@@ -10,6 +10,9 @@ class User(db.Model):
     user_id = db.Column(db.Integer, primary_key=True, autoincrement=True)
     username = db.Column(db.String(30), nullable=False, unique=True)
     pw = db.Column(db.String(30), nullable=False)
+    first_name = db.Column(db.String(30))
+    last_name = db.Column(db.String(30))
+    gender = db.Column(db.String(30))
 
     def getUserPoints(self):
         """Calculates points accrued based on completed climbs."""
@@ -132,3 +135,4 @@ if __name__ == "__main__":
     from server import app
     connect_to_db(app)
     print "Connected to DB."
+

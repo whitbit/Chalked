@@ -190,7 +190,10 @@ ALTER SEQUENCE user_favorites_favorites_id_seq OWNED BY user_favorites.favorites
 CREATE TABLE users (
     user_id integer NOT NULL,
     username character varying(30) NOT NULL,
-    pw character varying(30) NOT NULL
+    pw character varying(30) NOT NULL,
+    first_name character varying(30),
+    last_name character varying(30),
+    gender character varying(30)
 );
 
 
@@ -3692,7 +3695,7 @@ SELECT pg_catalog.setval('user_favorites_favorites_id_seq', 1, false);
 -- Data for Name: users; Type: TABLE DATA; Schema: public; Owner: vagrant
 --
 
-COPY users (user_id, username, pw) FROM stdin;
+COPY users (user_id, username, pw, first_name, last_name, gender) FROM stdin;
 \.
 
 
