@@ -90,7 +90,7 @@ class UserLog(db.Model):
     route_id = db.Column(db.Integer, db.ForeignKey('routes.route_id'))
     date = db.Column(db.DateTime)
     notes = db.Column(db.Text)
-    completed = db.Column(db.Boolean)
+    completed = db.Column(db.Boolean) #add defulat=false
     photo = db.Column(db.String(500))
 
     user = db.relationship('User', backref=db.backref('logs'), order_by=date)
