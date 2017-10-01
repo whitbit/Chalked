@@ -1,0 +1,45 @@
+{% extends 'base.html' %}
+
+{% block title %} WELCOME {% endblock %}
+
+{% block content %}
+
+<h1>Welcome!</h1>
+<form action='/login' method='POST'>
+    <label>Username:
+        <input type='username' name='username' required></label><br>
+    <label>Password:
+        <input type='password' name='password' required></label><br>
+    <input type='submit' value='log in'>
+</form>
+
+<h2>Sign Up</h2>
+<form action='/register' method='POST'>
+    <label>Username:
+        <input type='username' name='username' required>
+    </label><br>
+    
+    <label>Password:
+        <input type='password' name='password' required>
+    </label><br>
+
+    <label>First name:
+        <input type='text' name='first_name' required>
+    </label><br>
+
+    <label>Last name:
+        <input type='text' name='last_name' required>
+    </label><br>
+    
+    <label>Gender:
+        <input type='radio' name='gender' value='male' required>male
+        <input type='radio' name='gender' value='female' required>female<br>
+    </label>
+
+    <input type='submit' value='Create Account'>
+</form>
+
+
+
+
+{% endblock %}

@@ -1,0 +1,36 @@
+<!DOCTYPE HTML>
+
+<html>
+    <head>
+        <title>{% block title %} TITLE GOES HERE {% endblock %}</title>
+        <style>{% block style %} STYLIZE {% endblock %}</style>
+        <link rel="stylesheet" href="static/styles.css">
+        <script src ='https://code.jquery.com/jquery.js'></script>
+    </head>
+<body>
+    {% if 'username' in session %}
+        <div> Currently logged in as {{ session['username'] }}.</div>
+    {% endif %}
+
+    {% for message in get_flashed_messages() %}
+        <li> {{ message }} </li>
+    {% endfor %}
+    
+    {% block  content %} CONTENT GOES HERE {% endblock %}
+
+    <div>
+    {% if 'username' in session %}
+        <form action='/logout' method='POST'>
+                <input type='submit' value='log out'>
+        </form>
+    {% endif %}
+    </div>
+
+    <script>
+
+
+    </script>
+    
+
+
+</body>

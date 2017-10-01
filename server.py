@@ -1,4 +1,4 @@
-from flask import Flask, render_template, redirect, request, flash, session
+from flask import Flask, render_template, redirect, request, flash, session, jsonify
 from model import connect_to_db, db, User, Route, Review, UserLog, UserFavorites
 from datetime import datetime
 
@@ -12,12 +12,14 @@ def index():
 
     return render_template('/homepage.html')
 
+
 @app.route('/map')
 def routes_map():
     """shows all routes on Google map."""
 
     routes = Route.query.all()
     return render_template('US_map.html', routes=routes)
+
 
 @app.route('/register', methods=['POST'])
 def register_user():
@@ -75,61 +77,39 @@ def process_login():
 def user_dashboard():
     """Displays user dashboard."""
 
-    routes = Route.query.all()
-    state = request.args.get('state')
-    area = request.args.get('area')
-
-    states = []
-    areas = []
-    climbs = []
-
-    for route in routes:
-        if route.state not in states:
-            states.append(route.state)
-    
-    states.sort()
-
-    state_routes = Route.query.filter_by(state=state).all()
+    return render_template('dashboard.html')
 
 
-    for route in state_routes:
-        if route.area not in areas:
-            areas.append(route.area)
-            print route.area 
-
-    areas.sort()
-
-    area_routes = Route.query.filter_by(area=area).order_by('v_grade').all()
-
-    for route in area_routes:
-        if route not in climbs:
-          climbs.append((route.name, route.v_grade))
-
-    return render_template('dashboard.html', states=states, areas=areas, climbs=climbs)
-
-
-@app.route('/log-climb')
+@app.route('/log-climb.json', methods=['POST'])
 def logs_climb():
+    climb_name = request.form.get('route')
+    print 'climb_name', climb_name
 
-    climb_name = request.args.get('route')
-    complete = request.args.get('complete')
-    notes = request.args.get('notes')
-    new_climb = Route.query.filter_by(name=climb_name).one()
+    complete = request.form.get('complete')
+    print 'complete', complete
+    notes = request.form.get('notes')
+    print 'notes', notes
+    # new_climb = Route.query.filter_by(name=climb_name).one()
 
-    new_log = UserLog(user_id=session['user_id'],
-                      route_id=new_climb.route_id,
-                      date=datetime.now(),
-                      notes=notes,
-                      completed=complete)
 
-    db.session.add(new_log)
 
-    db.session.commit()
+    # new_log = UserLog(user_id=session['user_id'],
+    #                   route_id=new_climb.route_id,
+    #                   date=datetime.now(),
+    #                   notes=notes,
+    #                   completed=complete)
 
-    flash('successfully logged!')
+    # db.session.add(new_log)
+
+    # db.session.commit()
+
+    print 'sucess!'
+
+    # flash('successfully logged!')
     
-    return redirect('/')
+    # return redirect('/')
 
+    return jsonify({})
 
 @app.route('/logout', methods=['POST'])
 def logs_off_session():
@@ -140,8 +120,40 @@ def logs_off_session():
     return redirect('/')
 
 
+@app.route('/search.json')
+def search_specific_routes():
+
+    routes = Route.query.all()
+
+    states = sorted(set([route.state for route in routes]))
+   
+    routes_dict = {}
+    
+    routes_dict['states'] = states
 
 
+
+    state = request.args.get('state')
+
+    state_routes = Route.query.filter_by(state=state).all()
+
+    state_routes = sorted(set([route.area for route in state_routes]))
+
+    routes_dict['areas'] = state_routes
+
+
+
+    area = request.args.get('area')
+
+    area_routes = Route.query.filter_by(area=area).all()
+    route_names = sorted(set([route.name for route in area_routes]))
+    area_routes = sorted(set([route.v_grade + ' ' + route.name for route in area_routes]))
+
+
+    routes_dict['routes'] = area_routes
+    routes_dict['route_names'] = route_names
+
+    return jsonify(routes_dict)
 
 
 if __name__ == '__main__':

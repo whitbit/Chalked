@@ -1,0 +1,19 @@
+{% extends 'base.html' %}
+
+{% block title %} Search Results {% endblock %}
+
+{% block content %} 
+    
+    <form action='/filter-search'>
+        <select>
+        {% for area in areas %}
+            <option value='{{ area }}'>{{ area }}</option>
+        {% endfor %}
+        </select><br>
+        <input type='submit'>
+    </form>
+    
+
+
+
+{% endblock %}
