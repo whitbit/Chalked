@@ -82,32 +82,25 @@ def user_dashboard():
 
 @app.route('/log-climb.json', methods=['POST'])
 def logs_climb():
-    climb_name = request.form.get('route')
-    print 'climb_name', climb_name
+    
+    route_id = request.form.get('route_id')
 
     complete = request.form.get('complete')
-    print 'complete', complete
+
     notes = request.form.get('notes')
-    print 'notes', notes
-    # new_climb = Route.query.filter_by(name=climb_name).one()
 
 
+    new_log = UserLog(user_id=session['user_id'],
+                      route_id=route_id,
+                      date=datetime.now(),
+                      notes=notes,
+                      completed=complete)
 
-    # new_log = UserLog(user_id=session['user_id'],
-    #                   route_id=new_climb.route_id,
-    #                   date=datetime.now(),
-    #                   notes=notes,
-    #                   completed=complete)
+    db.session.add(new_log)
 
-    # db.session.add(new_log)
+    db.session.commit()
 
-    # db.session.commit()
-
-    print 'sucess!'
-
-    # flash('successfully logged!')
-    
-    # return redirect('/')
+    print 'success!'
 
     return jsonify({})
 
@@ -146,12 +139,15 @@ def search_specific_routes():
     area = request.args.get('area')
 
     area_routes = Route.query.filter_by(area=area).all()
-    route_names = sorted(set([route.name for route in area_routes]))
-    area_routes = sorted(set([route.v_grade + ' ' + route.name for route in area_routes]))
+    
+    route_info = {}
+    
+    for route in area_routes:
+        route_info[route.route_id] = (route.v_grade + ' ' + route.name)
 
 
-    routes_dict['routes'] = area_routes
-    routes_dict['route_names'] = route_names
+
+    routes_dict['routes'] = route_info
 
     return jsonify(routes_dict)
 

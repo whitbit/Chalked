@@ -57,11 +57,11 @@ function getRoutes(evt) {
 
 function showRoutes(results) {
 
-    var routes = results.routes;
-    var names = results.route_names;
+
+    var routes = results.routes
 
     $.each(routes, function(index, route) {
-         $('#route').append('<option value=' + route + '>' + route + '</option>');
+         $('#route').append('<option value=' + index + '>' + route + '</option>');
     });
 
 }
@@ -72,7 +72,7 @@ function submits_climb(evt) {
     evt.preventDefault();
 
     var formInputs = {
-        'route': $('select#route option:checked').text(),
+        'route_id': $('select#route option:checked').val(),
         'notes': $('#notes').val(),
         'complete': $( "input[type=checkbox][name=complete]:checked" ).val()
     };
@@ -84,10 +84,10 @@ function submits_climb(evt) {
 }
 
 function logs_climb(results) {
-    $('#submitted').innerHTML('<p>success</p>')
+    $('#submitted').innerHTML = '<p>success</p>' 
 }
 
 
-$('#log_climb').on('submit', submits_climb);
+$('#log-climb').on('submit', submits_climb);
 
 
