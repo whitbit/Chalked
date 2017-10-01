@@ -8,16 +8,17 @@ app.secret_key = 'ABC'
 
 @app.route('/')
 def index():
-    """Homepage."""
+    """Homepage with user registration/login form."""
 
     return render_template('/homepage.html')
 
 
 @app.route('/map')
 def routes_map():
-    """shows all routes on Google map."""
+    """Shows all routes in database on Google map."""
 
     routes = Route.query.all()
+
     return render_template('US_map.html', routes=routes)
 
 
@@ -52,7 +53,7 @@ def register_user():
 
 @app.route('/login', methods=['POST'])
 def process_login():
-    """checks if user is registered and verifies password."""
+    """Checks if user is registered and verifies password."""
 
     username = request.form.get('username')
     password = request.form.get('password')
@@ -72,9 +73,17 @@ def process_login():
         flash('Please register first!')
         return redirect('/')
 
+@app.route('/logout', methods=['POST'])
+def logs_off_session():
+    """Logs user off."""
+
+    del session['username']
+    flash('logged out successfully')
+    return redirect('/')
+
 
 @app.route('/dashboard')
-def user_dashboard():
+def renders_user_dashboard():
     """Displays user dashboard."""
 
     return render_template('dashboard.html')
@@ -82,6 +91,7 @@ def user_dashboard():
 
 @app.route('/log-climb.json', methods=['POST'])
 def logs_climb():
+    """Adds new UserLog entry."""
     
     route_id = request.form.get('route_id')
 
@@ -104,17 +114,9 @@ def logs_climb():
     return jsonify({})
 
 
-@app.route('/logout', methods=['POST'])
-def logs_off_session():
-    """Logs user off."""
-
-    del session['username']
-    flash('logged out successfully')
-    return redirect('/')
-
-
 @app.route('/search.json')
-def search_routes_to_log():
+def filters_routes_to_log():
+    """Filters routes for user to log."""
 
     routes = Route.query.all()
 
@@ -125,7 +127,6 @@ def search_routes_to_log():
     routes_dict['states'] = states
 
 
-
     state = request.args.get('state')
 
     state_routes = Route.query.filter_by(state=state).all()
@@ -133,7 +134,6 @@ def search_routes_to_log():
     state_routes = sorted(set([route.area for route in state_routes]))
 
     routes_dict['areas'] = state_routes
-
 
 
     area = request.args.get('area')
@@ -152,7 +152,9 @@ def search_routes_to_log():
 
 
 @app.route('/user-map.json')
-def shoes_user_map_locations():
+def renders_user_journal_info():
+    """Gets user's log info to render information on dashboard."""
+
 
     user_id = session['user_id']
     print 'USER ID', user_id
@@ -165,16 +167,25 @@ def shoes_user_map_locations():
     # get all log objects of user
     print 'USER LOGS', user_logged_climbs
 
-    coordinates = {}
+
+    log_info = {}
+
+    log_info['coordinates'] = {}
 
     for climb in user_logged_climbs:
+        
         route = Route.query.get(climb.route_id)
-        # gets route in log
-        coordinates[climb.review_id] = (route.latitude, route.longitude)
 
-    print 'COORDINATES', coordinates
+        log_info['coordinates'][climb.review_id] = {'lat': route.latitude, 'lng': route.longitude}
 
-    return jsonify(coordinates)
+        log_info['info'] = [route.name, route.state, route.area, route.v_grade, route.url]
+
+        log_info['user_notes'] = [climb.date, climb.notes, climb.completed]
+    
+    print log_info['user_notes']
+
+    return jsonify(log_info)
+
 
 
 

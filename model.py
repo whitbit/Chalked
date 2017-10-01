@@ -122,7 +122,6 @@ class UserFavorites(db.Model):
                                                                     self.route_id)
 
 
-
 def connect_to_db(app):
     """Connect to database."""
 
@@ -130,6 +129,7 @@ def connect_to_db(app):
     app.config['SQLCHEMY_ECHO'] = True
     db.app = app
     db.init_app(app)
+
 
 if __name__ == "__main__":
     from server import app
