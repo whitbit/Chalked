@@ -4,11 +4,6 @@
 
 {% block style %}
 
-      #map {
-        height: 500px;
-        width: 500px;
-      }
-
 
 {% endblock %}
 
@@ -16,28 +11,19 @@
 {% block content %}
 
     <h1>Welcome, {{ session['username'] }}!</h1>
-
+<!--         <div id="map"></div> -->
 
 <!-- filters state -->
-    <form id='state-form'>
-        <select name='state' id='state'>
-        </select>
-        <input type='submit'>
-    </form>
+        <select name='state' id='state'> </select><br>
 
 
 <!-- filters area -->
-    <form id='area-form'>
-        <select name='area' id='area'>
-        </select>
-        <input type='submit'>
-    </form>
+        <select name='area' id='area'> </select>
     
 <!-- logs climb info -->
     <form action='/log-climb.json' id='log-climb' method='POST'>
         <select name='route' id='route'>
         </select><br>
-
         <label>
             <textarea name='notes' id='notes' rows="4" cols="50"></textarea>
         </label><br>
@@ -46,15 +32,21 @@
             <input type='checkbox' id='complete' name='complete' value='true'>
         </label><br>
         
-        <input type='submit'>
+        <input type='submit' value='log'>
     </form>
     <div id='submitted'></div>
+
 
 <script src="http://code.jquery.com/jquery.js"></script>
 <script src="/static/search.js"></script>
 
 
-
+<script src="/static/user_map.js"></script>
+<!-- <script src="https://developers.google.com/maps/documentation/javascript/examples/markerclusterer/markerclusterer.js">
+</script>
+<script async defer
+    src="https://maps.googleapis.com/maps/api/js?key=AIzaSyC9qDiQS_jF-wRKvyNXlov2leRbMEq56Ig&callback=initMap">
+</script> -->
 
 
 

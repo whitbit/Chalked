@@ -100,9 +100,8 @@ def logs_climb():
 
     db.session.commit()
 
-    print 'success!'
-
     return jsonify({})
+
 
 @app.route('/logout', methods=['POST'])
 def logs_off_session():
@@ -114,7 +113,7 @@ def logs_off_session():
 
 
 @app.route('/search.json')
-def search_specific_routes():
+def search_routes_to_log():
 
     routes = Route.query.all()
 
@@ -140,14 +139,13 @@ def search_specific_routes():
 
     area_routes = Route.query.filter_by(area=area).all()
     
-    route_info = {}
+    route_info = []
     
     for route in area_routes:
-        route_info[route.route_id] = (route.v_grade + ' ' + route.name)
+        route_info.append([route.v_grade, route.name, route.route_id])
 
 
-
-    routes_dict['routes'] = route_info
+    routes_dict['routes'] = sorted(route_info)
 
     return jsonify(routes_dict)
 

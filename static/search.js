@@ -21,7 +21,12 @@ $(document).ready(getStates);
 function showAreas(results) {
     //shows areas by state
 
-    var areas = results.areas
+    var areas = results.areas;
+    console.log(areas)
+
+
+    $('#area').empty();
+    $('#route').empty();
 
     $.each(areas, function(index, area) {
         $('#area').append('<option value=' + area + '>' + area + '</option>');
@@ -34,13 +39,18 @@ function getAreas(evt) {
 
     evt.preventDefault();
 
-    $.get('/search.json', $('#state').serialize(), showAreas);
+    var formInputs = {
+        'state': $('select#state option:checked').text()
+    };
+    console.log(formInputs)
+
+    $.get('/search.json', formInputs, showAreas);
 }
 
 
-$('#state-form').on('submit', getAreas);
+$('#state').on('change', getAreas);
 
-$('#area-form').on('submit', getRoutes);
+$('#area').on('change', getRoutes);
 
 
 function getRoutes(evt) {
@@ -51,17 +61,19 @@ function getRoutes(evt) {
         'area': $('select#area option:checked').text()
     };
 
+
     $.get('/search.json', formInputs, showRoutes);
 }
 
 
 function showRoutes(results) {
 
+    var routes = results.routes;
 
-    var routes = results.routes
+    $('#route').empty();
 
     $.each(routes, function(index, route) {
-         $('#route').append('<option value=' + index + '>' + route + '</option>');
+         $('#route').append('<option value=' + route[2] + '>' + route[0] + ' ' + route[1] + '</option>');
     });
 
 }
