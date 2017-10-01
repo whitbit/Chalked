@@ -22,11 +22,9 @@ function showAreas(results) {
     //shows areas by state
 
     var areas = results.areas;
-    console.log(areas)
-
 
     $('#area').empty();
-    $('#route').empty();
+    // $('#route').empty();
 
     $.each(areas, function(index, area) {
         $('#area').append('<option value=' + area + '>' + area + '</option>');
@@ -42,7 +40,6 @@ function getAreas(evt) {
     var formInputs = {
         'state': $('select#state option:checked').text()
     };
-    console.log(formInputs)
 
     $.get('/search.json', formInputs, showAreas);
 }
@@ -88,8 +85,6 @@ function submits_climb(evt) {
         'notes': $('#notes').val(),
         'complete': $( "input[type=checkbox][name=complete]:checked" ).val()
     };
-
-    console.log(formInputs)
 
 
     $.post('/log-climb.json', formInputs, logs_climb);

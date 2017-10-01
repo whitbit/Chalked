@@ -11,18 +11,23 @@
 {% block content %}
 
     <h1>Welcome, {{ session['username'] }}!</h1>
-<!--         <div id="map"></div> -->
+        <div id="map"></div>
 
 <!-- filters state -->
-        <select name='state' id='state'> </select><br>
+        <select name='state' id='state'>
+            <option value='' disabled selected>STATE</option>
+        </select><br>
 
 
 <!-- filters area -->
-        <select name='area' id='area'> </select>
+        <select name='area' id='area'>
+            <option value='' disabled selected>AREA</option>
+        </select>
     
 <!-- logs climb info -->
     <form action='/log-climb.json' id='log-climb' method='POST'>
         <select name='route' id='route'>
+            <option value='' disabled selected>ROUTE</option>
         </select><br>
         <label>
             <textarea name='notes' id='notes' rows="4" cols="50"></textarea>
@@ -38,18 +43,19 @@
 
 
 <script src="http://code.jquery.com/jquery.js"></script>
-<script src="/static/search.js"></script>
 
 
 <script src="/static/user_map.js"></script>
-<!-- <script src="https://developers.google.com/maps/documentation/javascript/examples/markerclusterer/markerclusterer.js">
-</script>
-<script async defer
+
+
+<script src="/static/search.js"></script>
+
+
+ <script src="https://developers.google.com/maps/documentation/javascript/examples/markerclusterer/markerclusterer.js">
+    </script>
+    <script async defer
     src="https://maps.googleapis.com/maps/api/js?key=AIzaSyC9qDiQS_jF-wRKvyNXlov2leRbMEq56Ig&callback=initMap">
-</script> -->
-
-
-
+    </script>
     
 
 {% endblock %}
