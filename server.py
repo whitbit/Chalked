@@ -95,6 +95,7 @@ def logs_climb():
                       date=datetime.now(),
                       notes=notes,
                       completed=complete)
+    print 'ADDED NEW LOG', new_log
 
     db.session.add(new_log)
 
@@ -148,6 +149,33 @@ def search_routes_to_log():
     routes_dict['routes'] = sorted(route_info)
 
     return jsonify(routes_dict)
+
+
+@app.route('/user-map.json')
+def shoes_user_map_locations():
+
+    user_id = session['user_id']
+    print 'USER ID', user_id
+    
+    user = User.query.get(user_id)
+    # get user object
+    print 'USER OBJ', user
+
+    user_logged_climbs = user.logs
+    # get all log objects of user
+    print 'USER LOGS', user_logged_climbs
+
+    coordinates = {}
+
+    for climb in user_logged_climbs:
+        route = Route.query.get(climb.route_id)
+        # gets route in log
+        coordinates[climb.review_id] = (route.latitude, route.longitude)
+
+    print 'COORDINATES', coordinates
+
+    return jsonify(coordinates)
+
 
 
 if __name__ == '__main__':

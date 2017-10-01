@@ -91,7 +91,7 @@ function submits_climb(evt) {
 }
 
 function logs_climb(results) {
-    $('#submitted').innerHTML = '<p>success</p>' 
+    alert('logged')
 }
 
 
