@@ -69,13 +69,13 @@ function showRoutes(results) {
     $('#route').empty();
 
     $.each(routes, function(index, route) {
-         $('#route').append('<option value=' + route[2] + '>' + route[0] + ' ' + route[1] + '</option>');
+         $('#route').append('<option value=' + route[2] + '>' + 'V' + route[0] + ' ' + route[1] + '</option>');
     });
 
 }
 
 
-function submits_climb(evt) {
+function submitsClimb(evt) {
 
     evt.preventDefault();
 
@@ -84,29 +84,29 @@ function submits_climb(evt) {
         'notes': $('#notes').val(),
         'complete': $( "input[type=checkbox][name=complete]:checked" ).val(),
         'rating': $('#rating').val(),
-        // 'date': $('#date').val(),
+        'date': $('#date').val(),
         'photo': $('#photo').val()
     };
 
 
-    $.post('/log-climb.json', formInputs, logs_climb);
+    $.post('/log-climb.json', formInputs, logsClimb);
 }
 
-function logs_climb(results) {
+function logsClimb(results) {
     alert('logged')
 }
 
 
-$('#log-climb').on('submit', submits_climb);
+$('#log-climb').on('submit', submitsClimb);
 
 
 
 //displays user logged climbs
-function display_logs(evt) {
-    $.get('/user-info.json', get_logs);
+function displayLogs(evt) {
+    $.get('/user-info.json', getLogs);
 }
 
-function get_logs(results) {
+function getLogs(results) {
     
     var log_entries = results.review_info;
 
@@ -126,4 +126,18 @@ function get_logs(results) {
     }
 
 }
-display_logs()
+displayLogs()
+
+
+function displaysUserStatus() {
+    $.get('/user-info.json', function(results) {
+        points = results['user_points']
+
+        $('#points').append('V-points: ', points)
+    })
+}
+
+displaysUserStatus()
+
+
+

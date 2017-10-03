@@ -1,6 +1,6 @@
 from flask import Flask, render_template, redirect, request, flash, session, jsonify
 from model import connect_to_db, db, User, Route, UserLog, UserFavorites
-# from datetime import datetime
+
 
 app = Flask(__name__)
 
@@ -183,22 +183,28 @@ def renders_user_journal_info():
 
     log_info['map'] = {}
 
+    log_info['user_points'] = user.getUserPoints()
+
 
     for climb in user_logged_climbs:
+
         
         route = Route.query.get(climb.route_id)
 
+        date = str(climb.date.date())
+
         log_info['coordinates'][climb.review_id] = {'lat': route.latitude, 'lng': route.longitude}
 
-        log_info['review_info'][climb.review_id] = (
+        log_info['review_info'][climb.review_id] = (date,
                                                     route.name, 
-                                                    (route.area, route.state),
+                                                    route.state,
+                                                    route.area,
                                                     route.v_grade,
                                                     climb.rating,
                                                     climb.notes,
                                                     climb.completed)
         log_info['map'][climb.review_id] = { 'coordinates': {'lat': route.latitude, 'lng': route.longitude},
-                                             'info_window': (route.name, route.v_grade, route.state, route.area, route.img, route.url) }
+                                             'info_window': (route.name, route.v_grade, route.state, route.area, route.img, route.url ,date) }
 
 
     return jsonify(log_info)

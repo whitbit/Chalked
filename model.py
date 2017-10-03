@@ -17,13 +17,11 @@ class User(db.Model):
     def getUserPoints(self):
         """Calculates points accrued based on completed climbs."""
 
-        points = 0
+        points = 10
 
         for log in self.logs:
             if log.completed:
-                points += int(log.route.v_grade)
-        for review in self.reviews:
-            points += 1
+                points += (1 + log.route.v_grade)
 
         return points
 
