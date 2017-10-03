@@ -132,12 +132,14 @@ displayLogs()
 function displaysUserStatus() {
     $.get('/user-info.json', function(results) {
         points = results['user_points']
+        console.log(points)
 
         $('#points').append('V-points: ', points)
     })
 }
 
-displaysUserStatus()
 
+
+$(document).ready(displaysUserStatus);
 
 

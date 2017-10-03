@@ -202,14 +202,14 @@ def renders_user_journal_info():
                                                     route.v_grade,
                                                     climb.rating,
                                                     climb.notes,
-                                                    climb.completed)
+                                                    climb.completed,
+                                                    route.latitude,
+                                                    route.longitude)
         log_info['map'][climb.review_id] = { 'coordinates': {'lat': route.latitude, 'lng': route.longitude},
-                                             'info_window': (route.name, route.v_grade, route.state, route.area, route.img, route.url ,date) }
+                                             'info_window': (date, route.name, route.v_grade, route.state, route.area, route.img, route.url, route.latitude, route.longitude) }
 
 
     return jsonify(log_info)
-
-    #climb.date
 
 
 
