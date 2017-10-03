@@ -1,6 +1,6 @@
 from flask import Flask, render_template, redirect, request, flash, session, jsonify
-from model import connect_to_db, db, User, Route, Review, UserLog, UserFavorites
-from datetime import datetime
+from model import connect_to_db, db, User, Route, UserLog, UserFavorites
+# from datetime import datetime
 
 app = Flask(__name__)
 
@@ -99,12 +99,24 @@ def logs_climb():
 
     notes = request.form.get('notes')
 
+    rating = request.form.get('rating')
+    print 'RATING', rating
+
+    date = request.form.get('date')
+    print 'DATE', date
+
+    photo = request.form.get('photo')
+    print 'PHOTO', photo
+
 
     new_log = UserLog(user_id=session['user_id'],
                       route_id=route_id,
-                      date=datetime.now(),
+                      date=date,
                       notes=notes,
-                      completed=complete)
+                      rating=rating,
+                      completed=complete,
+                      photo=photo
+                      )
     print 'ADDED NEW LOG', new_log
 
     db.session.add(new_log)
@@ -151,26 +163,26 @@ def filters_routes_to_log():
     return jsonify(routes_dict)
 
 
-@app.route('/user-map.json')
+@app.route('/user-info.json')
 def renders_user_journal_info():
     """Gets user's log info to render information on dashboard."""
 
 
     user_id = session['user_id']
-    print 'USER ID', user_id
-    
+
     user = User.query.get(user_id)
-    # get user object
-    print 'USER OBJ', user
 
     user_logged_climbs = user.logs
-    # get all log objects of user
-    print 'USER LOGS', user_logged_climbs
 
 
     log_info = {}
 
     log_info['coordinates'] = {}
+
+    log_info['review_info'] = {}
+
+    log_info['map'] = {}
+
 
     for climb in user_logged_climbs:
         
@@ -178,11 +190,16 @@ def renders_user_journal_info():
 
         log_info['coordinates'][climb.review_id] = {'lat': route.latitude, 'lng': route.longitude}
 
-        log_info['info'] = [route.name, route.state, route.area, route.v_grade, route.url]
+        log_info['review_info'][climb.review_id] = (climb.date,
+                                                    route.name, 
+                                                    (route.area, route.state),
+                                                    route.v_grade,
+                                                    climb.rating,
+                                                    climb.notes,
+                                                    climb.completed)
+        log_info['map'][climb.review_id] = { 'coordinates': {'lat': route.latitude, 'lng': route.longitude},
+                                             'info_window': '<h1>' + route.name + route.v_grade + '</h1>'}
 
-        log_info['user_notes'] = [climb.date, climb.notes, climb.completed]
-    
-    print log_info['user_notes']
 
     return jsonify(log_info)
 

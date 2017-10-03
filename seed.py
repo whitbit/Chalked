@@ -1,5 +1,5 @@
 from sqlalchemy import func
-from model import User, Route, Review, UserLog, UserFavorites, connect_to_db, db
+from model import User, Route, UserLog, UserFavorites, connect_to_db, db
 from server import app
 from datetime import datetime
 import requests, os, json

@@ -30,17 +30,43 @@
         <select name='route' id='route'>
             <option value='' disabled selected>ROUTE</option>
         </select><br>
+        
+        <label> Rate the climb:
+            <input type='number' id='rating' name='rating' min='1' max='5'>
+        </label><br>
+        
         <label>
             <textarea name='notes' id='notes' rows="4" cols="50"></textarea>
         </label><br>
         
+        <label> Date:
+            <input id="date" name='date' type="date">
+        </label><br>
         <label>Complete
             <input type='checkbox' id='complete' name='complete' value='true'>
         </label><br>
+
+        <input type="file" id='photo' name="photo" accept="image/*">
+        <br>
         
         <input type='submit' value='log'>
     </form>
-    <div id='submitted'></div>
+    <div>
+        <h3>Log entries</h3>
+        <table id='user_logs'>
+            <tr>
+                <th>Date</th>
+                <th>Name</th>
+                <th>Location</th>
+                <th>Grade</th>
+                <th>Rating</th>
+                <th>Notes</th>
+                <th>Completed</th>
+            </tr>
+
+        </table>
+
+    </div>
 
 
     <script src="http://code.jquery.com/jquery.js"></script>
@@ -49,12 +75,12 @@
     <script src="/static/user_map.js"></script>
 
 
-    <script src="/static/search.js"></script>
+    <script src="/static/user_dashboard.js"></script>
 
 
      <script src="https://developers.google.com/maps/documentation/javascript/examples/markerclusterer/markerclusterer.js"></script>
 
-    <script async defer src="https://maps.googleapis.com/maps/api/js?key=AIzaSyC9qDiQS_jF-wRKvyNXlov2leRbMEq56Ig&callback=initMap"></script>
+    <script async defer src="https://maps.googleapis.com/maps/api/js?key=AIzaSyC9qDiQS_jF-wRKvyNXlov2leRbMEq56Ig"></script>
         
 
 {% endblock %}

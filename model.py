@@ -55,29 +55,29 @@ class Route(db.Model):
                                                   self.v_grade)
 
 
-class Review(db.Model):
-    """Reviews for climbs."""
+# class Review(db.Model):
+#     """Reviews for climbs."""
 
-    __tablename__ = 'reviews'
+#     __tablename__ = 'reviews'
 
-    review_id = db.Column(db.Integer, primary_key=True, autoincrement=True)
-    user_id = db.Column(db.Integer, db.ForeignKey('users.user_id'))
-    route_id = db.Column(db.Integer, db.ForeignKey('routes.route_id'))
-    date = db.Column(db.DateTime)
-    rating = db.Column(db.Integer)
-    description = db.Column(db.Text)
-    photos = db.Column(db.String(500)) 
+#     review_id = db.Column(db.Integer, primary_key=True, autoincrement=True)
+#     user_id = db.Column(db.Integer, db.ForeignKey('users.user_id'))
+#     route_id = db.Column(db.Integer, db.ForeignKey('routes.route_id'))
+#     date = db.Column(db.DateTime)
+#     rating = db.Column(db.Integer)
+#     description = db.Column(db.Text)
+#     photos = db.Column(db.String(500)) 
 
 
-    user = db.relationship('User', backref=db.backref('reviews'), order_by=date)
-    route = db.relationship('Route', backref=db.backref('reviews'), order_by=date)
+#     user = db.relationship('User', backref=db.backref('reviews'), order_by=date)
+#     route = db.relationship('Route', backref=db.backref('reviews'), order_by=date)
 
-    def __repr__(self):
-         """Provide helpful representation when printed."""
+#     def __repr__(self):
+#          """Provide helpful representation when printed."""
 
-         return "<Review id={}, user_id={}, route_id={}>".format(self.review_id,
-                                                                               self.user_id,
-                                                                               self.route_id)
+#          return "<Review id={}, user_id={}, route_id={}>".format(self.review_id,
+#                                                                                self.user_id,
+#                                                                                self.route_id)
 
 
 class UserLog(db.Model):
@@ -89,7 +89,8 @@ class UserLog(db.Model):
     user_id = db.Column(db.Integer, db.ForeignKey('users.user_id'))
     route_id = db.Column(db.Integer, db.ForeignKey('routes.route_id'))
     date = db.Column(db.DateTime)
-    notes = db.Column(db.Text)
+    notes = db.Column(db.Text, default='No notes logged!')
+    rating = db.Column(db.Integer)
     completed = db.Column(db.Boolean, default=False)
     photo = db.Column(db.String(500))
 

@@ -2,47 +2,62 @@
 $(document).ready(gets_coordinates);
 
 
+
 function gets_coordinates(evt) {
-
-  $.get('/user-map.json', map_climbs);
-
+    $.get('/user-info.json', map_climbs);
 }
-
-
-
-var locations = []
 
 
 function map_climbs(results) {
+
   
-  var coordinates = results['coordinates'];
+    var places = results['map'];
 
-  for(var key in coordinates) {
-    locations.push(coordinates[key]);
-  }
+    var bounds = new google.maps.LatLngBounds();
+    //sets bounds of where map is centered
 
-  initMap();
+  
+    var map = new google.maps.Map(document.getElementById('map'))
 
-}
+    var infoWindows = [];
 
+    var i = 0
+    for(var place in places) {
+      var content = places[place].info_window;
 
-function initMap() {
+      var infowindow = new google.maps.InfoWindow();
+      infowindow.setContent(content)
 
-  var map = new google.maps.Map(document.getElementById('map'), {
-    zoom: 3,
-    center: locations[0]
-  });
+      infoWindows.push(infowindow)
+      // append this window to array
+      
+      var marker = new google.maps.Marker({
+        position: places[place].coordinates,
+        num: i
+      });
 
-  // var labels = 'ABCDEFGHIJKLMNOPQRSTUVWXYZ';
+      i += 1
 
-  var markers = locations.map(function(location, i) {
-    return new google.maps.Marker({
-      position: location,
-      // label: labels[i % labels.length]
-    });
-  });
+      bounds.extend(marker.position)
+
+      marker.setMap(map)
+
+  
+      function addClick(marker) {
+        marker.addListener('click', function() {
+          infowindow.setContent(content);
+          index = marker.num
+          infoWindows[index].open(map, marker);
+        })
+      }
+      addClick(marker)
+
+    }
+
+    map.fitBounds(bounds)
 
   // Add a marker clusterer to manage the markers.
-  var markerCluster = new MarkerClusterer(map, markers,
-      {imagePath: 'https://developers.google.com/maps/documentation/javascript/examples/markerclusterer/m'});
+  // var markerCluster = new MarkerClusterer(map, markers,
+  //     {imagePath: 'https://developers.google.com/maps/documentation/javascript/examples/markerclusterer/m'});
 }
+
