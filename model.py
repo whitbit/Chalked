@@ -44,40 +44,28 @@ class Route(db.Model):
     longitude = db.Column(db.Float)
     state = db.Column(db.String(100))
     area = db.Column(db.String(100))
-    v_grade = db.Column(db.String(20))
+    v_grade = db.Column(db.Integer)
     url = db.Column(db.String(100))
     img = db.Column(db.String(100))
+
+    def getOverallRating(self):
+
+        sum = 0
+
+        if self.logs:
+
+            for log in self.logs:
+                sum += log.rating
+
+        rating = float(sum / len(self.logs))
+
+        return rating
 
     def __repr__(self):
          """Provide helpful representation when printed."""
 
          return "<Route id={}, vgrade={}>".format(self.route_id,
                                                   self.v_grade)
-
-
-# class Review(db.Model):
-#     """Reviews for climbs."""
-
-#     __tablename__ = 'reviews'
-
-#     review_id = db.Column(db.Integer, primary_key=True, autoincrement=True)
-#     user_id = db.Column(db.Integer, db.ForeignKey('users.user_id'))
-#     route_id = db.Column(db.Integer, db.ForeignKey('routes.route_id'))
-#     date = db.Column(db.DateTime)
-#     rating = db.Column(db.Integer)
-#     description = db.Column(db.Text)
-#     photos = db.Column(db.String(500)) 
-
-
-#     user = db.relationship('User', backref=db.backref('reviews'), order_by=date)
-#     route = db.relationship('Route', backref=db.backref('reviews'), order_by=date)
-
-#     def __repr__(self):
-#          """Provide helpful representation when printed."""
-
-#          return "<Review id={}, user_id={}, route_id={}>".format(self.review_id,
-#                                                                                self.user_id,
-#                                                                                self.route_id)
 
 
 class UserLog(db.Model):
@@ -126,7 +114,7 @@ class UserFavorites(db.Model):
 def connect_to_db(app):
     """Connect to database."""
 
-    app.config['SQLALCHEMY_DATABASE_URI'] = 'postgresql:///routes'
+    app.config['SQLALCHEMY_DATABASE_URI'] = 'postgresql:///vroutes'
     app.config['SQLCHEMY_ECHO'] = True
     db.app = app
     db.init_app(app)

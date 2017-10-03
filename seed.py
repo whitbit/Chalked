@@ -43,18 +43,23 @@ def load_routes():
 
 
         for route in r['routes']:
-            route = Route(name=route['name'],
-                          latitude=route['latitude'],
-                          longitude=route['longitude'],
-                          state=route['location'][0],
-                          area=route['location'][1],
-                          v_grade=route['rating'],
-                          url=route['url'],
-                          img=route['imgSmallMed'])
+            if validates_vgrade(route['rating']):  
+              route = Route(name=route['name'],
+                            latitude=route['latitude'],
+                            longitude=route['longitude'],
+                            state=route['location'][0],
+                            area=route['location'][1],
+                            v_grade=route['rating'][1:2],
+                            url=route['url'],
+                            img=route['imgSmallMed'])
 
-            db.session.add(route)
+              db.session.add(route)
 
         db.session.commit()
+
+def validates_vgrade(grade):
+  
+  return grade[0] == 'V' and grade[1].isdigit()
 
 
 
