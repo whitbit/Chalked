@@ -128,14 +128,12 @@ def upload_file():
         return jsonify({ 'error': 'no file selected'})
         
     if file and allowed_file(file.filename):
-        print '=================================== GOT INTO THE LOOP '
+
         filename = secure_filename(file.filename)
-        print '***********'
-        print UPLOAD_FOLDER
+
         file.save(os.path.join(app.config['UPLOAD_FOLDER'], filename))
         print 'UPLOADED'
 
-            # return redirect(url_for('uploaded_file', filename=filename))
         return jsonify({})
     flash('Please upload a valid file type')
     return jsonify({})
@@ -146,9 +144,7 @@ def upload_file():
 @app.route('/log-climb.json', methods=['POST'])
 def logs_climb():
     """Adds new UserLog entry."""
-    print '*******'
-    print request.form
-    print '******'
+
     
     route_id = request.form.get('route_id')
 
@@ -157,13 +153,15 @@ def logs_climb():
     notes = request.form.get('notes')
 
     rating = request.form.get('rating')
-    print 'RATING', rating
 
     date = request.form.get('date')
-    print 'DATE', date
 
     photo = request.form.get('photo')
-    print 'PHOTO', photo
+
+    if photo:
+        photo = photo.split('\\')[2]
+    print '*****************PHOTO', photo
+    print '*********************************'
 
 
     new_log = UserLog(user_id=session['user_id'],

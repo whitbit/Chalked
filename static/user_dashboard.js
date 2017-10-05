@@ -74,9 +74,18 @@ function showRoutes(results) {
 
 }
 
+var files = [];
+$('input[type=file]').on('change', prepareUpload);
+
+
+function prepareUpload(event){
+    files = event.target.files;
+}
+
+
 
 function submitsClimb(evt) {
-    console.log('hello friend')
+
     evt.preventDefault();
 
     var formInputs = {
@@ -91,14 +100,29 @@ function submitsClimb(evt) {
 
     $.post('/log-climb.json', formInputs, logsClimb);
 
+    if(files.length > 0) {
+        uploadsPhoto()
+    }
+}
+
+
+function logsClimb(results) {
+    alert('logged')
+}
+
+
+$('#log-climb').on('submit', submitsClimb);
+
+function uploadsPhoto(evt) {
     $('#upload-button').text('Uploading...');
 
     var data = new FormData();
     console.log(data)
-  
+    
     $.each(files, function(key, value) {
         data.append('file', value);
     });
+
 
 
     $.ajax({
@@ -117,13 +141,6 @@ function submitsClimb(evt) {
         }
     });
 }
-
-function logsClimb(results) {
-    $('#date').empty();
-}
-
-
-$('#log-climb').on('submit', submitsClimb);
 
 
 
@@ -168,15 +185,6 @@ function displaysUserStatus() {
 
 $(document).ready(displaysUserStatus);
 
-
-
-var files;
-$('input[type=file]').on('change', prepareUpload);
-
-
-function prepareUpload(event){
-    files = event.target.files;
-}
 
 
 
