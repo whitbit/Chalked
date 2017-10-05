@@ -85,7 +85,7 @@ function submitsClimb(evt) {
         'complete': $( "input[type=checkbox][name=complete]:checked" ).val(),
         'rating': $('#rating').val(),
         'date': $('#date').val(),
-        'photo': $('#photo').val()
+        'photo': $('#photo').val().split('\\')[2]
     };
 
 
@@ -93,7 +93,7 @@ function submitsClimb(evt) {
 }
 
 function logsClimb(results) {
-    alert('logged')
+    $('#date').empty();
 }
 
 
@@ -153,7 +153,7 @@ function prepareUpload(event){
 }
 
 
-$('#file-form').on('submit', function(event) {
+$('#upload-button').on('submit', function(event) {
     event.preventDefault();
 
     $('#upload-button').text('Uploading...');
