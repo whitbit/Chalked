@@ -76,7 +76,7 @@ function showRoutes(results) {
 
 
 function submitsClimb(evt) {
-
+    console.log('hello friend')
     evt.preventDefault();
 
     var formInputs = {
@@ -85,11 +85,37 @@ function submitsClimb(evt) {
         'complete': $( "input[type=checkbox][name=complete]:checked" ).val(),
         'rating': $('#rating').val(),
         'date': $('#date').val(),
-        'photo': $('#photo').val().split('\\')[2]
+        'photo': $('#photo').val()
     };
 
 
     $.post('/log-climb.json', formInputs, logsClimb);
+
+    $('#upload-button').text('Uploading...');
+
+    var data = new FormData();
+    console.log(data)
+  
+    $.each(files, function(key, value) {
+        data.append('file', value);
+    });
+
+
+    $.ajax({
+        url: '/upload.json',
+        type: 'POST',
+        data: data,
+        dataType: 'json',
+        processData: false,
+        contentType: false,
+        success: function(results, textStatus,  jqXHR) {
+            if(typeof results.error === 'undefined') {
+                $('#upload-button').text('Success!');
+            } else {
+                $('#upload-button').text('ERROR');
+            }
+        }
+    });
 }
 
 function logsClimb(results) {
@@ -97,7 +123,7 @@ function logsClimb(results) {
 }
 
 
-$('#file-form').on('submit', submitsClimb);
+$('#log-climb').on('submit', submitsClimb);
 
 
 
@@ -152,36 +178,6 @@ function prepareUpload(event){
     files = event.target.files;
 }
 
-
-$('#file-form').on('submit', function(event) {
-    event.preventDefault();
-
-    $('#upload-button').text('Uploading...');
-
-    var data = new FormData();
-    console.log(data)
-  
-    $.each(files, function(key, value) {
-        data.append('file', value);
-    });
-
-
-    $.ajax({
-        url: '/upload.json',
-        type: 'POST',
-        data: data,
-        dataType: 'json',
-        processData: false,
-        contentType: false,
-        success: function(results, textStatus,  jqXHR) {
-            if(typeof results.error === 'undefined') {
-                $('#upload-button').text('Success!');
-            } else {
-                $('#upload-button').text('ERROR');
-            }
-        }
-    });
-})
 
 
 

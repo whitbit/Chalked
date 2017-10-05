@@ -9,10 +9,6 @@
 
 
 {% block content %}
-    <form id='file-form'>
-        <input type='file' id='file-select' name='file'/>
-        <button type='submit' id='upload-button'>Upload</button>
-    </form>
 
     <h1>Welcome, {{ session['username'] }}!</h1>
     <h3 id='points'></h3>
@@ -32,7 +28,7 @@
         </select>
     
 <!-- logs climb info -->
-    <form id='log-climb' method='POST'>
+    <form id='log-climb'>
         
         <select name='route' id='route'>
             <option value='' disabled selected>ROUTE</option>
@@ -52,9 +48,9 @@
         <label>Complete
             <input type='checkbox' id='complete' name='complete' value='true'>
         </label><br>
+
+        <input type='file' id='photo' name='file'/> <br>
         
-        <input type='file' id='photo' name='file'/>
-        <br>
         <button type='submit' id='upload-button'>Log</button>
     
     </form>
