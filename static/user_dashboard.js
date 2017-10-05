@@ -97,7 +97,7 @@ function logsClimb(results) {
 }
 
 
-$('#log-climb').on('submit', submitsClimb);
+$('#file-form').on('submit', submitsClimb);
 
 
 
@@ -153,12 +153,13 @@ function prepareUpload(event){
 }
 
 
-$('#upload-button').on('submit', function(event) {
+$('#file-form').on('submit', function(event) {
     event.preventDefault();
 
     $('#upload-button').text('Uploading...');
 
     var data = new FormData();
+    console.log(data)
   
     $.each(files, function(key, value) {
         data.append('file', value);

@@ -120,6 +120,7 @@ def upload_file():
 
 
     file = request.files['file']
+    print file
 
 
     if file.filename == '':
