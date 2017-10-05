@@ -160,8 +160,6 @@ def logs_climb():
 
     if photo:
         photo = photo.split('\\')[2]
-    print '*****************PHOTO', photo
-    print '*********************************'
 
 
     new_log = UserLog(user_id=session['user_id'],
@@ -248,6 +246,8 @@ def renders_user_journal_info():
 
         date = str(climb.date.date())
 
+        photo = climb.photo
+
         log_info['coordinates'][climb.review_id] = {'lat': route.latitude, 'lng': route.longitude}
 
         log_info['review_info'][climb.review_id] = (date,
@@ -261,7 +261,7 @@ def renders_user_journal_info():
                                                     route.latitude,
                                                     route.longitude)
         log_info['map'][climb.review_id] = { 'coordinates': {'lat': route.latitude, 'lng': route.longitude},
-                                             'info_window': (date, route.name, route.v_grade, route.state, route.area, route.img, route.url, route.latitude, route.longitude) }
+                                             'info_window': (date, route.name, route.v_grade, route.state, route.area, photo, route.url, route.latitude, route.longitude) }
 
 
     return jsonify(log_info)

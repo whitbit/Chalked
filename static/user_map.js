@@ -70,10 +70,11 @@ function map_climbs(results) {
       v_grade = data[2]
       state = data[3];
       area = data[4];
-      img = data[5];
+      img = '/uploads/' + data[5];
       url = data[6];
       lat = data[7];
       lng = data[8];
+
 
       // console.log(date)
 
@@ -81,8 +82,8 @@ function map_climbs(results) {
              + '<h5>' + date + '</h5>'
              + '<h5>(' + lat + ', ' + lng + ')</h5>'
              + '<h5>' + area + ', ' + state + '</h5>' 
-             + '<a href=' + url + '> MORE INFO </a>'
-             + '<img src=' + img + '>'
+             + '<a href=' + url + '> MORE INFO </a><br>'
+             + '<img src=' + img + ' width="450px">'
 
     }
 
