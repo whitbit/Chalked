@@ -151,8 +151,8 @@ var uploadButton = document.getElementById('upload-button');
 
 var files;
 $('input[type=file]').on('change', prepareUpload);
-function prepareUpload(event)
-{
+
+function prepareUpload(event){
   files = event.target.files;
 }
 
@@ -176,6 +176,14 @@ form.onsubmit = function(event) {
     dataType: 'json',
     processData: false,
     contentType: false,
+    success: function(results, textStatus,  jqXHR) {
+        if(typeof results.error === 'undefined') {
+            uploadButton.innerHTML = 'Success!'
+            console.log('yay')
+        } else {
+            uploadButton.innerHTML = 'Error'
+        }
+    }
 
   })
 }
