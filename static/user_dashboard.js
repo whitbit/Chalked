@@ -144,56 +144,44 @@ $(document).ready(displaysUserStatus);
 
 
 
-var form = document.getElementById('file-form');
-var fileSelect = document.getElementById('file-select');
-var uploadButton = document.getElementById('upload-button');
-
-
 var files;
 $('input[type=file]').on('change', prepareUpload);
 
+
 function prepareUpload(event){
-  files = event.target.files;
+    files = event.target.files;
 }
 
-form.onsubmit = function(event) {
-  event.preventDefault();
 
-  // Update button text.
-  uploadButton.innerHTML = 'Uploading...';
+$('#file-form').on('submit', function(event) {
+    event.preventDefault();
 
-  var data = new FormData();
+    $('#upload-button').text('Uploading...');
+
+    var data = new FormData();
   
-  $.each(files, function(key, value) {
-    data.append('file', value);
-  })
+    $.each(files, function(key, value) {
+        data.append('file', value);
+    });
 
 
-  $.ajax({
-    url: '/upload.json',
-    type: 'POST',
-    data: data,
-    dataType: 'json',
-    processData: false,
-    contentType: false,
-    success: function(results, textStatus,  jqXHR) {
-        if(typeof results.error === 'undefined') {
-            uploadButton.innerHTML = 'Success!'
-            console.log('yay')
-        } else {
-            uploadButton.innerHTML = 'Error'
+    $.ajax({
+        url: '/upload.json',
+        type: 'POST',
+        data: data,
+        dataType: 'json',
+        processData: false,
+        contentType: false,
+        success: function(results, textStatus,  jqXHR) {
+            if(typeof results.error === 'undefined') {
+                $('#upload-button').text('Success!');
+            } else {
+                $('#upload-button').text('ERROR');
+            }
         }
-    }
-
-  })
-}
+    });
+})
 
 
-
-
-function doesSomething(results) {
-    uploadButton.innerITHML = 'success'
-    return upper
-}
 
 
