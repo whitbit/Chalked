@@ -1,10 +1,36 @@
-from flask import Flask, render_template, redirect, request, flash, session, jsonify
+import os
+from flask import Flask, render_template, redirect, request, flash, session, jsonify, url_for, send_from_directory
 from model import connect_to_db, db, User, Route, UserLog, UserFavorites
+from werkzeug.utils import secure_filename
 
+UPLOAD_FOLDER = './static/photos'
+ALLOWED_EXTENSIONS = set(['png', 'jpg', 'jpeg', 'gif'])
 
 app = Flask(__name__)
 
+app.config['UPLOAD_FOLDER'] = UPLOAD_FOLDER
+
 app.secret_key = 'ABC'
+
+
+
+
+def allowed_file(filename):
+    return '.' in filename and \
+           filename.rsplit('.', 1)[1].lower() in ALLOWED_EXTENSIONS
+
+
+
+
+
+
+@app.route('/uploads/<filename>')
+def uploaded_file(filename):
+    return send_from_directory(app.config['UPLOAD_FOLDER'], filename)
+
+
+
+
 
 @app.route('/')
 def index():
@@ -89,9 +115,39 @@ def renders_user_dashboard():
     return render_template('dashboard.html')
 
 
+@app.route('/upload.json', methods=['POST'])
+def upload_file():
+
+
+    file = request.files['file']
+
+
+    if file.filename == '':
+        flash('No selected file')
+        return jsonify({ 'error': 'no file selected'})
+        
+    if file and allowed_file(file.filename):
+        print '=================================== GOT INTO THE LOOP '
+        filename = secure_filename(file.filename)
+        print '***********'
+        print UPLOAD_FOLDER
+        file.save(os.path.join(app.config['UPLOAD_FOLDER'], filename))
+        print 'UPLOADED'
+
+            # return redirect(url_for('uploaded_file', filename=filename))
+        return jsonify({})
+    flash('Please upload a valid file type')
+    return jsonify({})
+
+
+
+
 @app.route('/log-climb.json', methods=['POST'])
 def logs_climb():
     """Adds new UserLog entry."""
+    print '*******'
+    print request.form
+    print '******'
     
     route_id = request.form.get('route_id')
 

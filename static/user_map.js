@@ -22,6 +22,8 @@ function map_climbs(results) {
 
     var i = 0;
 
+    // consider making some noise on coordinates to prevent stacking
+
     for(var place in places) {
 
       var marker = new google.maps.Marker({
@@ -30,8 +32,6 @@ function map_climbs(results) {
       });
 
       markers.push(marker);
-
-      console.log(marker.position)
 
       var infowindow = new google.maps.InfoWindow();
 
@@ -91,8 +91,8 @@ function map_climbs(results) {
     map.fitBounds(bounds)
 
   // Add a marker clusterer to manage the markers.
-  // var markerCluster = new MarkerClusterer(map, markers,
-  //     {imagePath: 'https://developers.google.com/maps/documentation/javascript/examples/markerclusterer/m'});
+  var markerCluster = new MarkerClusterer(map, markers,
+      {imagePath: 'https://developers.google.com/maps/documentation/javascript/examples/markerclusterer/m'});
 }
 
 

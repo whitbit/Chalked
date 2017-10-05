@@ -132,7 +132,7 @@ displayLogs()
 function displaysUserStatus() {
     $.get('/user-info.json', function(results) {
         points = results['user_points']
-        console.log(points)
+
 
         $('#points').append('V-points: ', points)
     })
@@ -141,5 +141,51 @@ function displaysUserStatus() {
 
 
 $(document).ready(displaysUserStatus);
+
+
+
+var form = document.getElementById('file-form');
+var fileSelect = document.getElementById('file-select');
+var uploadButton = document.getElementById('upload-button');
+
+
+var files;
+$('input[type=file]').on('change', prepareUpload);
+function prepareUpload(event)
+{
+  files = event.target.files;
+}
+
+form.onsubmit = function(event) {
+  event.preventDefault();
+
+  // Update button text.
+  uploadButton.innerHTML = 'Uploading...';
+
+  var data = new FormData();
+  
+  $.each(files, function(key, value) {
+    data.append('file', value);
+  })
+
+
+  $.ajax({
+    url: '/upload.json',
+    type: 'POST',
+    data: data,
+    dataType: 'json',
+    processData: false,
+    contentType: false,
+
+  })
+}
+
+
+
+
+function doesSomething(results) {
+    uploadButton.innerITHML = 'success'
+    return upper
+}
 
 
