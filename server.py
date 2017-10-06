@@ -1,6 +1,7 @@
 import os
 from flask import Flask, render_template, redirect, request, flash, session, jsonify, url_for, send_from_directory
 from model import connect_to_db, db, User, Route, UserLog, UserFavorites
+from functools import wraps
 from werkzeug.utils import secure_filename
 
 UPLOAD_FOLDER = './static/photos'
@@ -19,16 +20,17 @@ def allowed_file(filename):
     return '.' in filename and \
            filename.rsplit('.', 1)[1].lower() in ALLOWED_EXTENSIONS
 
-
-
-
+def requires_login(f):
+    @wraps(f)
+    def login_check(*args, **kwargs):
+        if 'user_id' not in session:
+            flash('Please log in or register first')
+            return redirect('/')
 
 
 @app.route('/uploads/<filename>')
 def uploaded_file(filename):
     return send_from_directory(app.config['UPLOAD_FOLDER'], filename)
-
-
 
 
 
@@ -106,6 +108,7 @@ def logs_off_session():
 
 # use password decorator 
 @app.route('/dashboard')
+@requires_login
 def renders_user_dashboard():
     """Displays user dashboard."""
 
@@ -262,6 +265,7 @@ def renders_user_journal_info():
     return jsonify(log_info)
 
 @app.route('/user-map')
+@requires_login
 def renders_user_map():
 
     return render_template('user_map.html')
