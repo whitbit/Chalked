@@ -11,6 +11,9 @@ class User(db.Model):
     username = db.Column(db.String(30), nullable=False, unique=True)
     pw = db.Column(db.String(30), nullable=False)
     climb_level = db.Column(db.String(30))
+    sex = db.Column(db.String(1))
+    email = db.Column(db.String(100))
+
 
 
     def getUserPoints(self):

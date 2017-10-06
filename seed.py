@@ -2,9 +2,12 @@ from sqlalchemy import func
 from model import User, Route, UserLog, connect_to_db, db
 from server import app
 from datetime import datetime
+from faker import Faker
 import requests, os, json
 
 TOKEN = os.environ.get('MOUNTAIN_PROJECT_TOKEN')
+
+fake = Faker()
 
 
 def getRouteIds(file):
@@ -62,11 +65,40 @@ def validates_vgrade(grade):
   return grade[0] == 'V' and grade[1].isdigit()
 
 
+def load_users():
+    """Populates database with fake users."""
+
+    User.query.delete()
+
+    for i in range(300):
+
+        pw = fake.password(length=10, 
+                           special_chars=True, 
+                           digits=True, 
+                           upper_case=True, 
+                           lower_case=True)
+        level = fake.word(ext_word_list=['beg', 'int', 'adv'])
+        sex = fake.word(ext_word_list=['M', 'F'])
+
+        print sex
+        user = User(username=fake.user_name(),
+                    pw=pw,
+                    climb_level=level,
+                    sex=sex,
+                    email=fake.email())
+
+        db.session.add(user)
+
+    db.session.commit()
+
+
+
+
 
 
 if __name__ == "__main__":
     connect_to_db(app)
 
     db.create_all()
-
-    load_routes()
+    load_users()
+    # load_routes()
