@@ -91,21 +91,21 @@ class UserLog(db.Model):
                                                                                self.route_id,
                                                                                self.completed)
 
-class UserFavorites(db.Model):
-    """Favorite climbs by Users."""
+# class UserFavorites(db.Model):
+#     """Favorite climbs by Users."""
 
-    __tablename__ = 'user_favorites'
+#     __tablename__ = 'user_favorites'
 
-    favorites_id = db.Column(db.Integer, primary_key=True, autoincrement=True)
-    user_id = db.Column(db.Integer, db.ForeignKey('users.user_id'))
-    route_id = db.Column(db.Integer, db.ForeignKey('routes.route_id'))
+#     favorites_id = db.Column(db.Integer, primary_key=True, autoincrement=True)
+#     user_id = db.Column(db.Integer, db.ForeignKey('users.user_id'))
+#     route_id = db.Column(db.Integer, db.ForeignKey('routes.route_id'))
 
-    def __repr__(self):
-         """Provide helpful representation when printed."""
+#     def __repr__(self):
+#          """Provide helpful representation when printed."""
 
-         return "<Favorites id={}, user_id={}, route_id={}>".format(self.favorites_id,
-                                                                    self.user_id,
-                                                                    self.route_id)
+#          return "<Favorites id={}, user_id={}, route_id={}>".format(self.favorites_id,
+#                                                                     self.user_id,
+#                                                                     self.route_id)
 
 
 def connect_to_db(app):

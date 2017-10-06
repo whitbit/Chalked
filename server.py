@@ -1,6 +1,6 @@
 import os
 from flask import Flask, render_template, redirect, request, flash, session, jsonify, url_for, send_from_directory
-from model import connect_to_db, db, User, Route, UserLog, UserFavorites
+from model import connect_to_db, db, User, Route, UserLog
 from functools import wraps
 from werkzeug.utils import secure_filename
 
@@ -22,10 +22,11 @@ def allowed_file(filename):
 
 def requires_login(f):
     @wraps(f)
-    def login_check():
-        if 'user_id' not in session:
+    def login_check(*args, **kwargs):
+        if 'username' not in session:
             flash('Please log in or register first')
             return redirect('/')
+        return f(*args, **kwargs)
     return login_check
 
 
@@ -55,7 +56,7 @@ def routes_map():
 def register_user():
     """Adds user to database."""
 
-    username = request.form.get('username')
+    username = request.form.get('username').upper()
     password = request.form.get('password')
     level = request.form.get('level')
 
@@ -67,8 +68,7 @@ def register_user():
     else:
         user = User(username=username,
                     pw=password,
-                    climb_level=level,
-                    last_name=last_name)
+                    climb_level=level)
 
         db.session.add(user)
 
@@ -81,7 +81,7 @@ def register_user():
 def process_login():
     """Checks if user is registered and verifies password."""
 
-    username = request.form.get('username')
+    username = request.form.get('username').upper()
     password = request.form.get('password')
 
     user = User.query.filter_by(username=username).first()
@@ -104,6 +104,7 @@ def logs_off_session():
     """Logs user off."""
 
     del session['username']
+    del session['user_id']
     flash('logged out successfully')
     return redirect('/')
 
