@@ -22,10 +22,11 @@ def allowed_file(filename):
 
 def requires_login(f):
     @wraps(f)
-    def login_check(*args, **kwargs):
+    def login_check():
         if 'user_id' not in session:
             flash('Please log in or register first')
             return redirect('/')
+    return login_check
 
 
 @app.route('/uploads/<filename>')
