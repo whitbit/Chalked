@@ -56,7 +56,7 @@ def routes_map():
 def register_user():
     """Adds user to database."""
 
-    username = request.form.get('username').upper()
+    username = request.form.get('username').lower()
     password = request.form.get('password')
     level = request.form.get('level')
     sex = fequest.form.get('sex')
@@ -85,7 +85,7 @@ def register_user():
 def process_login():
     """Checks if user is registered and verifies password."""
 
-    username = request.form.get('username').upper()
+    username = request.form.get('username').lower()
     password = request.form.get('password')
 
     user = User.query.filter_by(username=username).first()

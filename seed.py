@@ -3,6 +3,7 @@ from model import User, Route, UserLog, connect_to_db, db
 from server import app
 from datetime import datetime
 from faker import Faker
+from random import randint
 import requests, os, json
 
 TOKEN = os.environ.get('MOUNTAIN_PROJECT_TOKEN')
@@ -80,7 +81,6 @@ def load_users():
         level = fake.word(ext_word_list=['beg', 'int', 'adv'])
         sex = fake.word(ext_word_list=['M', 'F'])
 
-        print sex
         user = User(username=fake.user_name(),
                     pw=pw,
                     climb_level=level,
@@ -92,8 +92,29 @@ def load_users():
     db.session.commit()
 
 
+def load_logs():
+    """Populates database with fake logs."""
 
+    UserLog.query.delete()
 
+    for i in range(500):
+
+        user_id = randint(1, 300)
+        route_id = randint(1, 3211)
+        date = fake.date_time_between(start_date="-5y", end_date="now", tzinfo=None)
+        notes = fake.text(max_nb_chars=100, ext_word_list=None)
+        rating = randint(1, 5)
+        completed = fake.boolean(chance_of_getting_true=50)
+
+        log = UserLog(user_id=user_id,
+                      route_id=route_id,
+                      date=date,
+                      notes=notes,
+                      rating=rating,
+                      completed=completed)
+        db.session.add(log)
+
+    db.session.commit()
 
 
 if __name__ == "__main__":
@@ -101,4 +122,5 @@ if __name__ == "__main__":
 
     db.create_all()
     load_users()
-    # load_routes()
+    load_routes()
+    load_logs()

@@ -106,7 +106,7 @@ function submitsClimb(evt) {
 
 
 function logsClimb(results) {
-    alert('logged')
+    displayLogs()
 }
 
 
