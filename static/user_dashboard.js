@@ -23,7 +23,6 @@ function showAreas(results) {
     var areas = results.areas;
 
     $('#area').empty();
-    // $('#route').empty();
 
     $.each(areas, function(index, area) {
         $('#area').append('<option value=' + area + '>' + area + '</option>');

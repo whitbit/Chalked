@@ -54,9 +54,7 @@ def register_user():
 
     username = request.form.get('username')
     password = request.form.get('password')
-    first_name = request.form.get('first_name')
-    last_name = request.form.get('last_name')
-    gender = request.form.get('gender')
+    level = request.form.get('level')
 
     user = User.query.filter_by(username=username).first()
 
@@ -66,9 +64,8 @@ def register_user():
     else:
         user = User(username=username,
                     pw=password,
-                    first_name=first_name,
-                    last_name=last_name,
-                    gender=gender)
+                    climb_level=level,
+                    last_name=last_name)
 
         db.session.add(user)
 
@@ -107,7 +104,7 @@ def logs_off_session():
     flash('logged out successfully')
     return redirect('/')
 
-
+# use password decorator 
 @app.route('/dashboard')
 def renders_user_dashboard():
     """Displays user dashboard."""
@@ -257,16 +254,17 @@ def renders_user_journal_info():
                                                     route.v_grade,
                                                     climb.rating,
                                                     climb.notes,
-                                                    climb.completed,
-                                                    route.latitude,
-                                                    route.longitude)
+                                                    climb.completed)
         log_info['map'][climb.review_id] = { 'coordinates': {'lat': route.latitude, 'lng': route.longitude},
                                              'info_window': (date, route.name, route.v_grade, route.state, route.area, photo, route.url, route.latitude, route.longitude) }
 
 
     return jsonify(log_info)
 
+@app.route('/user-map')
+def renders_user_map():
 
+    return render_template('user_map.html')
 
 
 if __name__ == '__main__':
