@@ -59,7 +59,6 @@ def register_user():
     username = request.form.get('username').lower()
     password = request.form.get('password')
     level = request.form.get('level')
-    sex = request.form.get('sex')
     email = request.form.get('email')
 
     user = User.query.filter_by(username=username).first()
@@ -71,7 +70,6 @@ def register_user():
         user = User(username=username,
                     pw=password,
                     climb_level=level,
-                    sex=sex,
                     email=email)
 
         db.session.add(user)

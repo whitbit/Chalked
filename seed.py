@@ -71,7 +71,7 @@ def load_users():
 
     User.query.delete()
 
-    for i in range(300):
+    for i in range(20):
 
         pw = fake.password(length=10, 
                            special_chars=True, 
@@ -79,12 +79,10 @@ def load_users():
                            upper_case=True, 
                            lower_case=True)
         level = fake.word(ext_word_list=['beg', 'int', 'adv'])
-        sex = fake.word(ext_word_list=['M', 'F'])
 
         user = User(username=fake.user_name(),
                     pw=pw,
                     climb_level=level,
-                    sex=sex,
                     email=fake.email())
 
         db.session.add(user)
@@ -97,14 +95,14 @@ def load_logs():
 
     UserLog.query.delete()
 
-    for i in range(500):
+    for i in range(1500):
 
-        user_id = randint(1, 300)
-        route_id = randint(1, 3211)
-        date = fake.date_time_between(start_date="-5y", end_date="now", tzinfo=None)
+        user_id = randint(1, 20)
+        route_id = randint(1, 3210)
+        date = fake.date_time_between(start_date="-3y", end_date="now", tzinfo=None)
         notes = fake.text(max_nb_chars=100, ext_word_list=None)
         rating = randint(1, 5)
-        completed = fake.boolean(chance_of_getting_true=50)
+        completed = fake.boolean(chance_of_getting_true=80)
 
         log = UserLog(user_id=user_id,
                       route_id=route_id,
