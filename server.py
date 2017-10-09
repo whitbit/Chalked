@@ -2,7 +2,9 @@ import os
 from flask import Flask, render_template, redirect, request, flash, session, jsonify, url_for, send_from_directory
 from model import connect_to_db, db, User, Route, UserLog
 from functools import wraps
+from sqlalchemy import extract
 from werkzeug.utils import secure_filename
+from datetime import datetime
 
 UPLOAD_FOLDER = './static/photos'
 ALLOWED_EXTENSIONS = set(['png', 'jpg', 'jpeg', 'gif'])
@@ -262,8 +264,18 @@ def renders_user_journal_info():
                                                     climb.rating,
                                                     climb.notes,
                                                     climb.completed)
-        log_info['map'][climb.review_id] = { 'coordinates': {'lat': route.latitude, 'lng': route.longitude},
-                                             'info_window': (date, route.name, route.v_grade, route.state, route.area, photo, route.url, route.latitude, route.longitude) }
+        log_info['map'][climb.review_id] = { 'coordinates': {'lat': route.latitude,
+                                                             'lng': route.longitude},
+                                             'info_window': (date, 
+                                                             route.name,
+                                                             route.v_grade,
+                                                             route.state,
+                                                             route.area,
+                                                             photo,
+                                                             route.url,
+                                                             route.latitude,
+                                                             route.longitude) 
+                                            }
 
 
     return jsonify(log_info)
@@ -273,6 +285,59 @@ def renders_user_journal_info():
 def renders_user_map():
 
     return render_template('user_map.html')
+
+
+@app.route('/user-chart.json')
+def user_charts_data():
+    """Queries user log data for bubble chart generation"""
+
+    user_id = session['user_id']
+
+    current_year = datetime.now().year
+
+    year_logs = db.session.query(UserLog).filter(extract('year', UserLog.date) == current_year, 
+                                                 UserLog.user_id == user_id).all()
+
+    """Creates dictionary of climbs attempted per month and vgrade"""
+
+    climbs = {}
+
+    data = {}
+
+    for log in year_logs:
+
+        name = Route.query.get(log.route_id).name
+
+        v_grade = Route.query.get(log.route_id).v_grade
+        
+        month = log.date.month
+
+        climbs[(month, v_grade)] = climbs.setdefault((month, v_grade), 0) + 1
+
+    data['datasets'] = []
+
+    
+    for climb in climbs:
+
+        month = climb[0]
+
+        v_grade = climb[1]
+
+        data['datasets'].append({
+                'label': 'V' + str(v_grade),
+                'data': [{
+                    'x': month,
+                    'y': v_grade,
+                    'r': 5 * climbs[climb]
+                }],
+                'backgroundColor': '#ff6384',
+                'hoverBackgroundColor': '#ff6384'
+        })
+
+
+    return jsonify(data)
+
+
 
 
 if __name__ == '__main__':

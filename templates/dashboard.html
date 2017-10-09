@@ -13,6 +13,11 @@
     <h1>Welcome, {{ session['username'] }}!</h1>
     <h3 id='points'></h3>
 
+    <div class='climb-chart'>
+        <canvas id='climbChart'></canvas>
+        <div id='legend'></div>
+    </div>
+
 
 <!-- filters state -->
     <h2> Log a new climb: </h2>
@@ -79,16 +84,8 @@
 
     <script src="http://code.jquery.com/jquery.js"></script>
 
-
-<!--     <script src="/static/user_map.js"></script -->>
-
-
     <script src="/static/user_dashboard.js"></script>
 
 
-<!--      <script src="https://developers.google.com/maps/documentation/javascript/examples/markerclusterer/markerclusterer.js"></script>
-
-    <script async defer src="https://maps.googleapis.com/maps/api/js?key=AIzaSyC9qDiQS_jF-wRKvyNXlov2leRbMEq56Ig"></script> -->
-        
 
 {% endblock %}

@@ -116,8 +116,7 @@ function uploadsPhoto(evt) {
     $('#upload-button').text('Uploading...');
 
     var data = new FormData();
-    console.log(data)
-    
+
     $.each(files, function(key, value) {
         data.append('file', value);
     });
@@ -162,33 +161,12 @@ function getLogs(results) {
 
     logsArr.sort().reverse()
 
-    console.log(logsArr[0])
-
     for(var i = 0; i < logsArr.length; i++) {
         var html = ''
         for(var j = 0; j < logsArr[i].length; j++)
             html += '<td>' + logsArr[i][j] + '</td>';
         $('#user_logs').append('<tr>' + html + '</tr>');
     }
-
-
-
-
-
-    // for(var log in log_entries){
-        
-    //     var table_row = log_entries[log];
-
-    //     var html = ''
-
-    //     for(var i = 0; i < table_row.length; i++) {
-    //         html += '<td>' + table_row[i] + '</td>';
-    //     }
-
-    //     $('#user_logs').append('<tr>' + html + '</tr>');
-
-    // }
-
 }
 displayLogs()
 
@@ -205,6 +183,22 @@ function displaysUserStatus() {
 
 
 $(document).ready(displaysUserStatus);
+
+
+
+var options = { response: true };
+var ctx = document.getElementById('climbChart').getContext('2d')
+
+$.get('/user-chart.json', function(data) {
+    console.log(data)
+
+    var myBubbleChart = new Chart(ctx, {
+        type: 'bubble',
+        data: data,
+        options: options
+    })
+})
+
 
 
 
