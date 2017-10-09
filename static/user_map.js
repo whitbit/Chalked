@@ -65,18 +65,20 @@ function map_climbs(results) {
 
 
     function createContent(data) {
-      date = data[0];
-      name = data[1].toUpperCase();
-      v_grade = data[2]
-      state = data[3];
-      area = data[4];
-      img = '/uploads/' + data[5];
-      url = data[6];
-      lat = data[7];
-      lng = data[8];
+      var date = data[0];
+      var name = data[1].toUpperCase();
+      var v_grade = data[2]
+      var state = data[3];
+      var area = data[4];
+      var url = data[6];
+      var lat = data[7];
+      var lng = data[8];
 
-
-      // console.log(date)
+      if(data[5] === null) {
+        var img = '';
+      } else {
+        var img = '/uploads/' + data[5]
+      }
 
       return '<h4>' + name + ' (V' + v_grade + ') </h4>' 
              + '<h5>' + date + '</h5>'

@@ -152,20 +152,42 @@ function getLogs(results) {
     
     var log_entries = results.review_info;
 
-    for(var log in log_entries){
+    $('#user_logs').empty()
 
-        
-        var table_row = log_entries[log];
+    var logsArr = [];
 
-        var html = ''
-
-        for(var i = 0; i < table_row.length; i++) {
-            html += '<td>' + table_row[i] + '</td>';
-        }
-
-        $('#user_logs').append('<tr>' + html + '</tr>');
-
+    for(var log in log_entries) {
+        logsArr.push(log_entries[log])
     }
+
+    logsArr.sort().reverse()
+
+    console.log(logsArr[0])
+
+    for(var i = 0; i < logsArr.length; i++) {
+        var html = ''
+        for(var j = 0; j < logsArr[i].length; j++)
+            html += '<td>' + logsArr[i][j] + '</td>';
+        $('#user_logs').append('<tr>' + html + '</tr>');
+    }
+
+
+
+
+
+    // for(var log in log_entries){
+        
+    //     var table_row = log_entries[log];
+
+    //     var html = ''
+
+    //     for(var i = 0; i < table_row.length; i++) {
+    //         html += '<td>' + table_row[i] + '</td>';
+    //     }
+
+    //     $('#user_logs').append('<tr>' + html + '</tr>');
+
+    // }
 
 }
 displayLogs()
