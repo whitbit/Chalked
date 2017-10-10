@@ -330,8 +330,8 @@ def user_charts_data():
                     'y': v_grade,
                     'r': 5 * climbs[climb]
                 }],
-                'backgroundColor': '#ff6384',
-                'hoverBackgroundColor': '#ff6384'
+                'backgroundColor': 'rgba(193,46,12,0.2)',
+                'hoverBackgroundColor': 'rgba(193,46,12,1)'
         })
 
 
