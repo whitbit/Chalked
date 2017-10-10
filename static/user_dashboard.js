@@ -214,17 +214,23 @@ var ctx = document.getElementById('climbChart').getContext('2d')
 function generatesChart() {
     $.get('/user-chart.json', function(data) {
 
+        console.log(data)
+
         var myBubbleChart = new Chart(ctx, {
             type: 'bubble',
             data: data,
             options: {
+                responsive: true,
+                
                 legend: {
                     display: false
                 },
+                
                 title: {
                     display: true,
                     text: '2017'
                 },
+                
                 scales: {
                     yAxes: [{
                         scaleLabel: {
@@ -237,11 +243,15 @@ function generatesChart() {
                         }
                     }],
                     xAxes: [{
-                        ticks: {
-                            callback: function(value, index, values) {
-                                console.log(values)
-                                return convertMonth(parseInt(value));
-                            }
+                        // ticks: {
+                        //     callback: function(value, index, values) {
+                        //         console.log(values)
+                        //         return convertMonth(parseInt(value));
+                        //     }
+                        // },
+                        type: 'time',
+                        time: {
+                            unit: 'month'
                         },
                         scaleLabel: {
                             display: true,

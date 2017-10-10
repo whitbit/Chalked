@@ -306,7 +306,7 @@ def user_charts_data():
                                                  UserLog.completed == True).all()
 
 
-    """Creates dictionary of climbs attempted per month and vgrade"""
+    """Creates dictionary of climbs attempted per month and vgrade.  Keeps track of counts"""
 
     climbs = {}
 
@@ -320,21 +320,24 @@ def user_charts_data():
         
         month = log.date.month
 
-        climbs[(month, v_grade)] = climbs.setdefault((month, v_grade), 0) + 1
+        year = log.date.year
+
+        climbs[(year, month, v_grade)] = climbs.setdefault((year, month, v_grade), 0) + 1
 
     data['datasets'] = []
 
     for climb in climbs:
 
-        month = climb[0]
-        print '******** MONTH', month
+        # send a date format accepted by Moments into chart.js
+        date = str(climb[0]) + '-' + '%02d' % climb[1] + '-01' 
 
-        v_grade = climb[1]
+
+        v_grade = climb[2]
 
         data['datasets'].append({
                 'label': 'V' + str(v_grade),
                 'data': [{
-                    'x': month,
+                    'x': date,
                     'y': v_grade,
                     'r': 23 * climbs[climb]
                 }],
