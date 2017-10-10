@@ -186,6 +186,26 @@ $(document).ready(displaysUserStatus);
 
 
 
+function convertMonth(num) {
+    var months = {
+        1: 'January',
+        2: 'February',
+        3: 'March',
+        4: 'April',
+        5: 'May',
+        6: 'June',
+        7: 'July',
+        8: 'Aug',
+        9: 'Sept',
+        10: 'Oct',
+        11: 'Nov',
+        12: 'Dec'
+    }
+
+    return months[num]
+}
+
+
 var ctx = document.getElementById('climbChart').getContext('2d')
 
 $.get('/user-chart.json', function(data) {
@@ -199,7 +219,7 @@ $.get('/user-chart.json', function(data) {
             },
             title: {
                 display: true,
-                text: 'This year\'s progress'
+                text: '2017'
             },
             scales: {
                 yAxes: [{
@@ -209,15 +229,15 @@ $.get('/user-chart.json', function(data) {
                     }
                 }],
                 xAxes: [{
-                    time: {
-                        display: true,
-                        unit: 'month',
-                        unitStepSize: 1
+                    ticks: {
+                        callback: function(value, index, values) {
+                            return convertMonth(parseInt(value));
+                        }
                     },
                     scaleLabel: {
                         display: true,
                         labelString: 'Month'
-                    },
+                    }
                 }]
             }
         }

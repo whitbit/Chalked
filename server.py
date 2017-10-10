@@ -5,6 +5,7 @@ from functools import wraps
 from sqlalchemy import extract
 from werkzeug.utils import secure_filename
 from datetime import datetime
+import calendar
 
 UPLOAD_FOLDER = './static/photos'
 ALLOWED_EXTENSIONS = set(['png', 'jpg', 'jpeg', 'gif'])
@@ -316,7 +317,9 @@ def user_charts_data():
 
     data['datasets'] = []
 
-    
+    print climbs
+
+
     for climb in climbs:
 
         month = climb[0]
