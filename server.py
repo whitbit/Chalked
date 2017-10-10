@@ -4,7 +4,7 @@ from model import connect_to_db, db, User, Route, UserLog
 from functools import wraps
 from sqlalchemy import extract
 from werkzeug.utils import secure_filename
-from datetime import datetime
+from datetime import datetime, timedelta
 import calendar
 
 UPLOAD_FOLDER = './static/photos'
@@ -294,10 +294,17 @@ def user_charts_data():
 
     user_id = session['user_id']
 
-    current_year = datetime.now().year
+    # current_year = datetime.now().year
 
-    year_logs = db.session.query(UserLog).filter(extract('year', UserLog.date) == current_year, 
-                                                 UserLog.user_id == user_id).all()
+    last_twelve_months = datetime.now() - timedelta(365)
+
+    # year_logs = db.session.query(UserLog).filter(extract('year', UserLog.date) == current_year, 
+    #                                              UserLog.user_id == user_id).all()
+
+    year_logs = db.session.query(UserLog).filter(UserLog.date > last_twelve_months, 
+                                                 UserLog.user_id == user_id,
+                                                 UserLog.completed == True).all()
+
 
     """Creates dictionary of climbs attempted per month and vgrade"""
 
@@ -317,12 +324,10 @@ def user_charts_data():
 
     data['datasets'] = []
 
-    print climbs
-
-
     for climb in climbs:
 
         month = climb[0]
+        print '******** MONTH', month
 
         v_grade = climb[1]
 

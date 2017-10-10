@@ -18,71 +18,63 @@
         <div id='legend'></div>
     </div>
 
-<!-- Button trigger modal -->
-<button type="button" class="btn btn-primary" data-toggle="modal" data-target="#exampleModal">
-  Launch demo modal
-</button>
-
-<!-- Modal -->
-<div class="modal fade" id="myModal" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel" aria-hidden="true">
-  <div class="modal-dialog" role="document">
-    <div class="modal-content">
-      <div class="modal-header">
-        <h5 class="modal-title" id="exampleModalLabel">Modal title</h5>
-        <button type="button" class="close" data-dismiss="modal" aria-label="Close">
-          <span aria-hidden="true">&times;</span>
-        </button>
-      </div>
-      <div class="modal-body">
-        ...
-      </div>
-      <div class="modal-footer">
-        <button type="button" class="btn btn-secondary" data-dismiss="modal">Close</button>
-        <button type="button" class="btn btn-primary">Save changes</button>
-      </div>
+    <div class='container'>
+        <button type='button' class='btn btn-info btn-lg' data-toggle='modal' data-target='#myModal'>Log A New Climb</button>
     </div>
-  </div>
-</div>
 
-<!-- filters state -->
-    <h2> Log a new climb: </h2>
-        <select name='state' id='state'>
-            <option disable selected value>STATE</option>
-        </select><br>
+    <div class='modal fade' id='myModal' role='document'>
+        <div class='modal-dialog'>
+            <div class='modal-content'>
+                    <div class='modal-header'>
+                        <button type="button" class="close" data-dismiss="modal">&times;</button>
+                        <h2 class="modal-title">Log a new climb:</h2>
+                    </div>
+                    <div class="modal-body">
+
+                        <select name='state' id='state'>
+                            <option disable selected value>STATE</option>
+                        </select><br>
 
 
-<!-- filters area -->
-        <select name='area' id='area'>
-            <option disable selected value>AREA</option>
-        </select>
+                        <!-- filters area -->
+                        <select name='area' id='area'>
+                            <option disable selected value>AREA</option>
+                        </select>
     
-<!-- logs climb info -->
-    <form id='log-climb'>
-        
-        <select name='route' id='route'>
-            <option disable selected value>ROUTE</option>
-        </select><br>
-        
-        <label> Rate the climb:
-            <input type='number' id='rating' name='rating' min='1' max='5'>
-        </label><br>
-        
-        <label>
-            <textarea name='notes' id='notes' rows="4" cols="50"></textarea>
-        </label><br>
-        
-        <label> Date:
-            <input id="date" name='date' type="date">
-        </label><br>
-        <label>Complete
-            <input type='checkbox' id='complete' name='complete' value='true'>
-        </label><br>
+                        <!-- logs climb info -->
+                        <form id='log-climb'>
+                            
+                            <select name='route' id='route'>
+                                <option disable selected value>ROUTE</option>
+                            </select><br>
+                            
+                            <label> Rate the climb:
+                                <input type='number' id='rating' name='rating' min='1' max='5'>
+                            </label><br>
+                            
+                            <label>
+                                <textarea name='notes' id='notes' rows="4" cols="50"></textarea>
+                            </label><br>
+                            
+                            <label> Date:
+                                <input id="date" name='date' type="date">
+                            </label><br>
+                            <label>Complete
+                                <input type='checkbox' id='complete' name='complete' value='true'>
+                            </label><br>
 
-        <input type='file' id='photo' name='file'/> <br>
-        
-        <button type='submit' id='upload-button'>Log</button>
-    
-    </form>
+                            <input type='file' id='photo' name='file'/> <br>
+                            
+                            <button type='submit' id='upload-button'>Log</button>
+                        
+                        </form>
+                    </div>
+                    <div class="modal-footer">
+                        <button type="button" class="btn btn-default" data-dismiss="modal">Close</button>
+                    </div>
+            </div>
+        </div>
+    </div>
 
 
     <div>

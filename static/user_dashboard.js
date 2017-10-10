@@ -106,7 +106,9 @@ function submitsClimb(evt) {
 
 
 function logsClimb(results) {
+    //upon new long, buble chart and logs tables update
     displayLogs()
+    generatesChart()
 }
 
 
@@ -208,45 +210,49 @@ function convertMonth(num) {
 
 var ctx = document.getElementById('climbChart').getContext('2d')
 
-$.get('/user-chart.json', function(data) {
 
-    var myBubbleChart = new Chart(ctx, {
-        type: 'bubble',
-        data: data,
-        options: {
-            legend: {
-                display: false
-            },
-            title: {
-                display: true,
-                text: '2017'
-            },
-            scales: {
-                yAxes: [{
-                    scaleLabel: {
-                        display: true,
-                        labelString: 'V-Grade'
-                    }
-                }],
-                xAxes: [{
-                    ticks: {
-                        callback: function(value, index, values) {
-                            return convertMonth(parseInt(value));
+function generatesChart() {
+    $.get('/user-chart.json', function(data) {
+
+        var myBubbleChart = new Chart(ctx, {
+            type: 'bubble',
+            data: data,
+            options: {
+                legend: {
+                    display: false
+                },
+                title: {
+                    display: true,
+                    text: '2017'
+                },
+                scales: {
+                    yAxes: [{
+                        scaleLabel: {
+                            display: true,
+                            labelString: 'V-Grade'
+                        },
+                        ticks: {
+                            min: 0,
+                            max: 10
                         }
-                    },
-                    scaleLabel: {
-                        display: true,
-                        labelString: 'Month'
-                    }
-                }]
+                    }],
+                    xAxes: [{
+                        ticks: {
+                            callback: function(value, index, values) {
+                                console.log(values)
+                                return convertMonth(parseInt(value));
+                            }
+                        },
+                        scaleLabel: {
+                            display: true,
+                            labelString: 'Month'
+                        }
+                    }]
+                }
             }
-        }
+        })
     })
-})
-
-
-
-
-
+}
+generatesChart()
 
 
