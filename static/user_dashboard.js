@@ -189,16 +189,14 @@ $(document).ready(displaysUserStatus);
 var ctx = document.getElementById('climbChart').getContext('2d')
 
 $.get('/user-chart.json', function(data) {
-    console.log(data)
-    
-    data['labels'] = ['Jan', 'Feb', 'Mar', 'Apr', 'May', 'Jun']
-
-    console.log(data)
 
     var myBubbleChart = new Chart(ctx, {
         type: 'bubble',
         data: data,
         options: {
+            legend: {
+                display: false
+            },
             title: {
                 display: true,
                 text: 'This year\'s progress'
@@ -211,10 +209,15 @@ $.get('/user-chart.json', function(data) {
                     }
                 }],
                 xAxes: [{
+                    time: {
+                        display: true,
+                        unit: 'month',
+                        unitStepSize: 1
+                    },
                     scaleLabel: {
                         display: true,
                         labelString: 'Month'
-                    }
+                    },
                 }]
             }
         }

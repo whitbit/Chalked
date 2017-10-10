@@ -328,10 +328,10 @@ def user_charts_data():
                 'data': [{
                     'x': month,
                     'y': v_grade,
-                    'r': 5 * climbs[climb]
+                    'r': 23 * climbs[climb]
                 }],
-                'backgroundColor': 'rgba(193,46,12,0.2)',
-                'hoverBackgroundColor': 'rgba(193,46,12,1)'
+                'backgroundColor': 'rgba(193,46,12,0.6)',
+                'hoverBackgroundColor': 'rgba(193,46,12,0.8)'
         })
 
 
