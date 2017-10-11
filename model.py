@@ -109,6 +109,41 @@ class UserLog(db.Model):
 #                                                                     self.user_id,
 #                                                                     self.route_id)
 
+def example_data():
+    """Sample data for testing"""
+    User.query.delete()
+    Route.query.delete()
+    UserLog.query.delete()
+
+    user1 = User(username='Bart',
+                pw='kfneklwnf',
+                climb_level='int',
+                email='bart@email.com')
+    user2 = User(username='Jenny',
+                pw='knfdklsnf',
+                climb_level='adv',
+                email='jenny@email.com')
+    user3 = User(username='Harry',
+                pw='123566',
+                climb_level='adv',
+                email='harry@email.com')
+
+    log1 = UserLog(user_id=3,
+                   route_id=5,
+                   date='2014-11-08 23:56:52',
+                   notes='testtesttesttesttesttesttesttest',
+                   rating=3,
+                   completed=True)
+    log2 = UserLog(user_id=1,
+                   route_id=10,
+                   date='2017-11-08 20:56:52',
+                   notes='testtesttesttesttesttesttesttest',
+                   rating=3,
+                   completed=False)
+
+    db.session.add_all([user1, user2, user3])
+    db.session.commit()
+
 
 def connect_to_db(app):
     """Connect to database."""
