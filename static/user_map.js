@@ -26,6 +26,9 @@ function map_climbs(results) {
 
     for(var place in places) {
 
+      //adds noise to coordinates to prevent inadvertenant overlaying 
+      places[place].coordinates['lat'] = places[place].coordinates['lat'] + Math.random() * 0.001
+
       var marker = new google.maps.Marker({
         position: places[place].coordinates,
         num: i

@@ -243,12 +243,6 @@ function generatesChart() {
                         }
                     }],
                     xAxes: [{
-                        // ticks: {
-                        //     callback: function(value, index, values) {
-                        //         console.log(values)
-                        //         return convertMonth(parseInt(value));
-                        //     }
-                        // },
                         type: 'time',
                         time: {
                             unit: 'month'
