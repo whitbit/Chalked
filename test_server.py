@@ -59,10 +59,17 @@ class FlaskTestsDatabase(TestCase):
 
     def test_already_registered(self):
 
-        result = self.client.post('/register', data={ 'username': 'Bart' }
-                                                follow_redirects=True)
+        result = self.client.post('/register', data={ 'username': 'Bart'},
+                                               follow_redirects=True)
 
         self.assertIn('Please login!', result.data)
+
+    def test_login(self):
+
+        result = self.client.post('/login', data={ 'username': 'bart', 'password': 'kfneklwnf'},
+                                            follow_redirects=True)
+
+        self.assertIn('Welcome, bart', result.data)
 
 
 

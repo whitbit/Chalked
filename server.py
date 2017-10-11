@@ -99,6 +99,8 @@ def process_login():
             flash('Logged in!')
             return redirect('/dashboard')
         flash('Invalid password.  Please try again!')
+        return redirect('/')
+
 
     else: 
         flash('Please register first!')
