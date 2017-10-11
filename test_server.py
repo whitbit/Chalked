@@ -2,6 +2,7 @@ import server
 from server import app
 from unittest import TestCase
 from model import connect_to_db, db, example_data
+from flask import session
 
 
 class MyAppUnitTestCase(TestCase):
@@ -9,6 +10,7 @@ class MyAppUnitTestCase(TestCase):
     def test_allowed_file(self):
 
         self.assertTrue(server.allowed_file('file.png'))
+
 
 class FlaskTestsBasic(TestCase):
 
@@ -46,7 +48,7 @@ class FlaskTestsDatabase(TestCase):
 
         pass
 
-    def test_registeration(self):
+    def test_new_registeration(self):
 
         result = self.client.post('/register', data={ 'username': 'username',
                                                        'password': 'pw',
@@ -59,7 +61,7 @@ class FlaskTestsDatabase(TestCase):
 
     def test_already_registered(self):
 
-        result = self.client.post('/register', data={ 'username': 'Bart'},
+        result = self.client.post('/register', data={ 'username': 'Bart' },
                                                follow_redirects=True)
 
         self.assertIn('Please login!', result.data)
@@ -77,6 +79,43 @@ class FlaskTestsDatabase(TestCase):
                                             follow_redirects=True)
 
         self.assertIn('Invalid password. Please try again!', result.data)
+
+
+class FlaskTestsLoggedIn(TestCase):
+    """Tests if user logged in session."""
+
+    def setUp(self):
+
+        app.config['TESTING'] = True
+        app.config['SECRET_KEY'] = 'ABC'
+        self.client = app.test_client()
+
+        with self.client as c:
+            with c.session_transaction() as sess:
+                sess['username'] = 'bart'
+
+
+    def test_dashboard(self):
+
+        result = self.client.get('/dashboard')
+
+        self.assertIn('Welcome, bart!', result.data)
+
+
+class FlaskTestsLoggedOut(TestCase):
+    """Tests if user logged in session."""
+
+    def setUp(self):
+
+        app.config['TESTING'] = True
+        self.client = app.test_client()
+
+    def test_dashboard(self):
+
+        result = self.client.get('/dashboard', follow_redirects=True)
+
+        self.assertNotIn('V-points', result.data)
+        self.assertIn('Please log in', result.data)
 
 
 
