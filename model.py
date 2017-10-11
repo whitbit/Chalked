@@ -115,7 +115,7 @@ def example_data():
     Route.query.delete()
     UserLog.query.delete()
 
-    user1 = User(username='Bart',
+    user1 = User(username='bart',
                 pw='kfneklwnf',
                 climb_level='int',
                 email='bart@email.com')
@@ -129,26 +129,42 @@ def example_data():
                 email='harry@email.com')
 
     log1 = UserLog(user_id=3,
-                   route_id=5,
+                   route_id=2,
                    date='2014-11-08 23:56:52',
                    notes='testtesttesttesttesttesttesttest',
                    rating=3,
                    completed=True)
     log2 = UserLog(user_id=1,
-                   route_id=10,
+                   route_id=1,
                    date='2017-11-08 20:56:52',
-                   notes='testtesttesttesttesttesttesttest',
+                   notes='testtesttesttest',
                    rating=3,
                    completed=False)
+    route1 = Route(name='Calypso',
+                   latitude=39.9315,
+                   longitude=-105.283,
+                   state='Colorado',
+                   area='Boulder',
+                   v_grade=5,
+                   url='link1',
+                   img='calpyso.jpg')
+    route2 = Route(name='North Face',
+                  latitude=39.95,
+                  longitude=-105.2872,
+                  state='Colorado',
+                  area='Boulder',
+                  v_grade=3,
+                  url='link2',
+                  img='northface.png')
 
-    db.session.add_all([user1, user2, user3])
+    db.session.add_all([user1, user2, user3, log1, log2, route1, route2])
     db.session.commit()
 
 
-def connect_to_db(app):
+def connect_to_db(app, db_uri='postgresql:///vroutes'):
     """Connect to database."""
 
-    app.config['SQLALCHEMY_DATABASE_URI'] = 'postgresql:///vroutes'
+    app.config['SQLALCHEMY_DATABASE_URI'] = db_uri
     app.config['SQLCHEMY_ECHO'] = True
     db.app = app
     db.init_app(app)

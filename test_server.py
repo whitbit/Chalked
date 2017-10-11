@@ -1,4 +1,5 @@
 import server
+from server import app
 from unittest import TestCase
 from model import connect_to_db, db, example_data
 
@@ -13,8 +14,8 @@ class FlaskTestsBasic(TestCase):
 
     def setUp(self):
 
-        self.client = server.app.test_client()
-        server.app.config['TESTING'] = True
+        self.client = app.test_client()
+        app.config['TESTING'] = True
 
     def test_index(self):
 
@@ -27,12 +28,13 @@ class FlaskTestsDatabase(TestCase):
 
     def setUp(self):
 
-        self.client = server.app.test_client()
-        server.app.config['TESTING'] = True
+        self.client = app.test_client()
+        app.config['TESTING'] = True
 
         connect_to_db(app, "postgresql:///testdb")
         db.create_all()
         example_data()
+        # import pdb; pdb.set_trace()
 
     def tearDown(self):
 
@@ -44,14 +46,28 @@ class FlaskTestsDatabase(TestCase):
 
         pass
 
-    def test_register_form(self):
+    def test_registeration(self):
 
-        result = client.post('/register', data={ 'username': 'username',
-                                                 'password': 'pw',
-                                                 'level': 'int',
-                                                 'email': 'email@gmail.com'})
+        result = self.client.post('/register', data={ 'username': 'username',
+                                                       'password': 'pw',
+                                                       'level': 'int',
+                                                       'email': 'email@gmail.com'},
+                                               follow_redirects=True)
+
 
         self.assertIn('Successfully registered!', result.data)
+
+    def test_already_registered(self):
+
+        result = self.client.post('/register', data={ 'username': 'Bart',
+                                                       'password': 'kfneklwnf',
+                                                       'level': 'int',
+                                                       'email': 'bart@email.com'},
+                                                follow_redirects=True)
+
+        self.assertIn('Please login!', result.data)
+
+
 
 
 if __name__ == '__main__':
