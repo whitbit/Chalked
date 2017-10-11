@@ -64,13 +64,19 @@ class FlaskTestsDatabase(TestCase):
 
         self.assertIn('Please login!', result.data)
 
-    def test_login(self):
+    def test_valid_login(self):
 
         result = self.client.post('/login', data={ 'username': 'bart', 'password': 'kfneklwnf'},
                                             follow_redirects=True)
 
         self.assertIn('Welcome, bart', result.data)
 
+    def test_invalid_login(self):
+
+        result = self.client.post('/login', data={ 'username': 'bart', 'password': 'wrongpw'},
+                                            follow_redirects=True)
+
+        self.assertIn('Invalid password. Please try again!', result.data)
 
 
 
