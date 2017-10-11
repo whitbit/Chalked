@@ -50,33 +50,40 @@ class FlaskTestsDatabase(TestCase):
 
     def test_new_registeration(self):
 
-        result = self.client.post('/register', data={ 'username': 'username',
-                                                       'password': 'pw',
-                                                       'level': 'int',
-                                                       'email': 'email@gmail.com'},
-                                               follow_redirects=True)
+        result = self.client.post('/register', 
+                                  data={ 'username': 'username',
+                                                     'password': 'pw',
+                                                     'level': 'int',
+                                                     'email': 'email@gmail.com'},
+                                  follow_redirects=True)
 
 
         self.assertIn('Successfully registered!', result.data)
 
     def test_already_registered(self):
 
-        result = self.client.post('/register', data={ 'username': 'Bart' },
-                                               follow_redirects=True)
+        result = self.client.post('/register', 
+                                  data={ 'username': 'Bart' },
+                                  follow_redirects=True)
 
         self.assertIn('Please login!', result.data)
 
     def test_valid_login(self):
+        
+        with self.client as c:
+            result = c.post('/login', 
+                            data={ 'username': 'bart', 'password': 'kfneklwnf'},
+                            follow_redirects=True)
 
-        result = self.client.post('/login', data={ 'username': 'bart', 'password': 'kfneklwnf'},
-                                            follow_redirects=True)
+            self.assertEqual(session['username'], 'bart')
+            self.assertIn('Welcome, bart', result.data)
 
-        self.assertIn('Welcome, bart', result.data)
 
     def test_invalid_login(self):
 
-        result = self.client.post('/login', data={ 'username': 'bart', 'password': 'wrongpw'},
-                                            follow_redirects=True)
+        result = self.client.post('/login', 
+                                  data={ 'username': 'bart', 'password': 'wrongpw'},
+                                  follow_redirects=True)
 
         self.assertIn('Invalid password. Please try again!', result.data)
 
@@ -116,6 +123,18 @@ class FlaskTestsLoggedOut(TestCase):
 
         self.assertNotIn('V-points', result.data)
         self.assertIn('Please log in', result.data)
+
+    def test_logout(self):
+
+        with self.client as c:
+            with c.session_transaction() as sess:
+                sess['username'] = 'jenny'
+                sess['user_id'] = 2
+
+            result = self.client.post('/logout', follow_redirects=True)
+
+            self.assertNotIn('username', session)
+            self.assertIn('logged out successfully', result.data)
 
 
 
