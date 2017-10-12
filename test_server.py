@@ -1,7 +1,7 @@
 import server
 from server import app
 from unittest import TestCase
-from model import connect_to_db, db, example_data
+from model import connect_to_db, db, example_data, UserLog
 from flask import session
 
 
@@ -24,6 +24,7 @@ class FlaskTestsBasic(TestCase):
         result = self.client.get('/')
         
         self.assertEqual(result.status_code, 200)
+        self.assertIn('Welcome!', result.data)
 
 
 class FlaskTestsDatabase(TestCase):
@@ -36,7 +37,6 @@ class FlaskTestsDatabase(TestCase):
         connect_to_db(app, "postgresql:///testdb")
         db.create_all()
         example_data()
-        # import pdb; pdb.set_trace()
 
     def tearDown(self):
 
@@ -52,9 +52,9 @@ class FlaskTestsDatabase(TestCase):
 
         result = self.client.post('/register', 
                                   data={ 'username': 'username',
-                                                     'password': 'pw',
-                                                     'level': 'int',
-                                                     'email': 'email@gmail.com'},
+                                         'password': 'pw',
+                                         'level': 'int',
+                                         'email': 'email@gmail.com'},
                                   follow_redirects=True)
 
 
@@ -86,6 +86,24 @@ class FlaskTestsDatabase(TestCase):
                                   follow_redirects=True)
 
         self.assertIn('Invalid password. Please try again!', result.data)
+
+    def test_new_userlog(self):
+        """Tests that log form info is sent to logs table in database"""
+
+        with self.client as c:
+            with c.session_transaction() as sess:
+                sess['user_id'] = 3
+            
+            self.client.post('/log-climb.json',
+                              data={ 'route_id': 1,
+                                     'complete': True,
+                                     'notes': 'check',
+                                     'rating': 5,
+                                     'date': '2014-11-08 23:56:52'})
+
+
+        self.assertIsNotNone(UserLog.query.filter_by(notes='check').first())
+
 
 
 class FlaskTestsLoggedIn(TestCase):
@@ -136,6 +154,7 @@ class FlaskTestsLoggedOut(TestCase):
             self.assertNotIn('username', session)
             self.assertIn('logged out successfully', result.data)
 
+# /upload.json, /uploads/filename, /requireslogin, /map
 
 
 if __name__ == '__main__':
