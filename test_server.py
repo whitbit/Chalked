@@ -104,6 +104,20 @@ class FlaskTestsDatabase(TestCase):
 
         self.assertIsNotNone(UserLog.query.filter_by(notes='check').first())
 
+    def test_user_log_json(self):
+        """Tests that correct json info is returned, such as coordinates, 
+        route names, links for user in session."""
+
+        with self.client as c:
+            with c.session_transaction() as sess:
+                sess['user_id'] = 3
+
+        result = self.client.get('/user-info.json')
+
+        self.assertIn('39.95', result.data)
+        self.assertNotIn('39.9315', result.data)
+        self.assertIn('North Face', result.data)
+        self.assertIn('link2', result.data)
 
 
 class FlaskTestsLoggedIn(TestCase):
