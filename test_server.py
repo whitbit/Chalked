@@ -3,6 +3,7 @@ from server import app
 from unittest import TestCase
 from model import connect_to_db, db, example_data, UserLog
 from flask import session
+from selenium import webdriver
 
 
 class MyAppUnitTestCase(TestCase):
@@ -87,6 +88,15 @@ class FlaskTestsDatabase(TestCase):
 
         self.assertIn('Invalid password. Please try again!', result.data)
 
+
+    def test_not_registered(self):
+
+        result = self.client.post('/login', 
+                                  data={ 'username': 'annie'},
+                                  follow_redirects=True)
+
+        self.assertIn('Please register first', result.data)
+
     def test_new_userlog(self):
         """Tests that log form info is sent to logs table in database"""
 
@@ -99,7 +109,8 @@ class FlaskTestsDatabase(TestCase):
                                      'complete': True,
                                      'notes': 'check',
                                      'rating': 5,
-                                     'date': '2014-11-08 23:56:52'})
+                                     'date': '2014-11-08 23:56:52',
+                                     'photo': 'C:\\fakepath\\photo.jpg'})
 
 
         self.assertIsNotNone(UserLog.query.filter_by(notes='check').first())
@@ -118,6 +129,42 @@ class FlaskTestsDatabase(TestCase):
         self.assertNotIn('39.9315', result.data)
         self.assertIn('North Face', result.data)
         self.assertIn('link2', result.data)
+
+    def test_user_chart_info(self):
+        """Tests that correct json info is sent to chart.js"""
+
+        with self.client as c:
+            with c.session_transaction() as sess:
+                sess['user_id'] = 3
+
+        result = self.client.get('/user-chart.json')
+
+        self.assertNotIn('V5', result.data)
+        self.assertNotIn('rgba(193,46,12,0.8)', result.data)
+
+    def test_upload_route(self):
+        """Tests file upload route"""
+
+        with self.client as c:
+            with c.session_transaction() as sess:
+                sess['user_id'] = 3
+
+        result = self.client.post('/upload.json',
+                                  data={},
+                                  follow_redirects=True)
+        
+        self.assertEqual(result.status_code, 200)
+
+    def test_route_search(self):
+        """Tests route search query."""
+
+        with self.client as c:
+            with c.session_transaction() as sess:
+                sess['user_id'] = 3
+
+        result = self.client.get('/search.json', data={ 'state': 'Colorado'} )
+        
+        self.assertIn('Colorado', result.data)
 
 
 class FlaskTestsLoggedIn(TestCase):
@@ -139,6 +186,12 @@ class FlaskTestsLoggedIn(TestCase):
         result = self.client.get('/dashboard')
 
         self.assertIn('Welcome, bart!', result.data)
+
+    def test_user_map(self):
+
+        result = self.client.get('/user-map')
+
+        self.assertIn('Places I\'ve climbed', result.data)
 
 
 class FlaskTestsLoggedOut(TestCase):
@@ -167,6 +220,8 @@ class FlaskTestsLoggedOut(TestCase):
 
             self.assertNotIn('username', session)
             self.assertIn('logged out successfully', result.data)
+
+
 
 # /upload.json, /uploads/filename, /requireslogin, /map
 

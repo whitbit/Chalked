@@ -179,7 +179,7 @@ def logs_climb():
                       completed=complete,
                       photo=photo
                       )
-    print 'ADDED NEW LOG', new_log
+    # print 'ADDED NEW LOG', new_log
 
     db.session.add(new_log)
 

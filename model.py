@@ -130,7 +130,7 @@ def example_data():
 
     log1 = UserLog(user_id=3,
                    route_id=2,
-                   date='2014-11-08 23:56:52',
+                   date='2016-08-08 23:56:52',
                    notes='testtesttesttesttesttesttesttest',
                    rating=3,
                    completed=True)
@@ -140,6 +140,12 @@ def example_data():
                    notes='testtesttesttest',
                    rating=3,
                    completed=False)
+    log3 = UserLog(user_id=3,
+                   route_id=3,
+                   date='2017-02-08 20:56:52',
+                   notes='abcabc',
+                   rating=7,
+                   completed=True)
     route1 = Route(name='Calypso',
                    latitude=39.9315,
                    longitude=-105.283,
@@ -156,6 +162,14 @@ def example_data():
                   v_grade=3,
                   url='link2',
                   img='northface.png')
+    route3 = Route(name='Route 3',
+                  latitude=30.5,
+                  longitude=-10.2872,
+                  state='Colorado',
+                  area='Denver',
+                  v_grade=4,
+                  url='link3',
+                  img='northface2.png')
 
     db.session.add_all([user1, user2, user3, log1, log2, route1, route2])
     db.session.commit()
