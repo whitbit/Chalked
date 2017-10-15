@@ -214,12 +214,19 @@ var ctx = document.getElementById('climbChart').getContext('2d')
 function generatesChart() {
     $.get('/user-chart.json', function(data) {
 
-        console.log(data)
 
         var myBubbleChart = new Chart(ctx, {
             type: 'bubble',
             data: data,
             options: {
+                tooltips: {
+                    callbacks: {
+                        label: function(tooltipItem, data) {
+                            var times = (data.datasets[tooltipItem.datasetIndex].data[0].r) / 23
+                            return times + ' x ' + data.datasets[tooltipItem.datasetIndex].label
+                        }
+                    }
+                },
                 responsive: true,
                 
                 legend: {
@@ -228,29 +235,31 @@ function generatesChart() {
                 
                 title: {
                     display: true,
-                    text: '2017'
+                    text: 'My 12 Month Progress'
                 },
                 
                 scales: {
                     yAxes: [{
                         scaleLabel: {
                             display: true,
-                            labelString: 'V-Grade'
+                            labelString: 'Difficulty (V-grade)'
                         },
                         ticks: {
                             min: 0,
-                            max: 10
+                            max: 10,
                         }
                     }],
                     xAxes: [{
                         type: 'time',
                         time: {
-                            unit: 'month'
+                            unit: 'month',
+                            min: moment().subtract(12, 'months'),
+                            max: moment()
                         },
                         scaleLabel: {
                             display: true,
                             labelString: 'Month'
-                        }
+                        },
                     }]
                 }
             }
