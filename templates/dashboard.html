@@ -76,34 +76,58 @@
         </div>
     </div>
 
-
     <div>
-        <h3>Log entries</h3>
-        <table id='user_logs'>
+        <h3>Current Projects</h3>
+        <table id='projects'>
             <tr>
-                <th>Date</th>
-                <th>Name</th>
-                <th>State</th>
-                <th>Area</th>
-                <th>Difficulty</th>
-                <th>Rating</th>
+                <th onclick="w3.sortHTML('#projects', '.item', 'td:nth-child(1)')" style="cursor:pointer">Date</th>
+                <th onclick="w3.sortHTML('#projects', '.item', 'td:nth-child(2)')" style="cursor:pointer">Name</th>
+                <th onclick="w3.sortHTML('#projects', '.item', 'td:nth-child(3)')" style="cursor:pointer">State</th>
+                <th onclick="w3.sortHTML('#projects', '.item', 'td:nth-child(4)')" style="cursor:pointer">Area</th>
+                <th onclick="w3.sortHTML('#projects', '.item', 'td:nth-child(5)')" style="cursor:pointer">Difficulty</th>
+                <th onclick="w3.sortHTML('#projects', '.item', 'td:nth-child(6)')" style="cursor:pointer">Rating</th>
                 <th>Notes</th>
-                <th>Completed</th>
             </tr>
 
         </table>
+    </div>
 
+    <div>
+        <h3>Completed Climbs</h3>
+        <table id='completedClimbs'>
+            <tr>
+                <th onclick="w3.sortHTML('#completedClimbs', '.item', 'td:nth-child(1)')" style="cursor:pointer">Date</th>
+                <th onclick="w3.sortHTML('#completedClimbs', '.item', 'td:nth-child(2)')" style="cursor:pointer">Name</th>
+                <th onclick="w3.sortHTML('#completedClimbs', '.item', 'td:nth-child(3)')" style="cursor:pointer">State</th>
+                <th onclick="w3.sortHTML('#completedClimbs', '.item', 'td:nth-child(4)')" style="cursor:pointer">Area</th>
+                <th onclick="w3.sortHTML('#completedClimbs', '.item', 'td:nth-child(5)')" style="cursor:pointer">Difficulty</th>
+                <th onclick="w3.sortHTML('#completedClimbs', '.item', 'td:nth-child(6)')" style="cursor:pointer">Rating</th>
+                <th>Notes</th>
+            </tr>
+
+        </table>
     </div>
 
 
 
-    
 
+    <!-- <div id="root"></div> -->
+
+<!--     <script src="http://unpkg.com/react@15.6.2/dist/react.js"></script>
+    <script src="http://unpkg.com/react-dom@15.6.2/dist/react-dom.js"></script>
+
+    <script src="http://unpkg.com/babel-standalone"></script>
+
+    <script src="/static/dashboard.jsx" type="text/jsx"></script> -->
+    <script src="https://www.w3schools.com/lib/w3.js"></script>
 
 
     <script src="http://code.jquery.com/jquery.js"></script>
 
     <script src="/static/user_dashboard.js"></script>
+
+
+    
 
 
 

@@ -245,6 +245,10 @@ def renders_user_journal_info():
 
     log_info['map'] = {}
 
+    log_info['completed'] = {}
+
+    log_info['projects'] = {}
+
     log_info['user_points'] = user.getUserPoints()
 
 
@@ -259,14 +263,6 @@ def renders_user_journal_info():
 
         log_info['coordinates'][climb.review_id] = {'lat': route.latitude, 'lng': route.longitude}
 
-        log_info['review_info'][climb.review_id] = (date,
-                                                    route.name, 
-                                                    route.state,
-                                                    route.area,
-                                                    route.v_grade,
-                                                    climb.rating,
-                                                    climb.notes,
-                                                    climb.completed)
         log_info['map'][climb.review_id] = { 'coordinates': {'lat': route.latitude,
                                                              'lng': route.longitude},
                                              'info_window': (date, 
@@ -279,6 +275,22 @@ def renders_user_journal_info():
                                                              route.latitude,
                                                              route.longitude) 
                                             }
+        if climb.completed == True:
+            log_info['completed'][climb.review_id] = (date,
+                                                     route.name, 
+                                                     route.state,
+                                                     route.area,
+                                                     route.v_grade,
+                                                     climb.rating,
+                                                     climb.notes)
+        if climb.completed == False:
+            log_info['projects'][climb.review_id] = (date,
+                                                     route.name, 
+                                                    route.state,
+                                                    route.area,
+                                                    route.v_grade,
+                                                    climb.rating,
+                                                    climb.notes)
 
 
     return jsonify(log_info)

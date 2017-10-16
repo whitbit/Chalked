@@ -146,30 +146,58 @@ function uploadsPhoto(evt) {
 
 //displays user logged climbs
 function displayLogs(evt) {
-    $.get('/user-info.json', getLogs);
+    $.get('/user-info.json', function(results) {
+
+        var completedEntries = results.completed;
+
+        $('.items').empty()
+
+        var completedLog = [];
+
+        for(var log in completedEntries) {
+            completedLog.push(completedEntries[log])
+        }
+
+        completedLog.sort().reverse()
+
+
+        for(var i = 0; i < completedLog.length; i++) {
+            var html = ''
+
+            for(var j = 0; j < completedLog[i].length; j++)
+                if (j === 0) {
+                    html += '<td>' + moment(completedLog[i][j]).fromNow() + '</td>'
+                } else {
+                    html += '<td>' + completedLog[i][j] + '</td>';
+                }
+            $('#completedClimbs').append('<tr class="item">' + html + '</tr>');
+        }
+
+
+        var incompleteEntries = results.projects;
+
+        var projectsLog = [];
+
+        for(var log in incompleteEntries) {
+            projectsLog.push(incompleteEntries[log])
+        }
+
+        projectsLog.sort().reverse()
+
+        for(var i = 0; i < projectsLog.length; i++) {
+            var html = ''
+
+            for(var j = 0; j < projectsLog[i].length; j++)
+                if (j === 0) {
+                    html += '<td>' + moment(projectsLog[i][j]).fromNow() + '</td>'
+                } else {
+                    html += '<td>' + projectsLog[i][j] + '</td>';
+                }
+            $('#projects').append('<tr class="item">' + html + '</tr>');
+        }
+    });
 }
 
-function getLogs(results) {
-    
-    var log_entries = results.review_info;
-
-    $('#user_logs').empty()
-
-    var logsArr = [];
-
-    for(var log in log_entries) {
-        logsArr.push(log_entries[log])
-    }
-
-    logsArr.sort().reverse()
-
-    for(var i = 0; i < logsArr.length; i++) {
-        var html = ''
-        for(var j = 0; j < logsArr[i].length; j++)
-            html += '<td>' + logsArr[i][j] + '</td>';
-        $('#user_logs').append('<tr>' + html + '</tr>');
-    }
-}
 displayLogs()
 
 
@@ -178,7 +206,7 @@ function displaysUserStatus() {
         points = results['user_points']
 
 
-        $('#points').append('V-points: ', points)
+        $('#points').append('Total V-points: ', points)
     })
 }
 
