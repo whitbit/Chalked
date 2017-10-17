@@ -290,7 +290,8 @@ def renders_user_journal_info():
                                                     route.state,
                                                     route.area,
                                                     climb.rating,
-                                                    climb.notes)
+                                                    climb.notes,
+                                                    climb.review_id)
 
 
     return jsonify(log_info)
@@ -362,6 +363,12 @@ def user_charts_data():
 
     return jsonify(data)
 
+@app.route('/update-log.json')
+def updates_review_log():
+
+    print 'HELLO'
+
+    return jsonify({})
 
 
 

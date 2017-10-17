@@ -191,10 +191,10 @@ function displayLogs(evt) {
             
             html += '<td> <input type="checkbox" name="updated" value="true"> </td>'
 
-            html += '<td> <input type="submit" value="update" id=' + projectsLog[i][7] + '</td>'
+            html += '<td> <input type="submit" value="update" </td>'
 
-            $('#projects').append('<tr class="item">' + html + '</tr>');
-
+            $('#projects').append('<tr class="item" id="' + projectsLog[i][7] + '">' + html + '</tr>');
+            console.log(projectsLog[i][7])
 
         }
     });
@@ -203,22 +203,55 @@ function displayLogs(evt) {
 displayLogs()
 
 
+$('table').on('click', ':submit', updatesLog)
+
+
+function updatesLog(evt) {
+
+    evt.preventDefault();
+    console.log($(this).attr('id'))
+    console.log($('this.projectNotes').val())
+
+
+    var formInputs = {
+        'review_id': $(this).attr('id'),
+        'notes': $('.projectNotes').val(),
+        'complete': $( "input[type=checkbox][name=updated]:checked" ).val(),
+        'rating': $('#rating').val(),
+        'date': Date.now(),
+        'photo': $('#photo').val()
+    };
+
+
+    $.post('/log-climb.json', formInputs, function() {
+        alert('database updated!')
+    });
+
+    if(files.length > 0) {
+        uploadsPhoto()
+    }
+}
+
 
 
 function makeProjectLogRow(projectInfo) {
     var html = ''
-    
+    var originalNotes = projectInfo[6];
+    var originalRating = projectInfo[5];
+    console.log(projectInfo[6])
+
+    if (projectInfo[6] === null) {
+        originalNotes = 'Add notes...'
+    }
+
     for(var j = 0; j < projectInfo.length - 1; j++)
         if (j === 0) {
             html += '<td>' + moment(projectInfo[0]).fromNow() + '</td>'
         } else if (j === 5) {
-            
-            if (projectInfo[j] === "") {
-                html += '<td> <input type="text" placeholder="Add notes…" class="projectNotes">'
-            } else {
-                html += '<td> <input type="text" class="projectNotes"> </td>'
-                $('.projectNotes').val(projectInfo[5])
-            }
+            html += '<td> <input type="number" placeholder="' + originalRating + '" class="projectRating">'
+        } else if (j === 6) {
+            html += '<td> <input type="text" class="projectNotes">'
+            $('.projectNotes').val(originalNotes)
         } else {
             html += '<td>' + projectInfo[j] + '</td>';
         }
