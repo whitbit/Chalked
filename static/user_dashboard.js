@@ -222,8 +222,10 @@ function updatesLog(evt) {
         'photo': $('#photo').val()
     };
 
+    console.log(formInputs)
 
-    $.post('/log-climb.json', formInputs, function() {
+
+    $.post('/update-log.json', formInputs, function() {
         alert('database updated!')
     });
 
