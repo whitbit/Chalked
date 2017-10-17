@@ -277,18 +277,18 @@ def renders_user_journal_info():
                                             }
         if climb.completed == True:
             log_info['completed'][climb.review_id] = (date,
+                                                     route.v_grade,
                                                      route.name, 
                                                      route.state,
                                                      route.area,
-                                                     route.v_grade,
                                                      climb.rating,
                                                      climb.notes)
         if climb.completed == False:
             log_info['projects'][climb.review_id] = (date,
-                                                     route.name, 
+                                                    route.v_grade,
+                                                    route.name,
                                                     route.state,
                                                     route.area,
-                                                    route.v_grade,
                                                     climb.rating,
                                                     climb.notes)
 

@@ -187,18 +187,51 @@ function displayLogs(evt) {
         for(var i = 0; i < projectsLog.length; i++) {
             var html = ''
 
-            for(var j = 0; j < projectsLog[i].length; j++)
-                if (j === 0) {
-                    html += '<td>' + moment(projectsLog[i][j]).fromNow() + '</td>'
-                } else {
-                    html += '<td>' + projectsLog[i][j] + '</td>';
-                }
+            html += makeProjectLogRow(projectsLog[i])
+            
+            html += '<td> <input type="checkbox" name="updated" value="true"> </td>'
+
+            html += '<td> <input type="submit" value="update" id=' + projectsLog[i][7] + '</td>'
+
             $('#projects').append('<tr class="item">' + html + '</tr>');
+
+
         }
     });
 }
 
 displayLogs()
+
+
+
+
+function makeProjectLogRow(projectInfo) {
+    var html = ''
+    
+    for(var j = 0; j < projectInfo.length - 1; j++)
+        if (j === 0) {
+            html += '<td>' + moment(projectInfo[0]).fromNow() + '</td>'
+        } else if (j === 5) {
+            
+            if (projectInfo[j] === "") {
+                html += '<td> <input type="text" placeholder="Add notes…" class="projectNotes">'
+            } else {
+                html += '<td> <input type="text" class="projectNotes"> </td>'
+                $('.projectNotes').val(projectInfo[5])
+            }
+        } else {
+            html += '<td>' + projectInfo[j] + '</td>';
+        }
+    
+    return html
+}
+
+
+
+
+
+
+
 
 
 function displaysUserStatus() {
