@@ -111,8 +111,10 @@ function submitsClimb(evt) {
 
 function logsClimb(results) {
     //upon new long, buble chart and logs tables update
-    displayLogs()
-    generatesChart()
+    $('#myModal').modal('hide');
+    document.getElementById('log-climb').reset();
+    displayLogs();
+    generatesChart();
 }
 
 
