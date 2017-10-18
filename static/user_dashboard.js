@@ -220,7 +220,11 @@ function updatesLog(evt) {
     var tableData = $("table ." + reviewId + " td")
     var rating = tableData.eq(5).children().val()
     var notes = tableData.eq(6).children().val()
-    var completed = tableData.eq(7).children().val()
+    var completed = $( "input[type=checkbox][name=update]:checked" ).val()
+
+    if(completed === undefined) {
+        completed = false;
+    }
 
 
 
@@ -259,7 +263,7 @@ function makeProjectLogRow(projectInfo) {
         if (j === 0) {
             html += '<td>' + moment(projectInfo[0]).fromNow() + '</td>'
         } else if (j === 5) {
-            html += '<td> <input type="number" placeholder="' + originalRating + '" class="projectRating">'
+            html += '<td> <input type="number" placeholder="' + originalRating + '" class="projectRating" required>'
         } else if (j === 6) {
 
             html += renderOldLogNotes(projectInfo[6])
