@@ -6,6 +6,7 @@ from sqlalchemy import extract, update
 from werkzeug.utils import secure_filename
 from datetime import datetime, timedelta
 import calendar
+import bcrypt
 
 UPLOAD_FOLDER = './static/photos'
 ALLOWED_EXTENSIONS = set(['png', 'jpg', 'jpeg', 'gif'])
@@ -15,7 +16,6 @@ app = Flask(__name__)
 app.config['UPLOAD_FOLDER'] = UPLOAD_FOLDER
 
 app.secret_key = 'ABC'
-
 
 
 
@@ -60,9 +60,12 @@ def register_user():
     """Adds user to database."""
 
     username = request.form.get('username').lower()
-    password = request.form.get('password')
+    password = b'request.form.get("password")'
     level = request.form.get('level')
     email = request.form.get('email')
+
+    hashed = bcrypt.hashpw(password.encode('utf8'), bcrypt.gensalt())
+
 
     user = User.query.filter_by(username=username).first()
 
@@ -71,7 +74,7 @@ def register_user():
         return redirect('/')
     else:
         user = User(username=username,
-                    pw=password,
+                    pw=hashed,
                     climb_level=level,
                     email=email)
 
@@ -87,12 +90,15 @@ def process_login():
     """Checks if user is registered and verifies password."""
 
     username = request.form.get('username').lower()
-    password = request.form.get('password')
+    password = b'request.form.get("password")'
 
     user = User.query.filter_by(username=username).first()
+    print 'USER TYPED', password
+    print 'DATABASE', user.pw.encode('utf8')
+    print 'PASSWORD', password.encode('utf8')
 
     if user:
-        if user.pw == password:
+        if bcrypt.checkpw(password.encode('utf8'), user.pw.encode('utf8')):
             session['username'] = user.username
             session['user_id'] = user.user_id
 
