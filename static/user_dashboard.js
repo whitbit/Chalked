@@ -220,8 +220,8 @@ function updatesLog(evt) {
     var tableData = $("table ." + reviewId + " td")
     var rating = tableData.eq(5).children().val()
     var notes = tableData.eq(6).children().val()
-    var completed = $( "input[type=checkbox][name=update]:checked" ).val()
-
+    var completed = $( "input[type=checkbox][name=updated]:checked" ).val()
+    console.log(completed)
     if(completed === undefined) {
         completed = false;
     }
