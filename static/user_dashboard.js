@@ -156,7 +156,8 @@ function displayLogs(evt) {
 
         var completedEntries = results.completed;
 
-        $('.items').empty()
+        // $('table tr:not(:first)').empty()
+        $('.item').empty();
 
         var completedLog = [];
 
@@ -199,7 +200,7 @@ function displayLogs(evt) {
 
             html += '<td> <input type="submit" value="update" class="' + projectsLog[i][7] + '"</td>'
 
-            $('#projects').append('<tr class="' + projectsLog[i][7] + '">' + html + '</tr>');
+            $('#projects').append('<tr class="item" class="' + projectsLog[i][7] + '">' + html + '</tr>');
 
         }
     });
@@ -242,7 +243,7 @@ function updatesLog(evt) {
 
 
     $.post('/update-log.json', formInputs, function() {
-        alert('database updated!')
+        displayLogs();
     });
 
     // if(files.length > 0) {
@@ -257,15 +258,12 @@ function makeProjectLogRow(projectInfo) {
     var originalNotes = projectInfo[6];
     var originalRating = projectInfo[5];
 
-    if (projectInfo[6] === null) {
-        originalNotes = 'Add notes...'
-    }
 
     for(var j = 0; j < projectInfo.length - 1; j++)
         if (j === 0) {
             html += '<td>' + moment(projectInfo[0]).fromNow() + '</td>'
         } else if (j === 5) {
-            html += '<td> <input type="number" placeholder="' + originalRating + '" class="projectRating" required>'
+            html += '<td> <input type="number" class="projectRating" value="' + originalRating + '"required </td>'
         } else if (j === 6) {
 
             html += renderOldLogNotes(projectInfo[6])
