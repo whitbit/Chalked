@@ -32,20 +32,20 @@
                     <div class="modal-body">
 
                         <select name='state' id='state'>
-                            <option disable selected value>STATE</option>
+                            <option disable selected value> -- STATE -- </option>
                         </select><br>
 
 
                         <!-- filters area -->
                         <select name='area' id='area'>
-                            <option disable selected value>AREA</option>
+                            <option disable selected value> -- AREA -- </option>
                         </select>
     
                         <!-- logs climb info -->
                         <form id='log-climb'>
                             
                             <select name='route' id='route'>
-                                <option disable selected value>ROUTE</option>
+                                <option disable selected value> -- ROUTE -- </option>
                             </select><br>
                             
                             <label> Rate the climb:
@@ -78,7 +78,7 @@
 
     <div>
         <h3>Current Projects</h3>
-        <table id='projects' class='table'>
+        <table id='projects' class='table table-striped'>
             <tr>
                 <th onclick="w3.sortHTML('#projects', '.item', 'td:nth-child(1)')" style="cursor:pointer">Date</th>
                 <th onclick="w3.sortHTML('#projects', '.item', 'td:nth-child(2)')" style="cursor:pointer">Difficulty</th>
@@ -88,6 +88,7 @@
                 <th onclick="w3.sortHTML('#projects', '.item', 'td:nth-child(6)')" style="cursor:pointer">Rating</th>
                 <th>Notes</th>
                 <th>Completed?</th>
+                <th></th>
             </tr>
 
         </table>
@@ -95,7 +96,7 @@
 
     <div>
         <h3>Completed Climbs</h3>
-        <table id='completedClimbs' class='table'>
+        <table id='completedClimbs' class='table table-striped'>
             <tr>
                 <th onclick="w3.sortHTML('#completedClimbs', '.item', 'td:nth-child(1)')" style="cursor:pointer">Date</th>
                 <th onclick="w3.sortHTML('#completedClimbs', '.item', 'td:nth-child(2)')" style="cursor:pointer">Difficulty</th>

@@ -2,7 +2,7 @@ import os
 from flask import Flask, render_template, redirect, request, flash, session, jsonify, url_for, send_from_directory
 from model import connect_to_db, db, User, Route, UserLog
 from functools import wraps
-from sqlalchemy import extract
+from sqlalchemy import extract, update
 from werkzeug.utils import secure_filename
 from datetime import datetime, timedelta
 import calendar
@@ -363,10 +363,18 @@ def user_charts_data():
 
     return jsonify(data)
 
-@app.route('/update-log.json')
+@app.route('/update-log.json', methods=['POST'])
 def updates_review_log():
 
-    print 'HELLO'
+    review_id = request.form.get('review_id')
+    log = UserLog.query.get(review_id)
+    log.notes = request.form.get('notes')
+    log.completed = request.form.get('complete')
+    log.rating = request.form.get('rating')
+    log.date = request.form.get('date')
+
+    db.session.commit()
+
 
     return jsonify({})
 

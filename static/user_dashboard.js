@@ -24,6 +24,8 @@ function showAreas(results) {
 
     $('#area').empty();
 
+    $('#area').append('<option disable selected value> -- AREA -- </option>')
+    
     $.each(areas, function(index, area) {
         $('#area').append('<option value=' + area + '>' + area + '</option>');
     });
@@ -66,6 +68,8 @@ function showRoutes(results) {
     var routes = results.routes;
 
     $('#route').empty();
+
+    $('#route').append('<option disable selected value> -- ROUTE -- </option>')
 
     $.each(routes, function(index, route) {
          $('#route').append('<option value=' + route[2] + '>' + 'V' + route[0] + ' ' + route[1] + '</option>');
@@ -191,10 +195,9 @@ function displayLogs(evt) {
             
             html += '<td> <input type="checkbox" name="updated" value="true"> </td>'
 
-            html += '<td> <input type="submit" value="update" </td>'
+            html += '<td> <input type="submit" value="update" class="' + projectsLog[i][7] + '"</td>'
 
-            $('#projects').append('<tr class="item" id="' + projectsLog[i][7] + '">' + html + '</tr>');
-            console.log(projectsLog[i][7])
+            $('#projects').append('<tr class="' + projectsLog[i][7] + '">' + html + '</tr>');
 
         }
     });
@@ -209,17 +212,24 @@ $('table').on('click', ':submit', updatesLog)
 function updatesLog(evt) {
 
     evt.preventDefault();
-    console.log($(this).attr('id'))
-    console.log($('this.projectNotes').val())
+
+
+    // debugger;
+    var reviewId = $(this).attr('class')
+
+    var tableData = $("table ." + reviewId + " td")
+    var rating = tableData.eq(5).children().val()
+    var notes = tableData.eq(6).children().val()
+    var completed = tableData.eq(7).children().val()
+
 
 
     var formInputs = {
-        'review_id': $(this).attr('id'),
-        'notes': $('.projectNotes').val(),
-        'complete': $( "input[type=checkbox][name=updated]:checked" ).val(),
-        'rating': $('#rating').val(),
-        'date': Date.now(),
-        'photo': $('#photo').val()
+        'review_id': reviewId,
+        'notes': notes,
+        'complete': completed,
+        'rating': rating,
+        'date': moment(Date.now()).format('MM/DD/YYYY'),
     };
 
     console.log(formInputs)
@@ -229,9 +239,9 @@ function updatesLog(evt) {
         alert('database updated!')
     });
 
-    if(files.length > 0) {
-        uploadsPhoto()
-    }
+    // if(files.length > 0) {
+    //     uploadsPhoto()
+    // }
 }
 
 
@@ -240,7 +250,6 @@ function makeProjectLogRow(projectInfo) {
     var html = ''
     var originalNotes = projectInfo[6];
     var originalRating = projectInfo[5];
-    console.log(projectInfo[6])
 
     if (projectInfo[6] === null) {
         originalNotes = 'Add notes...'
@@ -252,8 +261,8 @@ function makeProjectLogRow(projectInfo) {
         } else if (j === 5) {
             html += '<td> <input type="number" placeholder="' + originalRating + '" class="projectRating">'
         } else if (j === 6) {
-            html += '<td> <input type="text" class="projectNotes">'
-            $('.projectNotes').val(originalNotes)
+
+            html += renderOldLogNotes(projectInfo[6])
         } else {
             html += '<td>' + projectInfo[j] + '</td>';
         }
@@ -262,6 +271,17 @@ function makeProjectLogRow(projectInfo) {
 }
 
 
+function renderOldLogNotes(note) {
+    var text = '';
+
+    if(note === '') {
+        text += '<td> <input type="text" class="projectNotes" placeholder="add notes...">'
+    } else {
+        text += '<td> <input type="text" class="projectNotes" value=' + note + '>'
+    }
+
+    return text
+}
 
 
 
