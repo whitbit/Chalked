@@ -157,7 +157,7 @@ function displayLogs(evt) {
         var completedEntries = results.completed;
 
         // $('table tr:not(:first)').empty()
-        $('.item').empty();
+        $('tr').has('td').empty();
 
         var completedLog = [];
 
@@ -200,7 +200,7 @@ function displayLogs(evt) {
 
             html += '<td> <input type="submit" value="update" class="' + projectsLog[i][7] + '"</td>'
 
-            $('#projects').append('<tr class="item" class="' + projectsLog[i][7] + '">' + html + '</tr>');
+            $('#projects').append('<tr class="' + projectsLog[i][7] + ' item" >' + html + '</tr>');
 
         }
     });
@@ -222,14 +222,14 @@ function updatesLog(evt) {
 
     var tableData = $("table ." + reviewId + " td")
     var rating = tableData.eq(5).children().val()
+    console.log(rating)
     var notes = tableData.eq(6).children().val()
+    console.log(notes)
     var completed = $( "input[type=checkbox][name=updated]:checked" ).val()
     console.log(completed)
     if(completed === undefined) {
         completed = false;
     }
-
-
 
     var formInputs = {
         'review_id': reviewId,
@@ -281,7 +281,7 @@ function renderOldLogNotes(note) {
     if(note === '') {
         text += '<td> <input type="text" class="projectNotes" placeholder="add notes...">'
     } else {
-        text += '<td> <input type="text" class="projectNotes" value=' + note + '>'
+        text += '<td> <input type="text" class="projectNotes" value="' + note + '"">'
     }
 
     return text

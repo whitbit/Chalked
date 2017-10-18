@@ -60,7 +60,7 @@ def register_user():
     """Adds user to database."""
 
     username = request.form.get('username').lower()
-    password = b'request.form.get("password")'
+    password = request.form.get("password")
     level = request.form.get('level')
     email = request.form.get('email')
 
@@ -90,12 +90,14 @@ def process_login():
     """Checks if user is registered and verifies password."""
 
     username = request.form.get('username').lower()
-    password = b'request.form.get("password")'
+    password = request.form.get("password")
 
     user = User.query.filter_by(username=username).first()
     print 'USER TYPED', password
     print 'DATABASE', user.pw.encode('utf8')
     print 'PASSWORD', password.encode('utf8')
+    # hashed = bcrypt.hashpw(password.encode('utf8'), bcrypt.gensalt())
+    # print hashed
 
     if user:
         if bcrypt.checkpw(password.encode('utf8'), user.pw.encode('utf8')):
