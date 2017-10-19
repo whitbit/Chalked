@@ -1,4 +1,5 @@
 from flask_sqlalchemy import SQLAlchemy
+import bcrypt
 
 db = SQLAlchemy()
 
@@ -107,7 +108,8 @@ class UserLog(db.Model):
 
 #          return "<Favorites id={}, user_id={}, route_id={}>".format(self.favorites_id,
 #                                                                     self.user_id,
-#                                                                     self.route_id)
+#                                                                    self.route_id)
+
 
 def example_data():
     """Sample data for testing"""
@@ -115,8 +117,13 @@ def example_data():
     Route.query.delete()
     UserLog.query.delete()
 
+    password = 'kfneklwnf'
+
+    password = bcrypt.hashpw(password.encode('utf8'), 
+                             bcrypt.gensalt())
+
     user1 = User(username='bart',
-                pw='kfneklwnf',
+                pw=password,
                 climb_level='int',
                 email='bart@email.com')
     user2 = User(username='Jenny',

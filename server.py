@@ -47,12 +47,33 @@ def index():
 
 
 @app.route('/map')
-def routes_map():
+def main_map():
     """Shows all routes in database on Google map."""
+
+    return render_template('US_map.html')
+
+
+@app.route('/map.json')
+def get_map_info():
 
     routes = Route.query.all()
 
-    return render_template('US_map.html', routes=routes)
+    main_map = {}
+
+    for route in routes:
+
+            main_map[route.route_id] = { 'coordinates': {'lat': route.latitude,
+                                                         'lng': route.longitude },
+                                                         'info_window': (route.name,
+                                                                         route.v_grade,
+                                                                         route.state,
+                                                                         route.area,
+                                                                         route.url,
+                                                                         route.latitude,
+                                                                         route.longitude,
+                                                                         route.img) 
+                                                         }
+    return jsonify(main_map)
 
 
 @app.route('/register', methods=['POST'])
@@ -93,11 +114,6 @@ def process_login():
     password = request.form.get("password")
 
     user = User.query.filter_by(username=username).first()
-    print 'USER TYPED', password
-    print 'DATABASE', user.pw.encode('utf8')
-    print 'PASSWORD', password.encode('utf8')
-    # hashed = bcrypt.hashpw(password.encode('utf8'), bcrypt.gensalt())
-    # print hashed
 
     if user:
         if bcrypt.checkpw(password.encode('utf8'), user.pw.encode('utf8')):

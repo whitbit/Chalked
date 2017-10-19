@@ -1,11 +1,8 @@
-<!DOCTYPE html>
-<html>
-  <head>
+{% extends 'base.html' %}
 
-    <title>Marker Clustering</title>
-    {% block style %}
-      /* Always set the map height explicitly to define the size of the div
-       * element that contains the map. */
+{% block title %} My map {% endblock %}
+
+{% block style %}
       #map {
         height: 100%;
       }
@@ -15,53 +12,17 @@
         margin: 0;
         padding: 0;
       }
-    {% endblock %}
-  </head>
-  <body>
-    <div id="map"></div>
-    <script>
 
-      function initMap() {
+{% endblock %}
 
-        var map = new google.maps.Map(document.getElementById('map'), {
-          zoom: 3,
-          center: {lat: 34.0148, lng: -116.1654}
-        });
+{% block content %} 
+<div id="map"></div>
 
-        // Create an array of alphabetical characters used to label the markers.
-        labels = 'ABCDEFGHIJKLMNOPQRSTUVWXYZ'
 
-        // Add some markers to the map.
-        // Note: The code uses the JavaScript Array.prototype.map() method to
-        // create an array of markers based on a given "locations" array.
-        // The map() method here has nothing to do with the Google Maps API.
-        var markers = locations.map(function(location, i) {
-          return new google.maps.Marker({
-            position: location,
-            label: labels[i % labels.length]
-          });
-        });
+ <script src="/static/main_map.js"></script>
+ <script src="https://developers.google.com/maps/documentation/javascript/examples/markerclusterer/markerclusterer.js"></script>
 
-        // Add a marker clusterer to manage the markers.
-        var markerCluster = new MarkerClusterer(map, markers,
-            {imagePath: 'https://developers.google.com/maps/documentation/javascript/examples/markerclusterer/m'});
-      }
+<script async defer src="https://maps.googleapis.com/maps/api/js?key=AIzaSyC9qDiQS_jF-wRKvyNXlov2leRbMEq56Ig"></script>
+        
 
-      var locations = [];
-
-      // refactor into AJAX later
-
-      {% for route in routes %}
-        locations.push(
-          { lat: {{ route.latitude }}, lng: {{ route.longitude }} }
-        );
-      {% endfor %}
-
-    </script>
-    <script src="https://developers.google.com/maps/documentation/javascript/examples/markerclusterer/markerclusterer.js">
-    </script>
-    <script async defer
-    src="https://maps.googleapis.com/maps/api/js?key=AIzaSyAde7VEw2uZ_ZgJKnbHk03YS9TwUC7rMLM&callback=initMap">
-    </script>
-  </body>
-</html>
+{% endblock %}
