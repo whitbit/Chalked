@@ -141,8 +141,8 @@ class FlaskTestsDatabase(TestCase):
 
         result = self.client.get('/user-chart.json')
 
-        self.assertNotIn('V5', result.data)
-        self.assertNotIn('rgba(193,46,12,0.8)', result.data)
+        self.assertIn('V3', result.data)
+        self.assertIn('rgba(193,46,12,0.8)', result.data)
 
     def test_upload_route(self):
         """Tests file upload route."""
@@ -175,6 +175,13 @@ class FlaskTestsDatabase(TestCase):
                                                             })
         
         self.assertEqual(result.status_code, 200)
+
+    def test_log_delete(self):
+
+        result = self.client.post('/delete-log.json', data= { 'review_id': 4} )
+
+        self.assertEqual(result.status_code, 200)
+        self.assertIsNone(UserLog.query.filter_by(review_id=4).first())
 
 
 class FlaskTestsLoggedIn(TestCase):

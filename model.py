@@ -121,7 +121,7 @@ def example_data():
 
     log1 = UserLog(user_id=3,
                    route_id=2,
-                   date='2016-08-08 23:56:52',
+                   date='2017-08-08 23:56:52',
                    notes='testtesttesttesttesttesttesttest',
                    rating=3,
                    completed=True)

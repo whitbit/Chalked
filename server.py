@@ -46,13 +46,6 @@ def index():
     return render_template('/homepage.html')
 
 
-@app.route('/map')
-def main_map():
-    """Shows all routes in database on Google map."""
-
-    return render_template('US_map.html')
-
-
 @app.route('/register', methods=['POST'])
 def register_user():
     """Adds user to database."""
