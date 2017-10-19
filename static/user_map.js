@@ -76,6 +76,7 @@ function map_climbs(results) {
       var url = data[6];
       var lat = data[7];
       var lng = data[8];
+      console.log(data[5])
 
       if(data[5] === null) {
         var img = '';
@@ -88,7 +89,7 @@ function map_climbs(results) {
              + '<h5>(' + lat + ', ' + lng + ')</h5>'
              + '<h5>' + area + ', ' + state + '</h5>' 
              + '<a href=' + url + '> MORE INFO </a><br>'
-             + '<img src=' + img + ' width="450px">'
+             + '<img src="' + img + '"" width="450px">'
 
     }
 

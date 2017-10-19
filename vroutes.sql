@@ -1674,6 +1674,16 @@ COPY logs (review_id, user_id, route_id, date, notes, rating, completed, photo) 
 1498	14	2375	2015-05-04 18:11:45	A esse debitis facilis minima. Voluptas occaecati nihil ea.	5	t	\N
 1499	17	1722	2016-10-10 03:51:04	Sit vitae qui fuga cum dolore. Vel necessitatibus magni fuga earum quos nam provident.	2	f	\N
 1500	9	705	2016-03-27 00:49:30	Ullam dolore voluptatibus cumque recusandae. Inventore quis debitis nulla.	4	t	\N
+1501	21	1020	2016-12-01 00:00:00	Warm up at Indian Rock.  Had a good climbing sesh today!	5	t	
+1502	21	965	2017-01-15 00:00:00		4	t	
+1503	21	878	2017-01-30 00:00:00	One of my favorite V0s outdoors	5	t	
+1504	21	980	2017-03-20 00:00:00	Huge mantle at the finish	5	t	
+1505	21	842	2017-05-01 00:00:00	Climbs at Joshua Tree are so hard!  This felt like an indoor V3..	5	t	
+1506	21	2610	2017-10-18 00:00:00	My first outdoor V2! It had a difficult crimpy start, and a huge throw to the lip. 	5	t	IMG_3277.JPG
+1507	21	2611	2017-01-04 00:00:00	Super fun with left heel hooks along big jugs	5	t	Red Rocks Krafts-6.jpg
+1508	21	2609	2017-11-01 00:00:00	Unique full body stem.  High ball climb :(	5	t	IMG_0968.JPG
+1509	21	54	2017-07-04 00:00:00	Climbing in central park!	5	t	
+1510	21	2935	2017-10-20 00:00:00	Crazy high ball climb! Didn't think I would make it to the top!	5	t	
 \.
 
 
@@ -1681,7 +1691,7 @@ COPY logs (review_id, user_id, route_id, date, notes, rating, completed, photo) 
 -- Name: logs_review_id_seq; Type: SEQUENCE SET; Schema: public; Owner: vagrant
 --
 
-SELECT pg_catalog.setval('logs_review_id_seq', 1500, true);
+SELECT pg_catalog.setval('logs_review_id_seq', 1510, true);
 
 
 --
@@ -4934,6 +4944,7 @@ COPY users (user_id, username, pw, climb_level, email) FROM stdin;
 18	vmendez	eD6K*Toq$^	beg	johncastaneda@russell.com
 19	kwelch	(sz0SAEqW*	beg	pamelajones@yahoo.com
 20	victor00	z6cs_XOT!c	int	haynesjames@hotmail.com
+21	whitney	$2b$12$r.tzSM.ZTCL2KuqQFraY9uALhrUwxFdCeqE09dTskSU1caJgw6PH2	intermediate	whitney@gmail.com
 \.
 
 
@@ -4941,7 +4952,7 @@ COPY users (user_id, username, pw, climb_level, email) FROM stdin;
 -- Name: users_user_id_seq; Type: SEQUENCE SET; Schema: public; Owner: vagrant
 --
 
-SELECT pg_catalog.setval('users_user_id_seq', 20, true);
+SELECT pg_catalog.setval('users_user_id_seq', 21, true);
 
 
 --

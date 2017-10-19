@@ -53,29 +53,6 @@ def main_map():
     return render_template('US_map.html')
 
 
-@app.route('/map.json')
-def get_map_info():
-
-    routes = Route.query.all()
-
-    main_map = {}
-
-    for route in routes:
-
-            main_map[route.route_id] = { 'coordinates': {'lat': route.latitude,
-                                                         'lng': route.longitude },
-                                                         'info_window': (route.name,
-                                                                         route.v_grade,
-                                                                         route.state,
-                                                                         route.area,
-                                                                         route.url,
-                                                                         route.latitude,
-                                                                         route.longitude,
-                                                                         route.img) 
-                                                         }
-    return jsonify(main_map)
-
-
 @app.route('/register', methods=['POST'])
 def register_user():
     """Adds user to database."""
@@ -102,7 +79,7 @@ def register_user():
         db.session.add(user)
 
         db.session.commit()
-        flash('Successfully registered!')
+        flash('Successfully registered! Please log in!')
         return redirect('/')
 
 
@@ -333,12 +310,7 @@ def user_charts_data():
 
     user_id = session['user_id']
 
-    # current_year = datetime.now().year
-
     last_twelve_months = datetime.now() - timedelta(365)
-
-    # year_logs = db.session.query(UserLog).filter(extract('year', UserLog.date) == current_year, 
-    #                                              UserLog.user_id == user_id).all()
 
     year_logs = db.session.query(UserLog).filter(UserLog.date > last_twelve_months, 
                                                  UserLog.user_id == user_id,
@@ -398,7 +370,6 @@ def updates_review_log():
     log.date = request.form.get('date')
 
     db.session.commit()
-
 
     return jsonify({})
 

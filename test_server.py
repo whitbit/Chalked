@@ -4,6 +4,7 @@ from unittest import TestCase
 from model import connect_to_db, db, example_data, UserLog
 from flask import session
 from selenium import webdriver
+from datetime import datetime
 
 
 class MyAppUnitTestCase(TestCase):
@@ -144,17 +145,9 @@ class FlaskTestsDatabase(TestCase):
         self.assertNotIn('rgba(193,46,12,0.8)', result.data)
 
     def test_upload_route(self):
-        """Tests file upload route"""
+        """Tests file upload route."""
 
-        with self.client as c:
-            with c.session_transaction() as sess:
-                sess['user_id'] = 3
-
-        result = self.client.post('/upload.json',
-                                  data={},
-                                  follow_redirects=True)
-        
-        self.assertEqual(result.status_code, 200)
+        pass
 
     def test_route_search(self):
         """Tests route search query."""
@@ -166,6 +159,22 @@ class FlaskTestsDatabase(TestCase):
         result = self.client.get('/search.json', data={ 'state': 'Colorado'} )
         
         self.assertIn('Colorado', result.data)
+
+    def test_log_update(self):
+        """Tests route that updates userlog entry."""
+
+        with self.client as c:
+            with c.session_transaction() as sess:
+                sess['user_id'] = 3
+
+        result = self.client.post('/update-log.json', data={ 'review_id': 1,
+                                                             'notes': 'Updated!',
+                                                             'completed': True,
+                                                             'rating': 5,
+                                                             'date': datetime.today() 
+                                                            })
+        
+        self.assertEqual(result.status_code, 200)
 
 
 class FlaskTestsLoggedIn(TestCase):

@@ -48,24 +48,24 @@ class Route(db.Model):
     url = db.Column(db.String(100))
     img = db.Column(db.String(100))
 
-    def getOverallRating(self):
+    # def getOverallRating(self):
 
-        sum = 0
+    #     sum = 0
 
-        if self.logs:
+    #     if self.logs:
 
-            for log in self.logs:
-                sum += log.rating
+    #         for log in self.logs:
+    #             sum += log.rating
 
-        rating = float(sum / len(self.logs))
+    #     rating = float(sum / len(self.logs))
 
-        return rating
+    #     return rating
 
-    def __repr__(self):
-         """Provide helpful representation when printed."""
+    # def __repr__(self):
+    #      """Provide helpful representation when printed."""
 
-         return "<Route id={}, vgrade={}>".format(self.route_id,
-                                                  self.v_grade)
+    #      return "<Route id={}, vgrade={}>".format(self.route_id,
+    #                                               self.v_grade)
 
 
 class UserLog(db.Model):
@@ -93,22 +93,6 @@ class UserLog(db.Model):
                                                                                self.user_id,
                                                                                self.route_id,
                                                                                self.completed)
-
-# class UserFavorites(db.Model):
-#     """Favorite climbs by Users."""
-
-#     __tablename__ = 'user_favorites'
-
-#     favorites_id = db.Column(db.Integer, primary_key=True, autoincrement=True)
-#     user_id = db.Column(db.Integer, db.ForeignKey('users.user_id'))
-#     route_id = db.Column(db.Integer, db.ForeignKey('routes.route_id'))
-
-#     def __repr__(self):
-#          """Provide helpful representation when printed."""
-
-#          return "<Favorites id={}, user_id={}, route_id={}>".format(self.favorites_id,
-#                                                                     self.user_id,
-#                                                                    self.route_id)
 
 
 def example_data():

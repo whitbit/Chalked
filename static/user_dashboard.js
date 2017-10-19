@@ -198,7 +198,10 @@ function displayLogs(evt) {
             
             html += '<td> <input type="checkbox" name="updated" value="true"> </td>'
 
-            html += '<td> <input type="submit" value="update" class="' + projectsLog[i][7] + '"</td>'
+            html += '<td> <input type="submit" value="update" class="' + projectsLog[i][7] + ' submitupdate"</td>'
+
+            html += '<td> <button type="button" class="btn btn-default">\
+                    <span class="glyphicon glyphicon-remove-circle" area-hidden="true"</span></button></td>'
 
             $('#projects').append('<tr class="' + projectsLog[i][7] + ' item" >' + html + '</tr>');
 
@@ -208,8 +211,13 @@ function displayLogs(evt) {
 
 displayLogs()
 
+$('#delete').on('click', function() {
+    alert('deleted')
+})
 
-$('table').on('click', ':submit', updatesLog)
+
+
+$('table').on('click', '.submitupdate', updatesLog)
 
 
 function updatesLog(evt) {
@@ -218,15 +226,15 @@ function updatesLog(evt) {
 
 
     // debugger;
-    var reviewId = $(this).attr('class')
+    var reviewId = ($(this).attr('class')).split(' ')[0]
 
     var tableData = $("table ." + reviewId + " td")
     var rating = tableData.eq(5).children().val()
-    console.log(rating)
+    // console.log(rating)
     var notes = tableData.eq(6).children().val()
-    console.log(notes)
+    // console.log(notes)
     var completed = $( "input[type=checkbox][name=updated]:checked" ).val()
-    console.log(completed)
+    // console.log(completed)
     if(completed === undefined) {
         completed = false;
     }
@@ -244,11 +252,9 @@ function updatesLog(evt) {
 
     $.post('/update-log.json', formInputs, function() {
         displayLogs();
+        generatesChart()
     });
 
-    // if(files.length > 0) {
-    //     uploadsPhoto()
-    // }
 }
 
 
@@ -286,8 +292,6 @@ function renderOldLogNotes(note) {
 
     return text
 }
-
-
 
 
 
