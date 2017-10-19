@@ -200,7 +200,7 @@ function displayLogs(evt) {
 
             html += '<td> <input type="submit" value="update" class="' + projectsLog[i][7] + ' submitupdate"</td>'
 
-            html += '<td> <button type="button" class="btn btn-default">\
+            html += '<td> <button type="button" id="deleteLog" class="btn btn-default '+ projectsLog[i][7] +'">\
                     <span class="glyphicon glyphicon-remove-circle" area-hidden="true"</span></button></td>'
 
             $('#projects').append('<tr class="' + projectsLog[i][7] + ' item" >' + html + '</tr>');
@@ -211,8 +211,22 @@ function displayLogs(evt) {
 
 displayLogs()
 
-$('#delete').on('click', function() {
-    alert('deleted')
+
+$('table').on('click', '#deleteLog', function() {
+    var reviewId = ($(this).attr('class')).split(' ')[2]
+    console.log(reviewId)
+
+
+    var formInputs = {
+        'review_id': reviewId
+    }
+
+    $.post('/delete-log.json', formInputs, function() {
+        displayLogs();
+    });
+
+    alert('deleted!')
+
 })
 
 

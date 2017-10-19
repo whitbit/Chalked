@@ -373,6 +373,17 @@ def updates_review_log():
 
     return jsonify({})
 
+@app.route('/delete-log.json', methods=['POST'])
+def deletes_review_log():
+
+    review_id = request.form.get('review_id')
+
+    UserLog.query.filter_by(review_id=review_id).delete()
+
+    db.session.commit()
+
+    return jsonify({})
+
 
 
 if __name__ == '__main__':
