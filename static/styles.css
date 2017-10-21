@@ -1,4 +1,10 @@
-  #map {
+t  #map {
     height: 700px;
     width: 1000px;
   }
+
+
+td {
+  word-wrap:break-word;
+  word-break:break-all;
+}

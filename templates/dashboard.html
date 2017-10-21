@@ -10,127 +10,169 @@
 
 {% block content %}
 
-
-
-
-    <h1>Welcome, {{ session['username'] }}!</h1>
-    <h3 id='points'></h3>
-
-    <div class='climb-chart'>
-        <canvas id='climbChart'></canvas>
-        <div id='legend'></div>
+<nav class="navbar navbar-default navbar-fixed-top">
+  <div class="container-fluid">
+    <!-- Brand and toggle get grouped for better mobile display -->
+    <div class="navbar-header">
+      <button type="button" class="navbar-toggle collapsed" data-toggle="collapse" data-target="#bs-example-navbar-collapse-1" aria-expanded="false">
+        <span class="sr-only">Toggle navigation</span>
+        <span class="icon-bar"></span>
+        <span class="icon-bar"></span>
+        <span class="icon-bar"></span>
+      </button>
+      <a class="navbar-brand" href="/dashboard">CHALKED</a>
     </div>
 
-    <div class='container'>
-        <button type='button' class='btn btn-info btn-lg' id='log-climb-btn' data-toggle='modal' data-target='#myModal'>Log A New Climb</button>
-    </div>
+    <!-- Collect the nav links, forms, and other content for toggling -->
+    <div class="collapse navbar-collapse" id="bs-example-navbar-collapse-1">
+      <ul class="nav navbar-nav">
+        <li class="active"><a href="/dashboard">home<span class="sr-only">(current)</span></a></li>
+        <li><a href="/user-map">map</a></li>
+        <li><p class="navbar-text">signed in as {{ session['username'] }}</li>
+      </ul>
+      
+      <ul class="nav navbar-nav navbar-right">
+        <li>
+            <form class="navbar-form navbar-right" action='/logout' method='POST'>
+                <button class='btn btn-link' role='link' type='submit' value='log out'>log out </button>
+            </form>
+        </li>
+      </ul>
+    </div><!-- /.navbar-collapse -->
+  </div><!-- /.container-fluid -->
+</nav>
 
-    <div class='modal fade' id='myModal' role='document'>
-        <div class='modal-dialog'>
-            <div class='modal-content'>
-                    <div class='modal-header'>
-                        <button type="button" class="close" data-dismiss="modal">&times;</button>
-                        <h2 class="modal-title">Log a new climb:</h2>
+
+<div class="container">
+    <div class="row">
+        <div class="col-sm-3">
+            <div class="affix">
+                <br>
+                    <div class="centerBlock">
+                        <h1 class=center-block>Hello, {{ session['username'] }}!</h1>
+                        <div class="center-block"><img src='/static/45.png'></div>
+                        <h3 id='points'></h3>
                     </div>
-                    <div class="modal-body">
 
-                        <select name='state' id='state'>
-                            <option disable selected value> -- STATE -- </option>
-                        </select><br>
+            <button type='button' class='btn btn-info btn-lg' id='log-climb-btn' data-toggle='modal' data-target='#myModal'>Log A New Climb</button>
 
 
-                        <!-- filters area -->
-                        <select name='area' id='area'>
-                            <option disable selected value> -- AREA -- </option>
-                        </select>
-    
-                        <!-- logs climb info -->
-                        <form id='log-climb'>
+            <div class='modal fade' id='myModal' role='document'>
+                <div class='modal-dialog'>
+                    <div class='modal-content'>
                             
-                            <select name='route' id='route'>
-                                <option disable selected value> -- ROUTE -- </option>
-                            </select><br>
+                            <div class='modal-header'>
+                                <button type="button" class="close" data-dismiss="modal">&times;</button>
+                                <h2 class="modal-title">Log a new climb:</h2>
+                            </div>
                             
-                            <label> Rate the climb:
-                                <input type='number' id='rating' name='rating' min='1' max='5'>
-                            </label><br>
-                            
-                            <label>
-                                <textarea name='notes' id='notes' rows="4" cols="50"></textarea>
-                            </label><br>
-                            
-                            <label> Date:
-                                <input id="date" name='date' type="date">
-                            </label><br>
-                            <label>Complete
-                                <input type='checkbox' id='complete' name='complete' value='true'>
-                            </label><br>
+                            <div class="modal-body">
 
-                            <input type='file' id='photo' name='file'/> <br>
+                                <select name='state' id='state'>
+                                    <option disable selected value> -- STATE -- </option>
+                                </select><br>
+
+
+                                <!-- filters area -->
+                                <select name='area' id='area'>
+                                    <option disable selected value> -- AREA -- </option>
+                                </select>
+            
+                                <!-- logs climb info -->
+                                <form id='log-climb'>
+                                    
+                                    <select name='route' id='route'>
+                                        <option disable selected value> -- ROUTE -- </option>
+                                    </select><br>
+                                    
+                                    <label> Rate the climb:
+                                        <input type='number' id='rating' name='rating' min='1' max='5'">
+                                    </label><br>
+                                    
+                                    <label>
+                                        <textarea name='notes' id='notes' rows="4" cols="50"></textarea>
+                                    </label><br>
+                                    
+                                    <label> Date:
+                                        <input id="date" name='date' type="date">
+                                    </label><br>
+                                    <label>Complete
+                                        <input type='checkbox' id='complete' name='complete' value='true'>
+                                    </label><br>
+
+                                    <input type='file' id='photo' name='file'/> <br>
+                                    
+                                    <button type='submit' id='upload-button'>Log</button>
+                                
+                                </form>
+                            </div>
                             
-                            <button type='submit' id='upload-button'>Log</button>
+                            <div class="modal-footer">
+                                <button type="button" class="btn btn-default" data-dismiss="modal">Close</button>
+                            </div>
                         
-                        </form>
                     </div>
-                    <div class="modal-footer">
-                        <button type="button" class="btn btn-default" data-dismiss="modal">Close</button>
-                    </div>
+                </div> 
+            </div> 
             </div>
         </div>
+
+        <div class="col-sm-8">
+            <div class='climb-chart'>
+                <canvas id='climbChart'></canvas>
+                <div id='legend'></div>
+            </div>
+
+        
+            <h3>Current Projects</h3>
+            <table id='projects' class='table table-striped'>
+                <tr>
+                    <th onclick="w3.sortHTML('#projects', '.item', 'td:nth-child(1)')" style="cursor:pointer">Date</th>
+                    <th onclick="w3.sortHTML('#projects', '.item', 'td:nth-child(2)')" style="cursor:pointer">Difficulty</th>
+                    <th onclick="w3.sortHTML('#projects', '.item', 'td:nth-child(3)')" style="cursor:pointer">Name</th>
+                    <th onclick="w3.sortHTML('#projects', '.item', 'td:nth-child(4)')" style="cursor:pointer">State</th>
+                    <th onclick="w3.sortHTML('#projects', '.item', 'td:nth-child(5)')" style="cursor:pointer">Area</th>
+                    <th onclick="w3.sortHTML('#projects', '.item', 'td:nth-child(6)')" style="cursor:pointer">Rating</th>
+                    <th>Notes</th>
+                    <th>Completed?</th>
+                    <th>Update</th>
+                    <th>Remove</th>
+                </tr>
+
+            </table>
+
+
+        <div>
+            <h3>Completed Climbs</h3>
+            <table id='completedClimbs' class='table table-striped'>
+                <tr>
+                    <th onclick="w3.sortHTML('#completedClimbs', '.item', 'td:nth-child(1)')" style="cursor:pointer">Date</th>
+                    <th onclick="w3.sortHTML('#completedClimbs', '.item', 'td:nth-child(2)')" style="cursor:pointer">Difficulty</th>
+                    <th onclick="w3.sortHTML('#completedClimbs', '.item', 'td:nth-child(3)')" style="cursor:pointer">Name</th>
+                    <th onclick="w3.sortHTML('#completedClimbs', '.item', 'td:nth-child(4)')" style="cursor:pointer">State</th>
+                    <th onclick="w3.sortHTML('#completedClimbs', '.item', 'td:nth-child(5)')" style="cursor:pointer">Area</th>
+                    <th onclick="w3.sortHTML('#completedClimbs', '.item', 'td:nth-child(6)')" style="cursor:pointer">Rating</th>
+                    <th>Notes</th>
+                </tr>
+
+            </table>
+        </div>
+
     </div>
+</div>
+    
 
-    <div>
-        <h3>Current Projects</h3>
-        <table id='projects' class='table table-striped'>
-            <tr>
-                <th onclick="w3.sortHTML('#projects', '.item', 'td:nth-child(1)')" style="cursor:pointer">Date</th>
-                <th onclick="w3.sortHTML('#projects', '.item', 'td:nth-child(2)')" style="cursor:pointer">Difficulty</th>
-                <th onclick="w3.sortHTML('#projects', '.item', 'td:nth-child(3)')" style="cursor:pointer">Name</th>
-                <th onclick="w3.sortHTML('#projects', '.item', 'td:nth-child(4)')" style="cursor:pointer">State</th>
-                <th onclick="w3.sortHTML('#projects', '.item', 'td:nth-child(5)')" style="cursor:pointer">Area</th>
-                <th onclick="w3.sortHTML('#projects', '.item', 'td:nth-child(6)')" style="cursor:pointer">Rating</th>
-                <th>Notes</th>
-                <th>Completed?</th>
-                <th></th>
-            </tr>
-
-        </table>
-    </div>
-
-    <div>
-        <h3>Completed Climbs</h3>
-        <table id='completedClimbs' class='table table-striped'>
-            <tr>
-                <th onclick="w3.sortHTML('#completedClimbs', '.item', 'td:nth-child(1)')" style="cursor:pointer">Date</th>
-                <th onclick="w3.sortHTML('#completedClimbs', '.item', 'td:nth-child(2)')" style="cursor:pointer">Difficulty</th>
-                <th onclick="w3.sortHTML('#completedClimbs', '.item', 'td:nth-child(3)')" style="cursor:pointer">Name</th>
-                <th onclick="w3.sortHTML('#completedClimbs', '.item', 'td:nth-child(4)')" style="cursor:pointer">State</th>
-                <th onclick="w3.sortHTML('#completedClimbs', '.item', 'td:nth-child(5)')" style="cursor:pointer">Area</th>
-                <th onclick="w3.sortHTML('#completedClimbs', '.item', 'td:nth-child(6)')" style="cursor:pointer">Rating</th>
-                <th>Notes</th>
-            </tr>
-
-        </table>
-    </div>
+    
 
 
 
-
-    <!-- <div id="root"></div> -->
-
-<!--     <script src="http://unpkg.com/react@15.6.2/dist/react.js"></script>
-    <script src="http://unpkg.com/react-dom@15.6.2/dist/react-dom.js"></script>
-
-    <script src="http://unpkg.com/babel-standalone"></script>
-
-    <script src="/static/dashboard.jsx" type="text/jsx"></script> -->
     <script src="https://www.w3schools.com/lib/w3.js"></script>
 
 
     <script src="http://code.jquery.com/jquery.js"></script>
 
-        <script src="/static/user_dashboard.js"></script>
-    
+    <script src="/static/user_dashboard.js"></script>
+
 
 
     
