@@ -8,3 +8,11 @@ td {
   word-wrap:break-word;
   word-break:break-all;
 }
+
+
+
+body {
+    background-color: white;
+    background-size: cover;
+    background: url(ep_naturalwhite.png) repeat;
+}

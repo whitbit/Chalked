@@ -1,3 +1,5 @@
+$('#myModal').appendTo("body") 
+
 function showStates(results) {
     //shows list of states
     
