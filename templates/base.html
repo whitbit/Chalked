@@ -4,12 +4,10 @@
     <head>
         <title>{% block title %} TITLE GOES HERE {% endblock %}</title>
         <style>{% block style %} STYLIZE {% endblock %}</style>
-        <link rel="stylesheet" href="static/styles.css">
         <link href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/css/bootstrap.css" rel="stylesheet">
-        <script src ='https://code.jquery.com/jquery.js'></script>    <script type="text/javascript" src="https://cdnjs.cloudflare.com/ajax/libs/moment.js/2.19.0/moment.min.js"></script>
-        <script src="https://cdnjs.cloudflare.com/ajax/libs/Chart.js/2.2.1/Chart.js">
-</script>
+        <link rel="stylesheet" href="static/styles.css">
     </head>
+        
 <body>
 
     {% if 'username' in session %}
@@ -24,8 +22,12 @@
 
 
     <script src="http://code.jquery.com/jquery.js"></script>
+
+    <script type="text/javascript" src="https://cdnjs.cloudflare.com/ajax/libs/moment.js/2.19.0/moment.min.js"></script>
     
     <script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/js/bootstrap.js"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/Chart.js/2.2.1/Chart.js"></script>
+    <script src="/static/user_map.js"></script>
 
 
 
