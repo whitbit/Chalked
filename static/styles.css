@@ -9,12 +9,6 @@ table {
 
 }
 
-#projects{
-  word-break: keep-all;
-}
-
-
-
 body {
     padding-top: 50px;
     background-color: #668e9b;
@@ -25,10 +19,7 @@ body {
 
 input {
      width: 100%; 
-     color: black;
-/*     background-color: rgba(170,102,14,0.8);*/
-     /*color: #fff;*/
-
+     color: #18121E;
 }
 
 #id {
@@ -47,11 +38,6 @@ input {
     color: #fff;
 }
 
-/*colors: 
-233237
-18121E
-984B43
-EAC67A*/
 h1, h2, h3 {
     font-family: 'permanent marker', cursive;
     color: #18121E;
@@ -59,7 +45,10 @@ h1, h2, h3 {
 }
 
 #profile img {
-    padding: 0% 10%;
+    /*padding: 0% 10%;*/
+    margin-left: auto;
+    margin-right: auto;
+    display: block;
 }
 
 
@@ -79,8 +68,7 @@ h1, h2, h3 {
 
 th {
     background-color: #738B95;
-    font-color: #ffffff;
-    font-weight: bold;
+    font-color: #18121E;
 }
 
 .glyphicon-menu-down:hover {
@@ -134,7 +122,7 @@ th {
 
 
 #login {
-    width:234px;
+    width:255px;
 }
 
 
@@ -144,9 +132,6 @@ li {
     padding: 0;
 }
 
-#current-projects, #completedClimbs {
-    font-weight: bold;
-}
 
 #tagline {
     font-size: 35px;
