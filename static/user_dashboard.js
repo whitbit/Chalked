@@ -227,8 +227,6 @@ $('table').on('click', '#deleteLog', function() {
         displayLogs();
     });
 
-    alert('deleted!')
-
 })
 
 

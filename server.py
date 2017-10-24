@@ -45,8 +45,13 @@ def index():
 
     return render_template('/homepage.html')
 
+@app.route('/register')
+def displays_registration_form():
 
-@app.route('/register', methods=['POST'])
+    return render_template('/register.html')
+
+
+@app.route('/register-user', methods=['POST'])
 def register_user():
     """Adds user to database."""
 
@@ -345,8 +350,8 @@ def user_charts_data():
                     'y': v_grade,
                     'r': 23 * climbs[climb]
                 }],
-                'backgroundColor': 'rgba(193,46,12,0.6)',
-                'hoverBackgroundColor': 'rgba(193,46,12,0.8)'
+                'backgroundColor': 'rgba(170,102,14, 0.6)',
+                'hoverBackgroundColor': 'rgba(170,102,14, 0.8)'
         })
 
 

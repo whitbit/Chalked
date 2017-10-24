@@ -2,33 +2,25 @@
 
 {% block title %} Dashboard {% endblock %}
 
-{% block style %}
-
-
-{% endblock %}
-
 
 {% block content %}
 
-<nav class="navbar navbar-default navbar-fixed-top">
+<nav class="navbar navbar-inverse navbar-fixed-top">
   <div class="container-fluid">
     <!-- Brand and toggle get grouped for better mobile display -->
     <div class="navbar-header">
       <button type="button" class="navbar-toggle collapsed" data-toggle="collapse" data-target="#bs-example-navbar-collapse-1" aria-expanded="false">
         <span class="sr-only">Toggle navigation</span>
-        <span class="icon-bar"></span>
-        <span class="icon-bar"></span>
-        <span class="icon-bar"></span>
       </button>
-      <a class="navbar-brand" href="/dashboard">CHALKED</a>
+      <a class="navbar-brand" href="/">CHALKED</a>
     </div>
 
     <!-- Collect the nav links, forms, and other content for toggling -->
     <div class="collapse navbar-collapse" id="bs-example-navbar-collapse-1">
       <ul class="nav navbar-nav">
-        <li class="active"><a href="/dashboard">home<span class="sr-only">(current)</span></a></li>
-        <li><a href="/user-map">map</a></li>
-        <li><p class="navbar-text">signed in as {{ session['username'] }}</li>
+        <li class="active"><a href="/dashboard"><span class="glyphicon glyphicon-home" aria-hidden="true"></span>  home<span class="sr-only">(current)</span></a></li>
+        <li><a href="/user-map"><span class="glyphicon glyphicon-map-marker" aria-hidden="true"></span> my map</a></li>
+        <li><p class="navbar-text"><i> signed in as {{ session['username'] }}</i></li>
       </ul>
       
       <ul class="nav navbar-nav navbar-right">
@@ -50,7 +42,7 @@
                 <br>
                 <div class="centerBlock">
                     <h1 class=center-block>Hello, {{ session['username'] }}!</h1>
-                    <div class="center-block"><img src='/static/45.png'></div>
+                    <img src='/static/45.png'>
                     <h3 id='points'></h3>
                 </div>
 
@@ -120,7 +112,7 @@
 
     
 
-        <div class="col-sm-8">
+        <div class="col-sm-9">
             <div class='climb-chart'>
                 <canvas id='climbChart'></canvas>
                 <div id='legend'></div>
@@ -129,17 +121,17 @@
         
             <h3>Current Projects</h3>
             <table id='projects' class='table table-striped'>
-                <tr>
-                    <th onclick="w3.sortHTML('#projects', '.item', 'td:nth-child(1)')" style="cursor:pointer">Date</th>
-                    <th onclick="w3.sortHTML('#projects', '.item', 'td:nth-child(2)')" style="cursor:pointer">Difficulty</th>
-                    <th onclick="w3.sortHTML('#projects', '.item', 'td:nth-child(3)')" style="cursor:pointer">Name</th>
-                    <th onclick="w3.sortHTML('#projects', '.item', 'td:nth-child(4)')" style="cursor:pointer">State</th>
-                    <th onclick="w3.sortHTML('#projects', '.item', 'td:nth-child(5)')" style="cursor:pointer">Area</th>
-                    <th onclick="w3.sortHTML('#projects', '.item', 'td:nth-child(6)')" style="cursor:pointer">Rating</th>
-                    <th>Notes</th>
-                    <th>Completed?</th>
-                    <th>Update</th>
-                    <th>Remove</th>
+                <tr id="current-projects">
+                    <th class="col-xs-1" onclick="w3.sortHTML('#projects', '.item', 'td:nth-child(1)')" style="cursor:pointer">Date <span class="glyphicon glyphicon-menu-down" aria-hidden="true"></span></th>
+                    <th class="col-xs-1" onclick="w3.sortHTML('#projects', '.item', 'td:nth-child(2)')" style="cursor:pointer">Difficulty <span class="glyphicon glyphicon-menu-down" aria-hidden="true"></span> </th>
+                    <th class="col-xs-1" onclick="w3.sortHTML('#projects', '.item', 'td:nth-child(3)')" style="cursor:pointer">Name <span class="glyphicon glyphicon-menu-down" aria-hidden="true"></span> </th>
+                    <th class="col-xs-1" onclick="w3.sortHTML('#projects', '.item', 'td:nth-child(4)')" style="cursor:pointer">State <span class="glyphicon glyphicon-menu-down" aria-hidden="true"></span> </th>
+                    <th class="col-xs-1" onclick="w3.sortHTML('#projects', '.item', 'td:nth-child(5)')" style="cursor:pointer">Area <span class="glyphicon glyphicon-menu-down" aria-hidden="true"></span> </th>
+                    <th class="col-xs-1" onclick="w3.sortHTML('#projects', '.item', 'td:nth-child(6)')" style="cursor:pointer">Rating <span class="glyphicon glyphicon-menu-down" aria-hidden="true"></span></th>
+                    <th class="col-xs-3"> Notes</th>
+                    <th class="col-xs-1">Complete</th>
+                    <th class="col-xs-1">Update</th>
+                    <th class="col-xs-1"> <span class="glyphicon glyphicon-remove-circle" area-hidden="true"</span> </th>
                 </tr>
 
             </table>
@@ -149,12 +141,12 @@
             <h3>Completed Climbs</h3>
             <table id='completedClimbs' class='table table-striped'>
                 <tr>
-                    <th onclick="w3.sortHTML('#completedClimbs', '.item', 'td:nth-child(1)')" style="cursor:pointer">Date</th>
-                    <th onclick="w3.sortHTML('#completedClimbs', '.item', 'td:nth-child(2)')" style="cursor:pointer">Difficulty</th>
-                    <th onclick="w3.sortHTML('#completedClimbs', '.item', 'td:nth-child(3)')" style="cursor:pointer">Name</th>
-                    <th onclick="w3.sortHTML('#completedClimbs', '.item', 'td:nth-child(4)')" style="cursor:pointer">State</th>
-                    <th onclick="w3.sortHTML('#completedClimbs', '.item', 'td:nth-child(5)')" style="cursor:pointer">Area</th>
-                    <th onclick="w3.sortHTML('#completedClimbs', '.item', 'td:nth-child(6)')" style="cursor:pointer">Rating</th>
+                    <th onclick="w3.sortHTML('#completedClimbs', '.item', 'td:nth-child(1)')" style="cursor:pointer">Date <span class="glyphicon glyphicon-menu-down" aria-hidden="true"></span></th>
+                    <th onclick="w3.sortHTML('#completedClimbs', '.item', 'td:nth-child(2)')" style="cursor:pointer">Difficulty <span class="glyphicon glyphicon-menu-down" aria-hidden="true"></span></th>
+                    <th onclick="w3.sortHTML('#completedClimbs', '.item', 'td:nth-child(3)')" style="cursor:pointer">Name <span class="glyphicon glyphicon-menu-down" aria-hidden="true"></span></th>
+                    <th onclick="w3.sortHTML('#completedClimbs', '.item', 'td:nth-child(4)')" style="cursor:pointer">State <span class="glyphicon glyphicon-menu-down" aria-hidden="true"></span></th>
+                    <th onclick="w3.sortHTML('#completedClimbs', '.item', 'td:nth-child(5)')" style="cursor:pointer">Area <span class="glyphicon glyphicon-menu-down" aria-hidden="true"></span></th>
+                    <th onclick="w3.sortHTML('#completedClimbs', '.item', 'td:nth-child(6)')" style="cursor:pointer">Rating <span class="glyphicon glyphicon-menu-down" aria-hidden="true"></span></th>
                     <th>Notes</th>
                 </tr>
 
@@ -165,7 +157,13 @@
 
 </div>
     
+<style>
 
+body {
+  background: url("static/crossword.png");
+}
+
+</style>
     
 
 

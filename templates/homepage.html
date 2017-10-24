@@ -3,44 +3,45 @@
 {% block title %} WELCOME {% endblock %}
 
 {% block style %}
-    body {
-        background-image: url("/static/preston-pownell-16950.jpg");
-        background-color: #cccccc;
-    }
+
 {% endblock %}
 
 {% block content %}
 
-<h1>Welcome!</h1>
-<form action='/login' method='POST'>
-    <label>Username:
-        <input type='username' name='username' id='username' required></label><br>
-    <label>Password:
-        <input type='password' name='password' id='password' required></label><br>
-    <input type='submit' id='login' value='log in'>
-</form>
+<div class="container fluid" id="homepage">
+  <div class="container">
+    <div id="log-in-form" class="row">
 
-<h2>Sign Up</h2>
-<form action='/register' id='register' method='POST'>
-    <label>Username:
-        <input type='username' name='username' required>
-    </label><br>
-    
-    <label>Password:
-        <input type='password' name='password' required>
-    </label><br>
+      <div class="col-md-4 col-md-offset-4">
+        <div id="title">
+          Chalked
+        </div>
+      </div>
+      <div class="col-md-4 col-md-offset-4">
+        <div id="sign-in">
+          <form action='/login' method='POST'>
+              <label>USERNAME:
+                  <input type='username' name='username' id='username' required></label><br>
+              <label>PASSWORD:
+                  <input type='password' name='password' id='password' required></label><br>
+              <input type='submit' id='login' value='log in'>
+          </form>
+        </div>
+        <a href="/register">register</a>
+      </div>
+    </div>
+  </div>
+</div>
 
-    <label>Email:
-        <input type='email' name='email' required>
-    </label><br>
-    
-    <label>Level:
-        <input type='radio' name='level' value='beginner' required>beginner
-        <input type='radio' name='level' value='intermediate' required>intermediate
-        <input type='radio' name='level' value='advanced' required>advanced<br>
-    </label>
+<style>
 
-    <input type='submit' value='Create Account'>
-</form>
+body {
+  
+  background-image: url(static/alexa-2.jpg);
+  background-size: cover;
+  background-repeat: no-repeat;
+}
+
+</style>
 
 {% endblock %}
