@@ -124,6 +124,14 @@ th {
 
 #login {
     width:200px;
-    
 }
 
+#flash-message {
+    color: #18121E;
+}
+
+li {
+    list-style-type: none;
+    margin: 0;
+    padding: 0;
+}

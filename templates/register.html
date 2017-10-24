@@ -1,0 +1,39 @@
+{% extends 'base.html' %}
+
+{% block title %} Register {% endblock %}
+
+{% block content %}
+
+
+<div class="container">
+
+  <div class="row">
+
+    <div class="col-md-4 col-md-offset-4">
+        <h2>Sign Up</h2>
+        <form action='/register-user' id='register' method='POST'>
+            <label>Username:
+                <input type='username' name='username' required>
+            </label><br>
+            
+            <label>Password:
+                <input type='password' name='password' required>
+            </label><br>
+
+            <label>Email:
+                <input type='email' name='email' required>
+            </label><br>
+            
+            <label>Level:
+                <input type='radio' name='level' value='beginner' required>beginner
+                <input type='radio' name='level' value='intermediate' required>intermediate
+                <input type='radio' name='level' value='advanced' required>advanced<br>
+            </label>
+
+            <input type='submit' value='Create Account'>
+        </form>
+        <a href="/">go back</a>
+    </div>
+</div>
+
+{% endblock %}

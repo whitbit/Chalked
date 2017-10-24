@@ -26,7 +26,13 @@ class FlaskTestsBasic(TestCase):
         result = self.client.get('/')
         
         self.assertEqual(result.status_code, 200)
-        self.assertIn('Welcome!', result.data)
+        self.assertIn('Chalked', result.data)
+
+    def test_register_page(self):
+
+        result = self.client.get('/register')
+
+        self.assertIn('Sign Up', result.data)
 
 
 class FlaskTestsDatabase(TestCase):
@@ -50,9 +56,10 @@ class FlaskTestsDatabase(TestCase):
 
         pass
 
+
     def test_new_registeration(self):
 
-        result = self.client.post('/register', 
+        result = self.client.post('/register-user', 
                                   data={ 'username': 'username',
                                          'password': 'pw',
                                          'level': 'int',
@@ -64,7 +71,7 @@ class FlaskTestsDatabase(TestCase):
 
     def test_already_registered(self):
 
-        result = self.client.post('/register', 
+        result = self.client.post('/register-user', 
                                   data={ 'username': 'Bart',
                                          'password': 'kfneklwnf' },
                                   follow_redirects=True)
@@ -79,7 +86,7 @@ class FlaskTestsDatabase(TestCase):
                             follow_redirects=True)
 
             self.assertEqual(session['username'], 'bart')
-            self.assertIn('Welcome, bart', result.data)
+            self.assertIn('Hello, bart', result.data)
 
 
     def test_invalid_login(self):
@@ -142,7 +149,7 @@ class FlaskTestsDatabase(TestCase):
         result = self.client.get('/user-chart.json')
 
         self.assertIn('V3', result.data)
-        self.assertIn('rgba(193,46,12,0.8)', result.data)
+        self.assertIn('rgba(170,102,14, 0.6)', result.data)
 
     def test_upload_route(self):
         """Tests file upload route."""
@@ -202,13 +209,13 @@ class FlaskTestsLoggedIn(TestCase):
 
         result = self.client.get('/dashboard')
 
-        self.assertIn('Welcome, bart!', result.data)
+        self.assertIn('Hello, bart!', result.data)
 
     def test_user_map(self):
 
         result = self.client.get('/user-map')
 
-        self.assertIn('Places I\'ve climbed', result.data)
+        self.assertEqual(result.status_code, 200)
 
 
 class FlaskTestsLoggedOut(TestCase):
