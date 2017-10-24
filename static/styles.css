@@ -44,6 +44,10 @@ h1, h2, h3 {
     margin-left: 12px;
 }
 
+h4, h5 {
+    font-family: 'Open Sans', sans-serif;
+}
+
 #profile img {
     /*padding: 0% 10%;*/
     margin-left: auto;
@@ -69,6 +73,10 @@ h1, h2, h3 {
 th {
     background-color: #738B95;
     font-color: #18121E;
+}
+
+th a:hover {
+    font-color: #fff;
 }
 
 .glyphicon-menu-down:hover {
