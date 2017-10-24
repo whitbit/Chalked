@@ -313,16 +313,46 @@ function renderOldLogNotes(note) {
 
 function displaysUserStatus() {
     $.get('/user-info.json', function(results) {
-        points = results['user_points']
+        var points = results['user_points']
+        var pointsAway;
+        var badge;
+        var animal;
 
 
-        $('#points').append('Total V-points: ', points)
+
+        if(points > 50 && points < 100) {
+            pointsAway = 100 - points;
+            animal = 'monkey';
+            badge = "<img src='/static/monkey.png'>";
+
+        } else if (points > 100) {
+            badge = "<img src='/static/goat.png'>";
+            animal = 'mountain goat'
+        } else {
+            pointsAway = 50 - points;
+            animal = 'gym rat'
+            badge = "<img src='/static/rat.png'>";
+        }
+
+
+        
+        $('#profile').append(badge);
+
+        $('#animal').append(animal);
+
+        $('#points').append('Total V-points: ', points);
+
+        $('#next-badge').append('<i>' + pointsAway + ' pts away from your next badge! </i>')
+
+
+
     })
 }
 
 
-
 $(document).ready(displaysUserStatus);
+
+
 
 
 

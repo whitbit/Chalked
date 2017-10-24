@@ -78,9 +78,8 @@ function map_climbs(results) {
       var url = data[6];
       var lat = data[7];
       var lng = data[8];
-      console.log(data[5])
 
-      if(data[5] === null) {
+      if(data[5] === '') {
         var img = '';
       } else {
         var img = '/uploads/' + data[5]

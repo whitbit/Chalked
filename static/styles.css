@@ -58,8 +58,8 @@ h1, h2, h3 {
     margin-left: 12px;
 }
 
-.centerBlock img {
-    padding: 0% 20%;
+#profile img {
+    padding: 0% 10%;
 }
 
 
@@ -73,7 +73,7 @@ h1, h2, h3 {
     /*text-transform: uppercase;*/
     color: #fffff;
     background: #233237;
-    margin-left: 25px;
+    /*margin-left: 5px;*/
 }
 
 
@@ -99,12 +99,7 @@ th {
 }
 
 #title {
-/*  margin-left: auto;
-  margin-right: auto;*/
-/*  margin-top: 20%;
-  position: auto;
-  top: 50%;
-  transform: translateY(100%);*/
+
   font-size: 150px;
   display: inline;
   color: white;
@@ -156,6 +151,7 @@ li {
 #tagline {
     font-size: 35px;
     font-family: 'Permanent Marker', cursive;
+    padding-right: 10%;
 }
 
 .col-xs-12 {
