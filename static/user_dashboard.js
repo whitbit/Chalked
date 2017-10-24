@@ -352,7 +352,7 @@ var ctx = document.getElementById('climbChart').getContext('2d')
 function generatesChart() {
     $.get('/user-chart.json', function(data) {
 
-        Chart.defaults.global.defaultFontFamily = "Comic Sans";
+        Chart.defaults.global.defaultFontFamily = "";
 
         var myBubbleChart = new Chart(ctx, {
             type: 'bubble',
