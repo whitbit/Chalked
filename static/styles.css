@@ -25,6 +25,7 @@ body {
 
 input {
      width: 100%; 
+     color: black;
 /*     background-color: rgba(170,102,14,0.8);*/
      /*color: #fff;*/
 
@@ -110,12 +111,22 @@ th {
 }
 
 #log-in-form {
-    margin-top: 5%;
-    background: rgba(35, 50, 55, 0.8);
-    margin-right: -100px;
-    margin-left: -100px;
-    color: #000000;
+    color: #fff;
+    font-weight: bold;
 }
+
+
+#log-in-form a {
+    color: #fff
+}
+
+#log-in-form a:hover {
+    color: #EAC67A
+}
+
+/*#log-in-form input {
+    background-colo
+}*/
 
 .btn-link:hover {
     text-decoration: none;
@@ -123,15 +134,21 @@ th {
 
 
 #login {
-    width:200px;
+    width:250px;
 }
 
-#flash-message {
-    color: #fff;
-}
 
 li {
     list-style-type: none;
     margin: 0;
     padding: 0;
+}
+
+#current-projects, #completedClimbs {
+    font-weight: bold;
+}
+
+#tagline {
+    font-size: 30px;
+    font-family: 'permanent marker';
 }
