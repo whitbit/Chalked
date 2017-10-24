@@ -25,6 +25,9 @@
               <label>PASSWORD:
                   <input type='password' name='password' id='password' required></label><br>
               <input type='submit' id='login' value='log in'>
+              {% for message in get_flashed_messages() %}
+                <li><i> {{ message }} <i></li>
+              {% endfor %}
           </form>
         </div>
         <a href="/register">register</a>
