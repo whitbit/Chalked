@@ -291,7 +291,6 @@ def renders_user_journal_info():
                                                     route.name,
                                                     route.state,
                                                     route.area,
-                                                    climb.rating,
                                                     climb.notes,
                                                     climb.review_id)
 

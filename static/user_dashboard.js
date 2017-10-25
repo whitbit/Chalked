@@ -71,7 +71,7 @@ function showRoutes(results) {
 
     $('#route').empty();
 
-    $('#route').append('<option disable selected value> -- ROUTE -- </option>')
+    $('#route').append('<option disable selected value> -- ROUTE -- </option>');
 
     $.each(routes, function(index, route) {
          $('#route').append('<option value=' + route[2] + '>' + 'V' + route[0] + ' ' + route[1] + '</option>');
@@ -158,7 +158,6 @@ function displayLogs(evt) {
 
         var completedEntries = results.completed;
 
-        // $('table tr:not(:first)').empty()
         $('tr').has('td').empty();
 
         var completedLog = [];
@@ -167,7 +166,7 @@ function displayLogs(evt) {
             completedLog.push(completedEntries[log])
         }
 
-        completedLog.sort().reverse()
+        completedLog.sort().reverse();
 
 
         for(var i = 0; i < completedLog.length; i++) {
@@ -175,7 +174,7 @@ function displayLogs(evt) {
 
             for(var j = 0; j < completedLog[i].length; j++)
                 if (j === 0) {
-                    html += '<td>' + moment(completedLog[i][j]).fromNow() + '</td>'
+                    html += '<td>' + moment(completedLog[i][j]).fromNow() + '</td>';
                 } else {
                     html += '<td>' + completedLog[i][j] + '</td>';
                 }
@@ -191,19 +190,19 @@ function displayLogs(evt) {
             projectsLog.push(incompleteEntries[log])
         }
 
-        projectsLog.sort().reverse()
+        projectsLog.sort().reverse();
 
         for(var i = 0; i < projectsLog.length; i++) {
             var html = ''
 
-            html += makeProjectLogRow(projectsLog[i])
+            html += makeProjectLogRow(projectsLog[i]);
             
-            html += '<td> <input type="checkbox" name="updated" value="true"> </td>'
+            html += '<td> <input type="checkbox" name="updated" value="true"> </td>';
 
-            html += '<td> <input type="submit" value="update" class="' + projectsLog[i][7] + ' submitupdate"</td>'
+            html += '<td> <input type="submit" value="update" class="' + projectsLog[i][7] + ' submitupdate"</td>';
 
             html += '<td> <button type="button" id="deleteLog" class="btn btn-default '+ projectsLog[i][7] +'">\
-                    <span class="glyphicon glyphicon-remove-circle" area-hidden="true"</span></button></td>'
+                    <span class="glyphicon glyphicon-remove-circle" area-hidden="true"</span></button></td>';
 
             $('#projects').append('<tr class="' + projectsLog[i][7] + ' item" >' + html + '</tr>');
 
@@ -211,17 +210,15 @@ function displayLogs(evt) {
     });
 }
 
-displayLogs()
+displayLogs();
 
 
 $('table').on('click', '#deleteLog', function() {
     var reviewId = ($(this).attr('class')).split(' ')[2]
-    console.log(reviewId)
-
 
     var formInputs = {
         'review_id': reviewId
-    }
+    };
 
     $.post('/delete-log.json', formInputs, function() {
         displayLogs();
@@ -231,7 +228,7 @@ $('table').on('click', '#deleteLog', function() {
 
 
 
-$('table').on('click', '.submitupdate', updatesLog)
+$('table').on('click', '.submitupdate', updatesLog);
 
 
 function updatesLog(evt) {
@@ -275,18 +272,15 @@ function updatesLog(evt) {
 
 function makeProjectLogRow(projectInfo) {
     var html = ''
-    var originalNotes = projectInfo[6];
-    var originalRating = projectInfo[5];
+    var originalNotes = projectInfo[5];
 
 
     for(var j = 0; j < projectInfo.length - 1; j++)
         if (j === 0) {
             html += '<td>' + moment(projectInfo[0]).fromNow() + '</td>'
         } else if (j === 5) {
-            html += '<td> <input type="number" class="projectRating" value="' + originalRating + '"required </td>'
-        } else if (j === 6) {
 
-            html += renderOldLogNotes(projectInfo[6])
+            html += renderOldLogNotes(projectInfo[5])
         } else {
             html += '<td>' + projectInfo[j] + '</td>';
         }
@@ -318,8 +312,6 @@ function displaysUserStatus() {
         var badge;
         var animal;
 
-
-
         if(points > 50 && points < 100) {
             pointsAway = 100 - points;
             animal = 'monkey';
@@ -340,7 +332,7 @@ function displaysUserStatus() {
 
         $('#animal').append(animal);
 
-        $('#points').append('Total V-points: ', points);
+        $('#points').append('Total V-points: <b>' + points + '</b>');
 
         $('#next-badge').append('<i>' + pointsAway + ' pts away from your next badge! </i>')
 
@@ -382,7 +374,7 @@ var ctx = document.getElementById('climbChart').getContext('2d')
 function generatesChart() {
     $.get('/user-chart.json', function(data) {
 
-        Chart.defaults.global.defaultFontFamily = "";
+        Chart.defaults.global.defaultFontFamily = "Open Sans";
 
         var myBubbleChart = new Chart(ctx, {
             type: 'bubble',
