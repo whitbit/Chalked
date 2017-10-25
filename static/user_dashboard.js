@@ -199,12 +199,12 @@ function displayLogs(evt) {
             
             html += '<td> <input type="checkbox" name="updated" value="true"> </td>';
 
-            html += '<td> <input type="submit" value="update" class="' + projectsLog[i][7] + ' submitupdate"</td>';
+            html += '<td> <input type="submit" value="update" class="' + projectsLog[i][6] + ' submitupdate"</td>';
 
-            html += '<td> <button type="button" id="deleteLog" class="btn btn-default '+ projectsLog[i][7] +'">\
+            html += '<td> <button type="button" id="deleteLog" class="btn btn-default '+ projectsLog[i][6] +'">\
                     <span class="glyphicon glyphicon-remove-circle" area-hidden="true"</span></button></td>';
 
-            $('#projects').append('<tr class="' + projectsLog[i][7] + ' item" >' + html + '</tr>');
+            $('#projects').append('<tr class="' + projectsLog[i][6] + ' item" >' + html + '</tr>');
 
         }
     });
@@ -240,9 +240,11 @@ function updatesLog(evt) {
     var reviewId = ($(this).attr('class')).split(' ')[0]
 
     var tableData = $("table ." + reviewId + " td")
-    var rating = tableData.eq(5).children().val()
+    console.log(tableData)
+    // var rating = tableData.eq(5).children().val()
     // console.log(rating)
-    var notes = tableData.eq(6).children().val()
+    var notes = tableData.eq(5).children().val()
+    console.log(notes)
     // console.log(notes)
     var completed = $( "input[type=checkbox][name=updated]:checked" ).val()
     // console.log(completed)
@@ -254,7 +256,7 @@ function updatesLog(evt) {
         'review_id': reviewId,
         'notes': notes,
         'complete': completed,
-        'rating': rating,
+        // 'rating': rating,
         'date': moment(Date.now()).format('MM/DD/YYYY'),
     };
 
