@@ -1,11 +1,13 @@
 # Chalked
 
-Chalked is a fullstack web application for tracking outdoor rockclimbing experiences. Keep track of completed climbs and projects you'd like to return to. Visualize your progress over time, and earn badges along the way! Additionally, integration with the Google Maps API allows users to build a roadmap of places they've visited. ![Chalked Homepage](/static/homepage.png)
+Chalked is a fullstack web application for tracking outdoor rockclimbing experiences. Securely keep track of completed climbs and projects you'd like to return to. Visualize your progress over the past twelve months, and earn badges via vpoints along the way! Users with over 100 points in climbs completed earn the title of Mountain Goat! Integration with the Google Maps API allows users to build a roadmap of places they've visited. User logs are rendered dynamically via AJAX. [Chalked Homepage](/static/homepage.png)
+![Chalked User Log](/static/log.png)
+![Chalked Map](/static/map.png)
 
 
 ## Table of Contents
-* [Technologies Used] (#technologiesused)
-* [How to locally run Chalked] (#run)
+* [Technologies Used](#technologiesused)
+* [How to locally run Chalked](#run)
 
 
 ## <a name="technologiesused"></a>Technologies Used
