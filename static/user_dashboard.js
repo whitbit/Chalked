@@ -92,6 +92,7 @@ function prepareUpload(event){
 function submitsClimb(evt) {
 
     evt.preventDefault();
+    console.log($( "input[type=checkbox][name=complete]:checked" ).val())
 
     var formInputs = {
         'route_id': $('select#route option:checked').val(),
@@ -235,7 +236,6 @@ function updatesLog(evt) {
 
     evt.preventDefault();
 
-
     // debugger;
     var reviewId = ($(this).attr('class')).split(' ')[0]
 
@@ -265,7 +265,8 @@ function updatesLog(evt) {
 
     $.post('/update-log.json', formInputs, function() {
         displayLogs();
-        generatesChart()
+        generatesChart();
+        
     });
 
 }
