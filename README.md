@@ -2,6 +2,7 @@
 
 Chalked is a fullstack web application for tracking outdoor rockclimbing experiences. Search for top routes within the US, securely keep track of completed climbs and projects you'd like to return to. Upload photos and visualize your progress over the past twelve months, and earn badges via v-points. Users with over 100 points in climbs completed earn the title of Mountain Goat! Integration with the Google Maps API allows users to build a roadmap of places they've visited. ![Chalked Homepage](/static/homepage.png)
 ![Chalked User Log](/static/log.png)
+![Chalked New Log](/static/new_log.png)
 ![Chalked Map](/static/map.png)
 ![Chalked User](/static/user-photo.png)
 
@@ -36,7 +37,7 @@ Chalked is not deployed yet, but stay tuned!
 
 For now:
 
-* Set up and activate a python virtualinv
+* Set up and activate a python virtualenv
     * `pip install -r requirements.text`
 * Run PostgreSQL and create a new database named vroutes:
     * `psql`
