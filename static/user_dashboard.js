@@ -27,7 +27,11 @@ function showAreas(results) {
     $('#area').empty();
 
     $('#area').append('<option disable selected value> -- AREA -- </option>')
+
+    $('#route').empty();
     
+    $('#route').append('<option disable selected value> -- ROUTE -- </option>')
+
     $.each(areas, function(index, area) {
         $('#area').append('<option value=' + area + '>' + area + '</option>');
     });
