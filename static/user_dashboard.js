@@ -96,7 +96,6 @@ function prepareUpload(event){
 function submitsClimb(evt) {
 
     evt.preventDefault();
-    console.log($( "input[type=checkbox][name=complete]:checked" ).val())
 
     var formInputs = {
         'route_id': $('select#route option:checked').val(),
