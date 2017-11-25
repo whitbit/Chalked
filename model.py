@@ -11,7 +11,6 @@ class User(db.Model):
     user_id = db.Column(db.Integer, primary_key=True, autoincrement=True)
     username = db.Column(db.String(30), nullable=False, unique=True)
     pw = db.Column(db.String(100), nullable=False)
-    climb_level = db.Column(db.String(30))
     email = db.Column(db.String(100))
 
 

@@ -15,7 +15,7 @@ app = Flask(__name__)
 
 app.config['UPLOAD_FOLDER'] = UPLOAD_FOLDER
 
-app.secret_key = 'ABC'
+app.secret_key = os.environ.get('SECRET_KEY')
 
 
 
@@ -60,7 +60,6 @@ def register_user():
 
     username = request.form.get('username').lower()
     password = request.form.get("password")
-    level = request.form.get('level')
     email = request.form.get('email')
 
     hashed = bcrypt.hashpw(password.encode('utf8'), bcrypt.gensalt())
@@ -74,7 +73,6 @@ def register_user():
     else:
         user = User(username=username,
                     pw=hashed,
-                    climb_level=level,
                     email=email)
 
         db.session.add(user)
