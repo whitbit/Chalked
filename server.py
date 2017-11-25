@@ -45,6 +45,8 @@ def uploaded_file(filename):
 @app.route('/')
 def index():
     """Homepage with user registration/login form."""
+    if 'username' in session:
+        return redirect('/dashboard')
 
     return render_template('/homepage.html')
 
