@@ -123,6 +123,10 @@ function logsClimb(results) {
 
 $('#log-climb').on('submit', submitsClimb);
 
+$('#close').on('click', function(evt) {
+    document.getElementById('log-climb').reset();
+});
+
 function uploadsPhoto(evt) {
     $('#upload-button').text('Uploading...');
 
