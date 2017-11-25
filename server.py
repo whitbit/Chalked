@@ -131,8 +131,6 @@ def upload_file():
 
 
     file = request.files['file']
-    print file
-
 
     if file.filename == '':
         flash('No selected file')
@@ -148,8 +146,6 @@ def upload_file():
         return jsonify({})
     flash('Please upload a valid file type')
     return jsonify({})
-
-
 
 
 @app.route('/log-climb.json', methods=['POST'])
@@ -181,7 +177,6 @@ def logs_climb():
                       completed=complete,
                       photo=photo
                       )
-    # print 'ADDED NEW LOG', new_log
 
     db.session.add(new_log)
 
@@ -256,7 +251,6 @@ def renders_user_journal_info():
 
     for climb in user_logged_climbs:
 
-        
         route = Route.query.get(climb.route_id)
 
         date = str(climb.date.date())
@@ -283,7 +277,6 @@ def renders_user_journal_info():
                                                      route.name, 
                                                      route.state,
                                                      route.area,
-                                                     # climb.rating,
                                                      climb.notes)
         if climb.completed == False:
             log_info['projects'][climb.review_id] = (date,
@@ -296,6 +289,7 @@ def renders_user_journal_info():
 
 
     return jsonify(log_info)
+
 
 @app.route('/user-map')
 @requires_login
@@ -355,7 +349,6 @@ def user_charts_data():
                 'backgroundColor': 'rgba(170,102,14, 0.6)',
                 'hoverBackgroundColor': 'rgba(170,102,14, 0.8)'
         })
-
 
     return jsonify(data)
 
