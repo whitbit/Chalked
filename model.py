@@ -48,25 +48,6 @@ class Route(db.Model):
     url = db.Column(db.String(100))
     img = db.Column(db.String(100))
 
-    # def getOverallRating(self):
-
-    #     sum = 0
-
-    #     if self.logs:
-
-    #         for log in self.logs:
-    #             sum += log.rating
-
-    #     rating = float(sum / len(self.logs))
-
-    #     return rating
-
-    # def __repr__(self):
-    #      """Provide helpful representation when printed."""
-
-    #      return "<Route id={}, vgrade={}>".format(self.route_id,
-    #                                               self.v_grade)
-
 
 class UserLog(db.Model):
     """User's log of completed/in-progress climbs."""
