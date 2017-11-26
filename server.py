@@ -141,7 +141,6 @@ def upload_file():
         filename = secure_filename(file.filename)
 
         file.save(os.path.join(app.config['UPLOAD_FOLDER'], filename))
-        print 'UPLOADED'
 
         return jsonify({})
     flash('Please upload a valid file type')
