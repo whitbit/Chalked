@@ -58,6 +58,7 @@ def displays_registration_form():
 @app.route('/register-user', methods=['POST'])
 def register_user():
     """Adds user to database."""
+    print '***********************'
 
     username = request.form.get('username').lower()
     password = request.form.get("password")
@@ -67,11 +68,14 @@ def register_user():
 
 
     user = User.query.filter_by(username=username).first()
+    print 'user', user
 
     if user:
+        print 'IN IF USER'
         flash('You\'ve already registered.  Please login!')
         return redirect('/')
     else:
+        print 'IN ELSE'
         user = User(username=username,
                     pw=hashed,
                     email=email)
@@ -349,7 +353,7 @@ def user_charts_data():
         })
 
     return jsonify(data)
-    
+
 
 @app.route('/update-log.json', methods=['POST'])
 def updates_review_log():
