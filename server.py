@@ -17,6 +17,9 @@ app.config['UPLOAD_FOLDER'] = UPLOAD_FOLDER
 
 app.config['SECRET_KEY'] = os.environ.get("FLASK_SECRET_KEY", "abcdef")
 
+app = Flask(__name__)
+app.config['SQLALCHEMY_DATABASE_URI'] = os.environ['DATABASE_URL']
+db = SQLAlchemy(app)
 
 
 def allowed_file(filename):
@@ -386,6 +389,8 @@ def error():
 if __name__ == '__main__':
 
     connect_to_db(app, os.environ.get("DATABASE_URL"))
+
+    db.create_all(app=app)
 
     DEBUG = "NO_DEBUG" not in os.environ
     PORT = int(os.environ.get("PORT", 5000))
