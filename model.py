@@ -38,14 +38,14 @@ class Route(db.Model):
     __tablename__ = 'routes'
 
     route_id = db.Column(db.Integer, primary_key=True, autoincrement=True)
-    name = db.Column(db.String(100))
+    name = db.Column(db.String(200))
     latitude = db.Column(db.Float)
     longitude = db.Column(db.Float)
-    state = db.Column(db.String(100))
-    area = db.Column(db.String(100))
+    state = db.Column(db.String(200))
+    area = db.Column(db.String(200))
     v_grade = db.Column(db.Integer)
-    url = db.Column(db.String(100))
-    img = db.Column(db.String(100))
+    url = db.Column(db.String(200))
+    img = db.Column(db.String(200))
 
 
 class UserLog(db.Model):
@@ -149,18 +149,13 @@ def example_data():
 def connect_to_db(app, db_uri=None):
     """Connect our application to our database."""
 
-    app.config['SQLALCHEMY_DATABASE_URI'] = db_uri or 'postgres:///vroutes'
+    app.config['SQLALCHEMY_DATABASE_URI'] = os.environ['DATABASE_URL'] or 'postgres:///vroutes'
     app.config['SQLCHEMY_ECHO'] = True
     db.app = app
     db.init_app(app)
-    
+
 
 if __name__ == "__main__":
     from server import app
     connect_to_db(app)
-    print('connected to db.')
-
-
-
-
 

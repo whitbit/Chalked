@@ -43,7 +43,6 @@ def load_routes():
 
         r = requests.get('https://www.mountainproject.com/data/get-routes', params=payload).json()
 
-
         for route in r['routes']:
             if validates_vgrade(route['rating']):  
               route = Route(name=route['name'],
@@ -58,6 +57,7 @@ def load_routes():
               db.session.add(route)
 
         db.session.commit()
+        
 
 def validates_vgrade(grade):
   
@@ -68,6 +68,4 @@ if __name__ == "__main__":
     connect_to_db(app)
 
     db.create_all()
-    load_users()
     load_routes()
-    load_logs()
