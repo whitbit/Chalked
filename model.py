@@ -146,17 +146,21 @@ def example_data():
     db.session.commit()
 
 
-def connect_to_db(app, db_uri='postgresql:///vroutes'):
-    """Connect to database."""
+def connect_to_db(app, db_uri=None):
+    """Connect our application to our database."""
 
-    app.config['SQLALCHEMY_DATABASE_URI'] = db_uri
+    app.config['SQLALCHEMY_DATABASE_URI'] = db_uri or 'postgres:///vroutes'
     app.config['SQLCHEMY_ECHO'] = True
     db.app = app
     db.init_app(app)
-
+    
 
 if __name__ == "__main__":
     from server import app
     connect_to_db(app)
     print('connected to db.')
+
+
+
+
 

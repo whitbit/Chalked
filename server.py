@@ -15,7 +15,7 @@ app = Flask(__name__)
 
 app.config['UPLOAD_FOLDER'] = UPLOAD_FOLDER
 
-app.secret_key = os.environ.get('SECRET_KEY')
+app.config['SECRET_KEY'] = os.environ.get("FLASK_SECRET_KEY", "abcdef")
 
 
 
@@ -377,13 +377,17 @@ def deletes_review_log():
     return jsonify({})
 
 
+@app.route("/error")
+def error():
+    raise Exception("Error!")
+
+
 
 if __name__ == '__main__':
 
-    app.debug = True
+    connect_to_db(app, os.environ.get("DATABASE_URL"))
 
-    connect_to_db(app)
-
+    DEBUG = "NO_DEBUG" not in os.environ
     PORT = int(os.environ.get("PORT", 5000))
 
-    app.run(port=PORT, host='0.0.0.0')
+    app.run(host="0.0.0.0", port=PORT, debug=DEBUG)
