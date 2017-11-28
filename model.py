@@ -158,5 +158,5 @@ def connect_to_db(app, db_uri='postgresql:///vroutes'):
 if __name__ == "__main__":
     from server import app
     connect_to_db(app)
-    print "Connected to DB."
+    print('connected to db.')
 
