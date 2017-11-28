@@ -349,6 +349,7 @@ def user_charts_data():
         })
 
     return jsonify(data)
+    
 
 @app.route('/update-log.json', methods=['POST'])
 def updates_review_log():
@@ -379,7 +380,6 @@ def deletes_review_log():
 @app.route("/error")
 def error():
     raise Exception("Error!")
-
 
 
 if __name__ == '__main__':
