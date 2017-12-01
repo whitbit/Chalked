@@ -2,7 +2,7 @@
 
 Chalked is a fullstack web application for tracking outdoor rockclimbing experiences. Search for top routes within the US, securely keep track of completed climbs and projects you'd like to return to. Upload photos and visualize your progress over the past twelve months, and earn badges via v-points. Users with over 100 points in climbs completed earn the title of Mountain Goat! Integration with the Google Maps API allows users to build a roadmap of places they've visited. ![Chalked Homepage](/static/homepage.png)
 
-[a link](https://chalked.herokuapp.com)
+Chalked is deployed on Heroku [here](https://chalked.herokuapp.com).
 
 ![Chalked User Log](/static/log.png)
 ![Chalked New Log](/static/new_log.png)
@@ -36,7 +36,7 @@ Chalked is a fullstack web application for tracking outdoor rockclimbing experie
 
 
 ## <a name="run"></a>How to locally run Chalked
-Chalked is now deployed on: [a link](https://chalked.herokuapp.com)
+Chalked is now deployed [here](https://chalked.herokuapp.com).
 
 
 Alternatively:
